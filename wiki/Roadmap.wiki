@@ -4,7 +4,6 @@
   * Translate javadocs
   * Internationalize messages
   * Improve Installation for non-developers
-  * Automatize Build.
   * Separate it scripts of tester-core
   
 = Version 0.1 Released Wednesday, Apr 15, 2009 =
