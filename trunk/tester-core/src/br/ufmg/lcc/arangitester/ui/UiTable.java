@@ -1,3 +1,18 @@
+/*
+ * Copyright 2000 Universidade Federal de Minas Gerais.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package br.ufmg.lcc.arangitester.ui;
 
 import java.util.ArrayList;
@@ -9,6 +24,7 @@ import org.apache.commons.lang.StringUtils;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.ui.iterators.RealLinesIterator;
@@ -85,14 +101,36 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 
 	}
 	
+	/**
+	 * Trasfome Component id or name in a xpath locator.
+	 * @return Xpath Locator for table.
+	 */
+	public String getTableLocatorInPath() {
+        if (StringUtils.isNotBlank(super.getComponentId())) {
+            return String.format("xpath=//%stable[@id='%s']", super.locator.getHtmlNameSpace(), super.getComponentId());
+        } else if (StringUtils.isNotBlank(super.getComponentName())) {
+            return String.format("xpath=//%stable[@name='%s']", super.locator.getHtmlNameSpace(), super.getComponentName());
+        } else {
+            if (!super.getComponentLocator().startsWith("xpath=")) {
+                throw new TesterException("Locator for table must be a xpath locator. If possible use id or name attribute on annotation.");
+            }
+            return super.getComponentLocator();
+        }
+    }
+	
+	/**
+	 * 
+	 * @param lineNumber
+	 * @return
+	 */
 	public String getLineContent(int lineNumber){
-		String xpath = "xpath=//"+super.locator.getHtmlNameSpace()+"table[@id='" + getComponentId() +"']/"+super.locator.getHtmlNameSpace()+"tbody/"+super.locator.getHtmlNameSpace()+"tr[" +	lineNumber + "]";
+	    String xpath = String.format("%s/%stbody/%str[%s]", this.getTableLocatorInPath(), super.locator.getHtmlNameSpace(), super.locator.getHtmlNameSpace(), lineNumber);
 		return getSel().getText(xpath);
 	}
 	
 	@Logger("Clicking at line [#0]")
 	public void clickAtLine(int lineNumber){
-		String xpath = "xpath=//"+super.locator.getHtmlNameSpace()+"table[@id='" + getComponentId() +"']/"+super.locator.getHtmlNameSpace()+"tbody/"+super.locator.getHtmlNameSpace()+"tr[" + lineNumber + "]";
+	    String xpath = String.format("%s/%stbody/%str[%s]", this.getTableLocatorInPath(), super.locator.getHtmlNameSpace(), super.locator.getHtmlNameSpace(), lineNumber);
 		getSel().click(xpath);
 	}
 	
