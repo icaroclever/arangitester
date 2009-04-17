@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.config.ConfigFactory;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
+import br.ufmg.lcc.arangitester.ui.DefaultLocator;
 
 /**
  * Instaciate a loginController from config.
@@ -31,22 +32,23 @@ public class LoginControllerFactory {
 	private static Logger LOG = Logger.getLogger(LoginControllerFactory.class);
 
 	public static ILoginController getLoginController() {
-		String loginController = ConfigFactory.getConfig().getLoginController();
-		if (StringUtils.isEmpty(loginController)) {
-			loginController = "br.ufmg.lcc.arangitester.boot.ArangiLoginController";
-		}
+        String loginController = ConfigFactory.getConfig().getLoginController();
+        try {
+            Class< ? > clazz = null;
+            if (StringUtils.isEmpty(loginController)) {
+                clazz = DefaultLocator.class;
+            } else {
+                Class.forName(loginController);
+            }
+            LOG.debug("Carregando Login Controller: " + clazz.getName());
+            return (ILoginController) clazz.newInstance();
+        } catch (ClassNotFoundException e) {
+            throw new EnvException("Classe de controle de login não existe: " + loginController);
+        } catch (InstantiationException e) {
+            throw new EnvException("Error ao carregar a classe de controle de login: " + loginController);
+        } catch (IllegalAccessException e) {
+            throw new EnvException("Error ao carregar a classe de controle de login: " + loginController);
+        }
 
-		LOG.debug("Carregando Login Controller: " + loginController);
-		try {
-			Class<?> clazz = Class.forName(loginController);
-			return (ILoginController) clazz.newInstance();
-		} catch (ClassNotFoundException e) {
-			throw new EnvException("Classe de controle de login não existe: " + loginController);
-		} catch (InstantiationException e) {
-			throw new EnvException("Error ao carregar a classe de controle de login: " + loginController);
-		} catch (IllegalAccessException e) {
-			throw new EnvException("Error ao carregar a classe de controle de login: " + loginController);
-		}
-
-	}
+    }
 }
