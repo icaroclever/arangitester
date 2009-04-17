@@ -89,6 +89,14 @@ public abstract class UiComponent implements IUiComponent{
 		setComponentName(basicConfig.name());
 	}
 
+	/**
+	 * Move mouse over the component.
+	 */
+	@Logger("Mouser Over:  #{componentDesc}")
+	public void mouseOver() {
+	    waitElement(getComponentLocator());
+	    getSel().mouseOver(getComponentLocator());
+	}
 	
 	/**
 	 * Verify if element exist, if expectation is true. Or element not exist, if expectation is false.
