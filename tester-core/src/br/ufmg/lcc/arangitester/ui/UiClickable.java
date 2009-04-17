@@ -30,7 +30,7 @@ public class UiClickable extends UiComponent implements ICreate{
 	
 	public void clickWithOutLogger(){
 		waitElement(getComponentLocator());
-		
+		super.mouseOver();
 		IRequestCommand action = new IRequestCommand(){
 
 			@Override
