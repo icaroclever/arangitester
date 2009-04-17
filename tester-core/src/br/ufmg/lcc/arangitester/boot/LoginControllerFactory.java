@@ -36,9 +36,10 @@ public class LoginControllerFactory {
         try {
             Class< ? > clazz = null;
             if (StringUtils.isEmpty(loginController)) {
-                clazz = DefaultLocator.class;
+                //clazz = DefaultLocator.class;
+            	//TODO Uma melhor forma de ser executado
             } else {
-                Class.forName(loginController);
+            	clazz = Class.forName(loginController);
             }
             LOG.debug("Carregando Login Controller: " + clazz.getName());
             return (ILoginController) clazz.newInstance();
@@ -49,6 +50,5 @@ public class LoginControllerFactory {
         } catch (IllegalAccessException e) {
             throw new EnvException("Error ao carregar a classe de controle de login: " + loginController);
         }
-
     }
 }
