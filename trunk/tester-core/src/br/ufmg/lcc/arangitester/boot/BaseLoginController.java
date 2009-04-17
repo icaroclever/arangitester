@@ -20,9 +20,12 @@ import java.lang.reflect.Method;
 import org.apache.commons.lang.StringUtils;
 
 import br.ufmg.lcc.arangitester.Context;
+import br.ufmg.lcc.arangitester.annotations.Field;
 import br.ufmg.lcc.arangitester.annotations.Login;
 import br.ufmg.lcc.arangitester.config.ConfigFactory;
 import br.ufmg.lcc.arangitester.exceptions.FatalException;
+import br.ufmg.lcc.arangitester.ui.UiPage;
+import br.ufmg.lcc.arangitester.util.ComponentElUtil;
 
 /**
  * @author Lucas Gonçalves
@@ -31,9 +34,20 @@ import br.ufmg.lcc.arangitester.exceptions.FatalException;
 public abstract class BaseLoginController implements ILoginController {
 	private boolean alreadyLogged = false;
 	private String user;
-	
-	protected abstract void login(String user, String password) throws FatalException;
 
+	protected abstract void login(String user, String password, Field[] fields) throws FatalException;
+
+	/**
+	 * Fill field on login page with values come from @Login. 
+	 * @param fields Extra Fields to be filled.
+	 * @param pageLogin Login page with the fields.
+	 */
+	protected void fillExtraFields(Field[] fields, UiPage pageLogin) {
+		for (Field field: fields) {
+			ComponentElUtil.fill(field.name(), field.value(), pageLogin);
+		}
+	}
+	
 	@Override
 	public void loginIfNeed(Object target, Method method) throws FatalException{
 		Login login = target.getClass().getAnnotation(Login.class);
@@ -73,7 +87,7 @@ public abstract class BaseLoginController implements ILoginController {
 		}
 		
 		if ( login != null && alreadyLogged == false){
-			login(username, password);
+			login(username, password, login.fields());
 			user = login.user();
 			alreadyLogged = true;
 		}

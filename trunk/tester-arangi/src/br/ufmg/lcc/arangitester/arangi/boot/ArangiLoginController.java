@@ -16,6 +16,7 @@
 package br.ufmg.lcc.arangitester.arangi.boot;
 
 import br.ufmg.lcc.arangitester.Context;
+import br.ufmg.lcc.arangitester.annotations.Field;
 import br.ufmg.lcc.arangitester.arangi.pages.ArangiLoginPage;
 import br.ufmg.lcc.arangitester.boot.BaseLoginController;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
@@ -35,7 +36,7 @@ import com.thoughtworks.selenium.SeleniumException;
  */
 public class ArangiLoginController extends BaseLoginController {
 
-	protected void login(String user, String password) throws FatalException {
+	protected void login(String user, String password, Field[] fields) throws FatalException {
 		Selenium sel = Context.getInstance().getSeleniumController().getSeleniumClient();
 		try{
 			ArangiLoginPage login = UiComponentFactory.getInstance(ArangiLoginPage.class);
