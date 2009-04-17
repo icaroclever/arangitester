@@ -108,11 +108,15 @@ public class Reactor {
 		}
 		try {
 			dbController.reload(test);
-			loginController.forceLogOff();
+			if (this.loginController != null) {
+			    loginController.forceLogOff();
+			}
 			List<LccMethod> methods = createLccMethodsList(test);
 			
 			Object testObj = Refletions.createTestClassInstance(test);
-			loginController.loginIfNeed(testObj, null);
+			if (this.loginController != null) {
+			    loginController.loginIfNeed(testObj, null);
+			}
 			
 			if (onlyMethod != null) {
 				for (LccMethod method : methods) {
@@ -160,7 +164,9 @@ public class Reactor {
 		try {
 			method.setExecuted(true);
 			try {
-				loginController.loginIfNeed(target, method.getMethod());
+				if (this.loginController != null) {
+				    loginController.loginIfNeed(target, method.getMethod());
+				}
 				method.getMethod().invoke(target);
 			}
 			catch (Throwable e) {
