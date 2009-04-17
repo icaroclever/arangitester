@@ -169,7 +169,7 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 			throw new ElementNotExistException("Erro. Tabela não encontrada. Desc: "+ getComponentDesc()+". Id:  "+ getComponentId());
 		}
 		
-		String xpath = "//"+super.locator.getHtmlNameSpace()+"table[@id='" + getComponentId() +"']/tbody/tr";
+		String xpath = "//"+super.locator.getHtmlNameSpace()+"table[@id='" + getComponentId() +"']/"+super.locator.getHtmlNameSpace()+"tbody/"+super.locator.getHtmlNameSpace()+"tr";
 		Number eval = getSel().getXpathCount(xpath);
 		return eval.intValue();
 	}
