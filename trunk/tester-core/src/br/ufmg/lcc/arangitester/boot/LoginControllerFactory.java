@@ -20,7 +20,6 @@ import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.config.ConfigFactory;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
-import br.ufmg.lcc.arangitester.ui.DefaultLocator;
 
 /**
  * Instaciate a loginController from config.
@@ -33,14 +32,11 @@ public class LoginControllerFactory {
 
 	public static ILoginController getLoginController() {
         String loginController = ConfigFactory.getConfig().getLoginController();
+        if (StringUtils.isBlank(loginController)){
+            return null;
+        }
         try {
-            Class< ? > clazz = null;
-            if (StringUtils.isEmpty(loginController)) {
-                //clazz = DefaultLocator.class;
-            	//TODO Uma melhor forma de ser executado
-            } else {
-            	clazz = Class.forName(loginController);
-            }
+            Class< ? > clazz = Class.forName(loginController);
             LOG.debug("Carregando Login Controller: " + clazz.getName());
             return (ILoginController) clazz.newInstance();
         } catch (ClassNotFoundException e) {
