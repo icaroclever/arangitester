@@ -13,15 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.annotations;
+package br.ufmg.lcc.arangitester.arangi.annotations;
+
+import br.ufmg.lcc.arangitester.arangi.pages.ArangiSearchPage;
+import br.ufmg.lcc.arangitester.arangi.pages.NullSearchPage;
 
 /**
+ * Configure behavior of a popup.
  * @author Lucas Gonçalves
  *
  */
-public @interface PopField {
-	String name();
-	String cancelValue() default "";
-	String modifyValue() default "";
-	String addValue() default "";
+public @interface PopUp {
+	/**
+	 * Page of the popup. Always a search page.
+	 */
+	Class<? extends ArangiSearchPage> searchPage() default NullSearchPage.class;
+	
+	/**
+	 * Fields(search arguments) to be filled before the search. 
+	 */
+	PopField[] popFields() default {};
 }

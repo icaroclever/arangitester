@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.pattern;
+package br.ufmg.lcc.arangitester.arangi.pattern;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,19 +21,19 @@ import java.util.Iterator;
 import org.apache.commons.lang.StringUtils;
 
 import br.ufmg.lcc.arangitester.Context;
-import br.ufmg.lcc.arangitester.annotations.Crud;
-import br.ufmg.lcc.arangitester.annotations.Field;
 import br.ufmg.lcc.arangitester.annotations.Page;
 import br.ufmg.lcc.arangitester.annotations.Test;
+import br.ufmg.lcc.arangitester.arangi.annotations.Crud;
+import br.ufmg.lcc.arangitester.arangi.annotations.Field;
+import br.ufmg.lcc.arangitester.arangi.pages.ArangiSearchPage;
+import br.ufmg.lcc.arangitester.arangi.pages.NullSearchPage;
+import br.ufmg.lcc.arangitester.arangi.ui.UiArangiPage;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
-import br.ufmg.lcc.arangitester.pages.ArangiSearchPage;
-import br.ufmg.lcc.arangitester.pages.NullSearchPage;
 import br.ufmg.lcc.arangitester.ui.Button;
 import br.ufmg.lcc.arangitester.ui.GenericLine;
 import br.ufmg.lcc.arangitester.ui.IRequest;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
-import br.ufmg.lcc.arangitester.ui.UiArangiPage;
 import br.ufmg.lcc.arangitester.ui.UiInputText;
 
 /**

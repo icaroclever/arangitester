@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.annotations;
+package br.ufmg.lcc.arangitester.arangi.annotations;
 
-public @interface Field {
+/**
+ * @author Lucas Gonçalves
+ *
+ */
+public @interface PopField {
 	String name();
 	String cancelValue() default "";
 	String modifyValue() default "";
 	String addValue() default "";
-	PopUp popup() default @PopUp;
 }

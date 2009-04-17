@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.pages;
+package br.ufmg.lcc.arangitester.arangi.pages;
 
 import br.ufmg.lcc.arangitester.annotations.Page;
 import br.ufmg.lcc.arangitester.annotations.Ui;
-import br.ufmg.lcc.arangitester.ui.UiArangiPage;
+import br.ufmg.lcc.arangitester.arangi.ui.UiArangiPage;
 import br.ufmg.lcc.arangitester.ui.UiButton;
 import br.ufmg.lcc.arangitester.ui.UiInputText;
 

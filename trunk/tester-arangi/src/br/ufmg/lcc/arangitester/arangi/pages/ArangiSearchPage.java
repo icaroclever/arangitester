@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.pages;
+package br.ufmg.lcc.arangitester.arangi.pages;
 
 import org.apache.log4j.Logger;
 
+import br.ufmg.lcc.arangitester.arangi.ui.UiArangiPage;
 import br.ufmg.lcc.arangitester.boot.Reactor;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.ui.GenericLine;
-import br.ufmg.lcc.arangitester.ui.UiArangiPage;
 import br.ufmg.lcc.arangitester.ui.UiPage;
 import br.ufmg.lcc.arangitester.ui.UiTable;
 
