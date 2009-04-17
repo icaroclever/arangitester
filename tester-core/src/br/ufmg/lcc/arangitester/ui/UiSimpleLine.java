@@ -62,14 +62,14 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
                 el.addVariable("index", index);
 
                 if (StringUtils.isNotBlank(id)) {
-                    ui.setComponentId(el.resolveElExpression(id));
+                    ui.setComponentId((String) el.resolveElExpression(id));
                 }
 
                 if (StringUtils.isNotBlank(locator)) {
-                    ui.setComponentLocator(el.resolveElExpression(locator));
+                    ui.setComponentLocator((String) el.resolveElExpression(locator));
                 }
 
-                ui.setComponentDesc(el.resolveElExpression(uiConfig.desc()));
+                ui.setComponentDesc((String) el.resolveElExpression(uiConfig.desc()));
 
             } catch (Exception e) {
                 e.printStackTrace();

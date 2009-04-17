@@ -21,8 +21,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Controla o login. Se colocar sem definir o usuario então será usado o usuário 'admin', MAS se não for definido nenhum usuário e no arquivo tester-config.xml for definida o usuário na tag
- * default-login-username então este será usado. O mesmo acontece com a senha.
+ * Controla o login. Se colocar sem definir o usuario então será usado o usuário
+ * 'admin', MAS se não for definido nenhum usuário e no arquivo
+ * tester-config.xml for definida o usuário na tag default-login-username então
+ * este será usado. O mesmo acontece com a senha.
  * 
  * @author Lucas Gonçalves
  * 
@@ -33,4 +35,12 @@ public @interface Login {
 	String user() default "NULL";
 
 	String password() default "NULL";
+
+	/**
+	 * Login and password don´t go here otherwise use user and password
+	 * atributes.
+	 * 
+	 * @return Extra fields that must be filled on login page.
+	 */
+	Field[] fields() default {};
 }

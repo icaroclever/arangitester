@@ -97,7 +97,7 @@ public class LoggerImpl implements IInterceptor{
 	
 	private String interpolate(String text, Object[] args, Object from){
 		fillElContext(args, from);
-		String elResolv = el.resolveElExpression(text);
+		String elResolv = (String) el.resolveElExpression(text);
 		if ( elResolv != null ){
 			text = elResolv;
 		}
