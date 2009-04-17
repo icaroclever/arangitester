@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.pattern;
+package br.ufmg.lcc.arangitester.arangi.pattern;
 
 import java.lang.annotation.Annotation;
 
@@ -25,13 +25,13 @@ import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.Context;
 import br.ufmg.lcc.arangitester.ITestCase;
-import br.ufmg.lcc.arangitester.annotations.Field;
-import br.ufmg.lcc.arangitester.annotations.PopField;
-import br.ufmg.lcc.arangitester.annotations.PopUp;
+import br.ufmg.lcc.arangitester.arangi.annotations.Field;
+import br.ufmg.lcc.arangitester.arangi.annotations.PopField;
+import br.ufmg.lcc.arangitester.arangi.annotations.PopUp;
+import br.ufmg.lcc.arangitester.arangi.pages.ArangiSearchPage;
+import br.ufmg.lcc.arangitester.arangi.pages.NullSearchPage;
 import br.ufmg.lcc.arangitester.el.CompositeResolver;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
-import br.ufmg.lcc.arangitester.pages.ArangiSearchPage;
-import br.ufmg.lcc.arangitester.pages.NullSearchPage;
 import br.ufmg.lcc.arangitester.ui.IRequest;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 import br.ufmg.lcc.arangitester.ui.UiButton;

@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.pages;
+package br.ufmg.lcc.arangitester.arangi.annotations;
 
-public class NullSearchPage extends ArangiSearchPage {
-
-	public NullSearchPage(String tableName) {
-		super(tableName);
-	}
-
+public @interface Field {
+	String name();
+	String cancelValue() default "";
+	String modifyValue() default "";
+	String addValue() default "";
+	PopUp popup() default @PopUp;
 }

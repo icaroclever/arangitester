@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.boot;
+package br.ufmg.lcc.arangitester.arangi.boot;
 
 import br.ufmg.lcc.arangitester.Context;
+import br.ufmg.lcc.arangitester.arangi.pages.ArangiLoginPage;
+import br.ufmg.lcc.arangitester.boot.BaseLoginController;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.FatalException;
 import br.ufmg.lcc.arangitester.exceptions.InvokeException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
-import br.ufmg.lcc.arangitester.pages.ArangiLoginPage;
 import br.ufmg.lcc.arangitester.ui.UiPage;
 
 import com.thoughtworks.selenium.Selenium;

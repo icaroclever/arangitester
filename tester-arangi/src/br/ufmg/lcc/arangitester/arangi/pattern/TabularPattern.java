@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.pattern;
+package br.ufmg.lcc.arangitester.arangi.pattern;
 
 import org.apache.commons.lang.StringUtils;
 
 import br.ufmg.lcc.arangitester.Context;
-import br.ufmg.lcc.arangitester.annotations.Crud;
-import br.ufmg.lcc.arangitester.annotations.Field;
-import br.ufmg.lcc.arangitester.annotations.Tabular;
 import br.ufmg.lcc.arangitester.annotations.Test;
-import br.ufmg.lcc.arangitester.pages.ArangiTabularPage;
+import br.ufmg.lcc.arangitester.arangi.annotations.Crud;
+import br.ufmg.lcc.arangitester.arangi.annotations.Field;
+import br.ufmg.lcc.arangitester.arangi.annotations.Tabular;
+import br.ufmg.lcc.arangitester.arangi.pages.ArangiTabularPage;
 import br.ufmg.lcc.arangitester.ui.GenericLine;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 

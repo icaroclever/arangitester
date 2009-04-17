@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.annotations;
+package br.ufmg.lcc.arangitester.arangi.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import br.ufmg.lcc.arangitester.pages.ArangiSearchPage;
-import br.ufmg.lcc.arangitester.pages.NullSearchPage;
-import br.ufmg.lcc.arangitester.pattern.CrudPattern;
-import br.ufmg.lcc.arangitester.ui.UiArangiPage;
+import br.ufmg.lcc.arangitester.arangi.pages.ArangiSearchPage;
+import br.ufmg.lcc.arangitester.arangi.pages.NullSearchPage;
+import br.ufmg.lcc.arangitester.arangi.pattern.CrudPattern;
+import br.ufmg.lcc.arangitester.arangi.ui.UiArangiPage;
 
 /**
  * Configuration to use LccCrudPattern. It must be used on subclass of {@link CrudPattern}

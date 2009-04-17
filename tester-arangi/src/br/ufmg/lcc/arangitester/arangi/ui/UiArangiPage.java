@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.ui;
+package br.ufmg.lcc.arangitester.arangi.ui;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +30,13 @@ import br.ufmg.lcc.arangitester.exceptions.LccException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.log.IResult;
+import br.ufmg.lcc.arangitester.ui.Button;
+import br.ufmg.lcc.arangitester.ui.IRequest;
+import br.ufmg.lcc.arangitester.ui.IUiComponent;
+import br.ufmg.lcc.arangitester.ui.UiButton;
+import br.ufmg.lcc.arangitester.ui.UiDiv;
+import br.ufmg.lcc.arangitester.ui.UiPage;
+import br.ufmg.lcc.arangitester.ui.IRequest.Confirmation;
 
 import com.thoughtworks.selenium.SeleniumException;
 

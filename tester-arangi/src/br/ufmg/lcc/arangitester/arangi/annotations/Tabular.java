@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.annotations;
+package br.ufmg.lcc.arangitester.arangi.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import br.ufmg.lcc.arangitester.pages.ArangiTabularPage;
+import br.ufmg.lcc.arangitester.arangi.pages.ArangiTabularPage;
 import br.ufmg.lcc.arangitester.ui.GenericLine;
 
 /**
