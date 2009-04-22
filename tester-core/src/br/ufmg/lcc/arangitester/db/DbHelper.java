@@ -28,7 +28,7 @@ public class DbHelper {
 	
 	public static DefaultTableFilter getIncludeExcludeFilter(ConfigDumpFile dumpFileConfig) {
 		DefaultTableFilter filter = new DefaultTableFilter();
-		if (dumpFileConfig.getNotTablesNames().length != 0) {
+		if (dumpFileConfig.getTables()!= null) {
 			for(ConfigTable table: dumpFileConfig.getTables()) {
 				if (table.isNot()) {
 					filter.excludeTable(table.getName());
