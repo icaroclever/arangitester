@@ -49,7 +49,11 @@ public class OracleDb implements DriverDb {
 	@Override
 	public void export(ConfigDatabase database, ConfigDumpFile fileConfig) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
-		IDatabaseConnection connection = new OracleConnection(jdbcConnection, null);
+		String schemaName = fileConfig.getSchema();
+        if (schemaName != null) {
+            schemaName = schemaName.toUpperCase();
+        }
+		IDatabaseConnection connection = new OracleConnection(jdbcConnection, schemaName);
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_SKIP_ORACLE_RECYCLEBIN_TABLES, true);
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, fileConfig.getQualifiedTableName());
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, fileConfig.getCaseSensetive());
@@ -85,10 +89,16 @@ public class OracleDb implements DriverDb {
 	 * arquivo sequences.txt contivesse todos os atributos das sequencias, para que eles fossem recuperados a partir deste metodo.
 	 */
 	@Override
-	public void reload(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
+	public void reload(ConfigDatabase database, ConfigDumpFile fileConfig) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
-		IDatabaseConnection connection = new OracleConnection(jdbcConnection, schema.getName().toUpperCase());
-
+		String schemaName = fileConfig.getSchema();
+		if (schemaName != null) {
+		    schemaName = schemaName.toUpperCase();
+		}
+        IDatabaseConnection connection = new OracleConnection(jdbcConnection, schemaName);
+        connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, fileConfig.getQualifiedTableName());
+        connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, fileConfig.getCaseSensetive());
+        
 		Properties prop = new Properties();
 		FileReader file = new FileReader("sequences.txt");
 		if (file == null)
@@ -96,7 +106,7 @@ public class OracleDb implements DriverDb {
 
 		prop.load(file);
 
-		HashMap<String, Long> sequences = getSequences(connection, schema);
+		HashMap<String, Long> sequences = getSequences(connection, fileConfig);
 		Enumeration<Object> keys = prop.keys();
 		while (keys.hasMoreElements()) {
 			String name = (String) keys.nextElement();
@@ -111,7 +121,9 @@ public class OracleDb implements DriverDb {
 			}
 		}
 
-		IDataSet ds = new XmlDataSet(new FileInputStream(schema.getName() + ".xml"));
+		IDataSet ds = new XmlDataSet(new FileInputStream(fileConfig.getName() + ".xml"));
+		jdbcConnection.setAutoCommit(false);
+		jdbcConnection.createStatement().execute("SET CONSTRAINTS ALL DEFERRED");
 		DatabaseOperation.CLEAN_INSERT.execute(connection, ds);
 
 		connection.close();
