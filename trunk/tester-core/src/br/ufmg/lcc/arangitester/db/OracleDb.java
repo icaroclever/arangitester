@@ -27,11 +27,9 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import org.dbunit.database.DatabaseConfig;
-import org.dbunit.database.DatabaseSequenceFilter;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.FilteredDataSet;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.filter.ITableFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.ext.oracle.OracleConnection;
 import org.dbunit.operation.DatabaseOperation;
@@ -49,26 +47,25 @@ public class OracleDb implements DriverDb {
 	 * 
 	 */
 	@Override
-	public void export(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
+	public void export(ConfigDatabase database, ConfigDumpFile fileConfig) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
-		IDatabaseConnection connection = new OracleConnection(jdbcConnection, schema.getName().toUpperCase());
+		IDatabaseConnection connection = new OracleConnection(jdbcConnection, null);
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_SKIP_ORACLE_RECYCLEBIN_TABLES, true);
-
+		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, fileConfig.getQualifiedTableName());
+		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, fileConfig.getCaseSensetive());
+		
 		IDataSet dataset = connection.createDataSet();
-		IDataSet filteredDs = new FilteredDataSet(DbHelper.getIncludeExcludeFilter(schema), dataset);
+		IDataSet filteredDs = new FilteredDataSet(DbHelper.getIncludeExcludeFilter(fileConfig), dataset);
 
 		Properties prop = new Properties();
-		HashMap<String, Long> sequences = getSequences(connection, schema);
+		HashMap<String, Long> sequences = getSequences(connection, fileConfig);
 		for (String key : sequences.keySet()) {
 			prop.setProperty(key, String.valueOf(sequences.get(key)));
 		}
 
 		prop.store(new FileWriter("sequences.txt"), "Sequences");
 
-		ITableFilter sequence = new DatabaseSequenceFilter(connection);
-		IDataSet fullDataSet = new FilteredDataSet(sequence, filteredDs);
-
-		XmlDataSet.write(fullDataSet, new FileOutputStream(schema.getName() + ".xml"));
+		XmlDataSet.write(filteredDs, new FileOutputStream(fileConfig.getName() + ".xml"));
 
 		connection.close();
 	}
@@ -125,7 +122,7 @@ public class OracleDb implements DriverDb {
 	 */
 	private HashMap<String, Long> getSequences(IDatabaseConnection connection, ConfigDumpFile schema) throws Exception {
 		HashMap<String, Long> map = new HashMap<String, Long>();
-		ResultSet seqResult = connection.getConnection().createStatement().executeQuery("select SEQUENCE_NAME, LAST_NUMBER from all_sequences where SEQUENCE_OWNER = '" + schema.getName() + "'");
+		ResultSet seqResult = connection.getConnection().createStatement().executeQuery("select SEQUENCE_NAME, LAST_NUMBER from all_sequences where SEQUENCE_OWNER = '" + schema.getSchema() + "'");
 		while (seqResult.next()) {
 			String name = seqResult.getString(1);
 			Long lastValue = seqResult.getLong(2);

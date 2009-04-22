@@ -77,7 +77,8 @@
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
 		<xsd:attribute name="schema" type="xsd:string"></xsd:attribute>
-		<xsd:attribute name="casesensetive" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="casesensetive" type="xsd:boolean"></xsd:attribute>
+		<xsd:attribute name="qualifiedtablename" type="xsd:boolean"></xsd:attribute>
 	</xsd:complexType>
 
 	<xsd:complexType name="environment">
