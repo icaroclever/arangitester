@@ -59,13 +59,23 @@
 
 	<xsd:complexType name="database">
 		<xsd:sequence>
-            <xsd:element name="url" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
-            <xsd:element name="user" type="xsd:string"></xsd:element>
+			<xsd:element name="url" type="xsd:string" minOccurs="1"
+				maxOccurs="1">
+			</xsd:element>
+			<xsd:element name="user" type="xsd:string"></xsd:element>
 			<xsd:element name="password" type="xsd:string"></xsd:element>
 			<xsd:element name="driver" type="xsd:string"></xsd:element>
-			<xsd:element name="file" type="file" maxOccurs="unbounded"
+            <xsd:element name="listener" type="xsd:string" minOccurs="0" maxOccurs="1">
+            	<xsd:annotation>
+            		<xsd:documentation>
+            			Reload listener. When reload database a listener
+            			class is executed. Class must implements
+            			br.ufmg.lcc.arangitester.db.IReloadListener
+            		</xsd:documentation>
+            	</xsd:annotation></xsd:element>
+            <xsd:element name="file" type="file" maxOccurs="unbounded"
 				minOccurs="0">
-			</xsd:element>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -79,6 +89,12 @@
 		<xsd:attribute name="schema" type="xsd:string"></xsd:attribute>
 		<xsd:attribute name="casesensetive" type="xsd:boolean"></xsd:attribute>
 		<xsd:attribute name="qualifiedtablename" type="xsd:boolean"></xsd:attribute>
+		<xsd:attribute name="schemasequences" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>
+					Export sequences of each schema separated by comma.
+				</xsd:documentation>
+			</xsd:annotation></xsd:attribute>
 	</xsd:complexType>
 
 	<xsd:complexType name="environment">

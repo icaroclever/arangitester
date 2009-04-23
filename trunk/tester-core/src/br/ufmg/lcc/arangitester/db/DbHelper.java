@@ -25,7 +25,7 @@ import br.ufmg.lcc.arangitester.config.ConfigTable;
  * 
  */
 public class DbHelper {
-	
+
 	public static DefaultTableFilter getIncludeExcludeFilter(ConfigDumpFile dumpFileConfig) {
 		DefaultTableFilter filter = new DefaultTableFilter();
 		if (dumpFileConfig.getTables()!= null) {

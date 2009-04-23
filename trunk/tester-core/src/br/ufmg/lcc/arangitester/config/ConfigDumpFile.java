@@ -43,6 +43,10 @@ public class ConfigDumpFile {
     @XStreamAsAttribute
     private String schema;
 
+    @XStreamAsAttribute
+    @XStreamAlias("schemasequences")
+    private String schemasequences;
+    
     public Boolean getQualifiedTableName() {
         if (this.qualifiedTableName == null) {
             return false;
@@ -52,6 +56,18 @@ public class ConfigDumpFile {
 
     public void setQualifiedTableName(Boolean qualifiedTableName) {
         this.qualifiedTableName = qualifiedTableName;
+    }
+
+    
+    public String getSchemasequences() {
+        if (this.schemasequences == null) {
+            return "";
+        }
+        return schemasequences;
+    }
+
+    public void setSchemasequences(String schemasequences) {
+        this.schemasequences = schemasequences;
     }
 
     public Boolean getCaseSensetive() {
