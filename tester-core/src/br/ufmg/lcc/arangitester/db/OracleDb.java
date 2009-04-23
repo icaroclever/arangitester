@@ -26,6 +26,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.FilteredDataSet;
@@ -62,12 +63,12 @@ public class OracleDb implements DriverDb {
 		IDataSet filteredDs = new FilteredDataSet(DbHelper.getIncludeExcludeFilter(fileConfig), dataset);
 
 		Properties prop = new Properties();
-		HashMap<String, Long> sequences = getSequences(connection, fileConfig);
+		HashMap<String, Long> sequences = getSequences(database, connection, fileConfig);
 		for (String key : sequences.keySet()) {
 			prop.setProperty(key, String.valueOf(sequences.get(key)));
 		}
 
-		prop.store(new FileWriter("sequences.txt"), "Sequences");
+		prop.store(new FileWriter(fileConfig.getName() + "_sequences.txt"), "Sequences");
 
 		XmlDataSet.write(filteredDs, new FileOutputStream(fileConfig.getName() + ".xml"));
 
@@ -100,13 +101,13 @@ public class OracleDb implements DriverDb {
         connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, fileConfig.getCaseSensetive());
         
 		Properties prop = new Properties();
-		FileReader file = new FileReader("sequences.txt");
+		FileReader file = new FileReader(fileConfig.getName() + "_sequences.txt");
 		if (file == null)
 			throw new Exception("File sequences.txt not found.");
 
 		prop.load(file);
 
-		HashMap<String, Long> sequences = getSequences(connection, fileConfig);
+		HashMap<String, Long> sequences = getSequences(database, connection, fileConfig);
 		Enumeration<Object> keys = prop.keys();
 		while (keys.hasMoreElements()) {
 			String name = (String) keys.nextElement();
@@ -132,14 +133,17 @@ public class OracleDb implements DriverDb {
 	/**
 	 * Export the last value of the sequences
 	 */
-	private HashMap<String, Long> getSequences(IDatabaseConnection connection, ConfigDumpFile schema) throws Exception {
+	private HashMap<String, Long> getSequences(ConfigDatabase database, IDatabaseConnection connection, ConfigDumpFile file) throws Exception {
 		HashMap<String, Long> map = new HashMap<String, Long>();
-		ResultSet seqResult = connection.getConnection().createStatement().executeQuery("select SEQUENCE_NAME, LAST_NUMBER from all_sequences where SEQUENCE_OWNER = '" + schema.getSchema() + "'");
-		while (seqResult.next()) {
-			String name = seqResult.getString(1);
-			Long lastValue = seqResult.getLong(2);
-			map.put(name, lastValue);
+		for (String schema: StringUtils.split(file.getSchemasequences(), ",")){
+		    ResultSet seqResult = connection.getConnection().createStatement().executeQuery("select SEQUENCE_NAME, LAST_NUMBER from all_sequences where SEQUENCE_OWNER = '" + schema + "'");
+		      while (seqResult.next()) {
+		            String name = schema + "." + seqResult.getString(1);
+		            Long lastValue = seqResult.getLong(2);
+		            map.put(name, lastValue);
+		        }
 		}
+		
 		return map;
 	}
 

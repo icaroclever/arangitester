@@ -32,7 +32,8 @@ public class ConfigDatabase {
 	private String user;
 	private String password;
 	private String url;
-
+	private String listener;
+	
 	@XStreamImplicit
 	private List<ConfigDumpFile> file;
 
@@ -76,4 +77,12 @@ public class ConfigDatabase {
 		this.url = url;
 	}
 
+    public String getListener() {
+        return listener;
+    }
+
+    public void setListener(String listener) {
+        this.listener = listener;
+    }
+	
 }
