@@ -42,8 +42,8 @@ public class MysqlDb implements DriverDb {
 	public void export(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
-		// connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
-		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, true);
+		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, schema.getQualifiedTableName());
+		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, schema.getCaseSensetive());
 
 		IDataSet dataset = connection.createDataSet();
 		IDataSet filteredDs = new FilteredDataSet(DbHelper.getIncludeExcludeFilter(schema), dataset);
@@ -57,6 +57,7 @@ public class MysqlDb implements DriverDb {
 	public void reload(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
+		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, schema.getQualifiedTableName());
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, schema.getCaseSensetive());
 		// Saves the current state of the foreign_key_checks
 		ResultSet foreignKeyCheck = connection.getConnection().prepareStatement("select @@FOREIGN_KEY_CHECKS").executeQuery();
