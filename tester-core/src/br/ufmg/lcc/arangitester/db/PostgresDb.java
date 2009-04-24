@@ -42,7 +42,8 @@ public class PostgresDb implements DriverDb {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection, schema.getSchema());
-		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
+		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, schema.getQualifiedTableName());
+		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, schema.getCaseSensetive());
 
 		IDataSet dataset = connection.createDataSet();
 
@@ -60,8 +61,8 @@ public class PostgresDb implements DriverDb {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection, schema.getSchema());
 
-		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, true);
-		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
+		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, schema.getCaseSensetive());
+		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, schema.getQualifiedTableName());
 		jdbcConnection.setAutoCommit(false);
 		jdbcConnection.createStatement().execute("SET CONSTRAINTS ALL DEFERRED");
 		
@@ -73,6 +74,8 @@ public class PostgresDb implements DriverDb {
 		DatabaseOperation.DELETE_ALL.execute(connection, ds);
 		jdbcConnection.commit();
 		
+		jdbcConnection.createStatement().execute("update pg_constraint set condeferrable = 't' where contype = 'f';");
+		jdbcConnection.createStatement().execute("update pg_trigger set tgdeferrable=true where tgisconstraint = true;");
 		jdbcConnection.createStatement().execute("SET CONSTRAINTS ALL DEFERRED");
 		DatabaseOperation.INSERT.execute(connection, ds);
 		jdbcConnection.commit();
