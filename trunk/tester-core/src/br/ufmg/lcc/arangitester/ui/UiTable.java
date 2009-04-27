@@ -90,15 +90,25 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	 * @throws Exception 
 	 */
 	@SuppressWarnings("unchecked")
+	//TODO Refazer essa função, não bem específicamente.
 	public T getLineFromContent(String text) {
 		Iterator<IUiLine> iterator = createRealLinesIterator();
 		IUiLine line;
+		String xpath;
 		while(iterator.hasNext()) {
-			if((line = iterator.next()).getText().contains(text))
+			line = iterator.next();
+			xpath = "xpath=//"+super.locator.getHtmlNameSpace()+"table[@id='"+getComponentId()+"']/"+super.locator.getHtmlNameSpace()+"tbody/"+super.locator.getHtmlNameSpace()+"tr["+(line.getIndex()+1)+"]";
+			
+			if(getSel().getText(xpath).contains(text))
 				return (T)line;
 		}
 		throw new LccException("Nenhuma linha com o texto: " +text);
-
+	}
+	
+	public boolean existLineFromContent(String text)
+	{
+		String line = getSel().getText("xpath=//"+super.locator.getHtmlNameSpace()+"/tr"+super.locator.getHtmlNameSpace()+"/td");
+		return line.contains(text);
 	}
 	
 	/**
