@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.example.org/config"
+	elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.example.org/config">
+	<xsd:element name="tester-config">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="locator-class" minOccurs="0"
+					maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation>
+							By default Arangi tester use a locator
+							specific for applications made with arangi.
+							Put full qualifity class of custom locator.
+							See LccIComponentLocator
+						</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:whiteSpace value="collapse"></xsd:whiteSpace>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="login-controller" type="xsd:string"
+					minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation>
+							Qualified name of class responsible for
+							control Authentication on app under test. If
+							not specified LccLoginController will be
+							used
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="tomcat-users" type="xsd:string"
+					minOccurs="0" maxOccurs="1">
+				</xsd:element>
+				<xsd:element name="default-login-username"
+					type="xsd:string" minOccurs="0">
+				</xsd:element>
+				<xsd:element name="default-login-password" type="xsd:string" minOccurs="0"></xsd:element>
+                <xsd:element name="environment" type="environment" maxOccurs="unbounded" minOccurs="0">
+				</xsd:element>
+            </xsd:sequence>
+			<xsd:attribute name="default" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="extension">
+                <xsd:annotation>
+                	<xsd:documentation>Define qual módulo de extensão usar. Este valor é utilizando quando executado via Ant no CruiseControl.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="tester-arangi"></xsd:enumeration>
+						<xsd:enumeration value="tester-php"></xsd:enumeration>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="database">
+		<xsd:sequence>
+			<xsd:element name="url" type="xsd:string" minOccurs="1"
+				maxOccurs="1">
+			</xsd:element>
+			<xsd:element name="user" type="xsd:string"></xsd:element>
+			<xsd:element name="password" type="xsd:string"></xsd:element>
+			<xsd:element name="driver" type="xsd:string"></xsd:element>
+            <xsd:element name="listener" type="xsd:string" minOccurs="0" maxOccurs="1">
+            	<xsd:annotation>
+            		<xsd:documentation>
+            			Reload listener. When reload database a listener
+            			class is executed. Class must implements
+            			br.ufmg.lcc.arangitester.db.IReloadListener
+            		</xsd:documentation>
+            	</xsd:annotation></xsd:element>
+            <xsd:element name="file" type="file" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="file">
+		<xsd:sequence>
+			<xsd:element name="table" type="table" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="schema" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="casesensetive" type="xsd:boolean"></xsd:attribute>
+		<xsd:attribute name="qualifiedtablename" type="xsd:boolean"></xsd:attribute>
+		<xsd:attribute name="schemasequences" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>
+					Export sequences of each schema separated by comma.
+				</xsd:documentation>
+			</xsd:annotation></xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="environment">
+    	<xsd:sequence>
+    		<xsd:element name="browser" type="xsd:string"></xsd:element>
+    		<xsd:element name="port" type="xsd:int"></xsd:element>
+    		<xsd:element name="host" type="xsd:string"></xsd:element>
+    		<xsd:element name="path" type="xsd:string"></xsd:element>
+    		<xsd:element name="database" type="database" maxOccurs="unbounded" minOccurs="0">
+    		</xsd:element>
+    	</xsd:sequence>
+    	<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+    </xsd:complexType>
+
+
+
+    <xsd:complexType name="table">
+    	<xsd:attribute name="not" type="xsd:boolean" use="optional" default="false"></xsd:attribute>
+    	<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+    </xsd:complexType>
+</xsd:schema>
