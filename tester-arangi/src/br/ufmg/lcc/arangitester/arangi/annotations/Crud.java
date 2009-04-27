@@ -90,4 +90,6 @@ public @interface Crud {
 	 */
 	int modifyId() default -1000;
 	int searchLine() default 0;
+	
+	String searchLineValue() default "";
 }
