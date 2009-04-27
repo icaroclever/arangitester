@@ -362,7 +362,14 @@ public class CrudPattern extends BasePatterns{
 		}
 		
 		searchPage.getBtnSearch().click();
-		GenericLine lineToVerify = searchPage.getResult().getLine(config.searchLine());
+		GenericLine lineToVerify = null;
+		if(!config.searchLineValue().equals(""))
+		{
+			lineToVerify = searchPage.getResult().getLineFromContent(config.searchLineValue());
+		}
+		if(lineToVerify ==null)
+			lineToVerify = searchPage.getResult().getLine(config.searchLine());
+		
 		if ( config.useViewToVerifyAddedRegistry() ){
 			lineToVerify.getView().click();
 		}else{
@@ -568,7 +575,15 @@ public class CrudPattern extends BasePatterns{
 		searchPage.getBtnSearch().click();
 		int bodyLines = searchPage.getResult().getRealLinesNumber();
 
-		searchPage.getResult().getLine(config.searchLine()).getCheckDelete().check();
+		GenericLine lineToVerify = null;
+		if(!config.searchLineValue().equals(""))
+		{
+			(lineToVerify = searchPage.getResult().getLineFromContent(config.searchLineValue())).getCheckDelete().check();
+		}
+		if(lineToVerify ==null)
+			searchPage.getResult().getLine(config.searchLine()).getCheckDelete().check();
+		
+		
 		searchPage.getBtnDelete().click();
 		searchPage.verifyMessagePresent(config.deleteMessage());
 		
