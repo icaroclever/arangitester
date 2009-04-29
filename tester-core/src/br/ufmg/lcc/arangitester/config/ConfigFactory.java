@@ -17,6 +17,7 @@ package br.ufmg.lcc.arangitester.config;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -50,6 +51,7 @@ public class ConfigFactory {
     public static ConfigEnv getEnvSpecificConfig() {
         if (configenv == null) {
             String env = System.getProperty("user.name");
+            env = StringUtils.replace(env, "‡", "ç");
             configenv = ConfigFactory.getEnv(env);
 
             if (configenv == null && StringUtils.isNotBlank(getConfig().getDefaultEnv())) {

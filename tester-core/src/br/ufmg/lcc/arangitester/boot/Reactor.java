@@ -30,6 +30,7 @@ import br.ufmg.lcc.arangitester.Context;
 import br.ufmg.lcc.arangitester.ITestCase;
 import br.ufmg.lcc.arangitester.annotations.Obs;
 import br.ufmg.lcc.arangitester.annotations.Test;
+import br.ufmg.lcc.arangitester.config.ConfigFactory;
 import br.ufmg.lcc.arangitester.db.DbUnitController;
 import br.ufmg.lcc.arangitester.exceptions.LccException;
 import br.ufmg.lcc.arangitester.exceptions.FatalException;
@@ -63,6 +64,9 @@ public class Reactor {
 	public static void main(String[] args) throws Exception {
 		Reactor lccReactor = new Reactor();
 		ExecutionOptions executionOptions = new ExecutionOptions(args);
+		if (ConfigFactory.getEnvSpecificConfig() == null ) {
+		    throw new Exception(String.format("Environment to user %s don´t exist", System.getProperty("user.name")));
+		}
 		lccReactor.startExecution(executionOptions);
 	}
 

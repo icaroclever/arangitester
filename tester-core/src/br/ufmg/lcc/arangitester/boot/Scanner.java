@@ -104,7 +104,7 @@ public class Scanner {
 	}
 
 	public void handleItem(String name) {
-		if ((name.endsWith("FunctionalTest.class") || name.endsWith("TestCase.class")) && !name.equals("LccTestCase.class")) {
+		if ((name.endsWith("FunctionalTest.class") || name.endsWith("TestCase.class")) && !name.equals("LccTestCase.class") && !name.equals("ITestCase.class")) {
 			try {
 				name = StringUtils.substringBeforeLast(StringUtils.replace(name, "/", "."), ".");
 				tests.add(getClass().getClassLoader().loadClass(name));
