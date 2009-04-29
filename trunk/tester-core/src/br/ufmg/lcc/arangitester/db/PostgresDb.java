@@ -64,6 +64,8 @@ public class PostgresDb implements DriverDb {
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, schema.getCaseSensetive());
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, schema.getQualifiedTableName());
 		jdbcConnection.setAutoCommit(false);
+		jdbcConnection.createStatement().execute("update pg_constraint set condeferrable = 't' where contype = 'f';");
+		jdbcConnection.createStatement().execute("update pg_trigger set tgdeferrable=true where tgisconstraint = true;");
 		jdbcConnection.createStatement().execute("SET CONSTRAINTS ALL DEFERRED");
 		
 		IDataSet ds = new XmlDataSet(new FileInputStream(schema.getName() + ".xml"));
