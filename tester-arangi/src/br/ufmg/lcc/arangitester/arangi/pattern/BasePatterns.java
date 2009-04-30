@@ -41,7 +41,6 @@ import br.ufmg.lcc.arangitester.ui.UiInputText;
 import br.ufmg.lcc.arangitester.ui.UiRadio;
 import br.ufmg.lcc.arangitester.ui.UiSelect;
 import br.ufmg.lcc.arangitester.ui.UiTab;
-import br.ufmg.lcc.arangitester.util.ComponentElUtil;
 
 import com.thoughtworks.selenium.Selenium;
 
