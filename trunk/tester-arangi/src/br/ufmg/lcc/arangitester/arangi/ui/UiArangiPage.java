@@ -36,7 +36,6 @@ import br.ufmg.lcc.arangitester.ui.IUiComponent;
 import br.ufmg.lcc.arangitester.ui.UiButton;
 import br.ufmg.lcc.arangitester.ui.UiDiv;
 import br.ufmg.lcc.arangitester.ui.UiPage;
-import br.ufmg.lcc.arangitester.ui.IRequest.Confirmation;
 
 import com.thoughtworks.selenium.SeleniumException;
 
