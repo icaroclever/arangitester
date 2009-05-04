@@ -17,6 +17,8 @@ package br.ufmg.lcc.arangitester;
 
 import java.io.File;
 
+import org.apache.commons.lang.StringUtils;
+
 import br.ufmg.lcc.arangitester.boot.SeleniumController;
 import br.ufmg.lcc.arangitester.config.ConfigEnv;
 import br.ufmg.lcc.arangitester.config.ConfigFactory;
@@ -38,13 +40,6 @@ public class Context {
 	private ConfigEnv serverConfig;
 	
 	private static File tempDir = null;
-	private static File screenshotHtmlDir = null;
-	private static File screenshotPngDir = null;
-	private static File screenshotDefaultDir = null;
-	private static final String SCREENSHOT_DEFAULT_DIR = getInstance().getTempDirectory().getAbsolutePath() + "/htmls";
-	private static final String SCREENSHOT_HTML_DIR = getInstance().getTempDirectory().getAbsolutePath() + "/htmls";
-	private static final String SCREENSHOT_PNG_DIR = getInstance().getTempDirectory().getAbsolutePath() + "/htmls";
-	
 	
 	/**
 	 * Result of executions.
@@ -66,45 +61,47 @@ public class Context {
 	
 	
 	public File getTempDirectory(){
-		if(tempDir==null){
+		if(Context.tempDir==null){
+		    
 			File resultFile = new File("").getAbsoluteFile();
-			tempDir =  new File( resultFile.getParentFile(), "temp");
+			Context.tempDir =  new File( resultFile.getParentFile(), "temp");
 		}
 		
-		return tempDir;
+		return Context.tempDir;
+	}
+	
+	public File getResultDir() {
+        String property = System.getProperty("result.out");
+        if (StringUtils.isNotBlank(property)){
+            return new File(property);
+        }
+        return Context.getInstance().getTempDirectory();
+	}
+	
+	public File getResultFile() {
+	    return new File(this.getResultDir(), "functionalTests.xml");
+	}
+	
+	public File getScreenshotDir() {
+	    return new File(this.getResultDir(), "htmls");
 	}
 	
 	public File getScreenshotHtmlDir(){
-		if(screenshotHtmlDir==null){
-			screenshotHtmlDir = new File(SCREENSHOT_HTML_DIR);
-			if ( !screenshotHtmlDir.exists() ){
-				if ( !screenshotHtmlDir.mkdirs()  )
-					throw new LccException("Erro ao tentar criar o diretorio " + screenshotHtmlDir.getAbsolutePath());
-			}
-		}
-		return screenshotHtmlDir;
+		if (!this.getScreenshotDir().exists()) {
+            if (!this.getScreenshotDir().mkdirs()) {
+                throw new LccException("Erro ao tentar criar o diretorio " + this.getScreenshotDir().getAbsolutePath());
+            }
+        }
+		
+		return this.getScreenshotDir();
 	}
 	
 	public File getScreenshotPngDir(){
-		if(screenshotPngDir==null){
-			screenshotPngDir = new File(SCREENSHOT_PNG_DIR);
-			if ( !screenshotPngDir.exists() ){
-				if ( !screenshotPngDir.mkdirs()  )
-					throw new LccException("Erro ao tentar criar o diretorio " + screenshotPngDir.getAbsolutePath());
-			}
-		}
-		return screenshotPngDir;
+	    return this.getScreenshotHtmlDir();
 	}
 	
 	public File getScreenshotDefaultDir(){
-		if(screenshotDefaultDir==null){
-			screenshotDefaultDir = new File(SCREENSHOT_DEFAULT_DIR);
-			if ( !screenshotDefaultDir.exists() ){
-				if ( !screenshotDefaultDir.mkdirs()  )
-					throw new LccException("Erro ao tentar criar o diretorio " + screenshotDefaultDir.getAbsolutePath());
-			}
-		}
-		return screenshotPngDir;
+	    return this.getScreenshotHtmlDir();
 	}
 
 	public IResult getResult(){

@@ -17,6 +17,8 @@ package br.ufmg.lcc.arangitester.config;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
@@ -49,6 +51,10 @@ public class ConfigEnv {
 	}
 
 	public String getHost() {
+	    String extraHost = System.getProperty("app.host");
+        if (StringUtils.isNotBlank(extraHost)){
+	        return extraHost;
+	    }
 		return host;
 	}
 
@@ -57,6 +63,10 @@ public class ConfigEnv {
 	}
 
 	public int getPort() {
+	    String extraPortStr = System.getProperty("app.port");
+        if (StringUtils.isNotBlank(extraPortStr)){
+            return Integer.valueOf(extraPortStr);
+        }
 		return port;
 	}
 

@@ -95,7 +95,7 @@ public class Reactor {
 
 		} finally {
 			Context.getInstance().getSeleniumController().stop();
-			File resultFile = new File(Context.getInstance().getTempDirectory(),"functionalTests.xml");
+			File resultFile = Context.getInstance().getResultFile();
 			LOG.info("");
 			LOG.info("###################################################################################################");
 			LOG.info("");
