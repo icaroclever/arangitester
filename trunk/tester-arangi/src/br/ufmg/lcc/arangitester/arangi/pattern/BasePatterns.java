@@ -113,9 +113,9 @@ public abstract class BasePatterns implements ITestCase{
 		LOG.debug("Preenchendo valor do campo: " + fieldConfig.name());
 		if ( isPopup(fieldConfig) ){
 			fillPopup(target, fieldConfig, action);
-			while(getSel().getAllWindowIds().length > 1)
+			for(int i=1; i < getSel().getAllWindowIds().length && getSel().getAllWindowIds().length > 1;i++)
 			{
-				getSel().selectWindow(getSel().getAllWindowNames()[getSel().getAllWindowIds().length-1]);
+				getSel().selectWindow(getSel().getAllWindowNames()[i]);
 				getSel().windowFocus();
 				getSel().close();
 			}
