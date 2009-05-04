@@ -15,13 +15,19 @@
  */
 package br.ufmg.lcc.arangitester.arangi.pages;
 
+import java.util.Iterator;
+
 import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.arangi.ui.UiArangiPage;
 import br.ufmg.lcc.arangitester.boot.Reactor;
+import br.ufmg.lcc.arangitester.exceptions.LccException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.ui.GenericLine;
+import br.ufmg.lcc.arangitester.ui.IUiComponent;
+import br.ufmg.lcc.arangitester.ui.IUiLine;
+import br.ufmg.lcc.arangitester.ui.UiLink;
 import br.ufmg.lcc.arangitester.ui.UiPage;
 import br.ufmg.lcc.arangitester.ui.UiTable;
 
@@ -66,10 +72,14 @@ public class ArangiSearchPage extends UiArangiPage{
 	 * @return The line of the table result corresponding to the id. 0 Based!
 	 */
 	public int getLinePositionFromRegistryId(int id){
-		
-		String xpath = "//"+this.locator.getHtmlNameSpace()+"a[contains(@href,'event=view&id="+id+"')]";// and substring-after(@href,'event=view&id="+id+"')='']/ancestor::"+this.locator.getHtmlNameSpace()+"tr[1]+/preceding-sibling::"+this.locator.getHtmlNameSpace()+"*";
+		// TODO Não faz sentido o código. Ele simplesmente verifica se existe o ID e manda deletar sempre o mesma linha, idependente do ID
+		return id;
+				
+		/*String xpath = "//"+this.locator.getHtmlNameSpace()+"a[contains(@href,'event=view&id="+id+"')]";// and substring-after(@href,'event=view&id="+id+"')='']/ancestor::"+this.locator.getHtmlNameSpace()+"tr[1]+/preceding-sibling::"+this.locator.getHtmlNameSpace()+"*";
+		System.out.println(xpath);
 		int linePosition = UiPage.getSel().getXpathCount(xpath).intValue(); //0 Based!
-		return linePosition;
+		System.out.println(linePosition);
+		return linePosition;*/
 	}
 	
 	
