@@ -1,17 +1,10 @@
 /*
- * Copyright 2000 Universidade Federal de Minas Gerais.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright 2000 Universidade Federal de Minas Gerais. Licensed under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in
+ * writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ * CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
 package br.ufmg.lcc.arangitester.ui;
 
@@ -20,12 +13,13 @@ import java.util.Iterator;
 
 import org.apache.commons.lang.StringUtils;
 
+import br.ufmg.lcc.arangitester.annotations.Line;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.annotations.Ui;
+import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.ui.iterators.ComponentsIterator;
 import br.ufmg.lcc.arangitester.util.ElHelper;
 import br.ufmg.lcc.arangitester.util.Refletions;
-
 
 /**
  * @author Lucas Gonçalves
@@ -33,6 +27,10 @@ import br.ufmg.lcc.arangitester.util.Refletions;
 public class UiSimpleLine extends UiComponent implements IUiLine {
     protected int index;
 
+    public UiSimpleLine() {
+        this.setComponentDesc("");
+    }
+    
     @Override
     public Iterator<IUiComponent> iterator() {
         return new ComponentsIterator(this);
@@ -66,7 +64,13 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
                 }
 
                 if (StringUtils.isNotBlank(locator)) {
-                    ui.setComponentLocator((String) el.resolveElExpression(locator));
+                    Line lineAnnotation = this.getClass().getSuperclass().getAnnotation(Line.class);
+                    if (lineAnnotation != null) {
+                        el.addVariable("beginIndex", lineAnnotation.beginIndex());
+                        ui.setComponentLocator((String) el.resolveElExpression(lineAnnotation.xpath() + locator));
+                    } else {
+                        ui.setComponentLocator((String) el.resolveElExpression(locator));
+                    }
                 }
 
                 ui.setComponentDesc((String) el.resolveElExpression(uiConfig.desc()));
@@ -83,6 +87,21 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
         for (IUiComponent component : Refletions.getAllUiComponents(this, components)) {
             component.verifyIsEnable(enable);
         }
+    }
+
+    @Override
+    public String getComponentLocator() {
+        ElHelper el = new ElHelper();
+        el.addVariable("tableXpath", getParent().getComponentLocator());
+        el.addVariable("tableId", getParent().getComponentId());
+        el.addVariable("tableName", getParent().getComponentName());
+        el.addVariable("index", index);
+        Line lineAnnotation = this.getClass().getSuperclass().getAnnotation(Line.class);
+        if (lineAnnotation != null) {
+            el.addVariable("beginIndex", lineAnnotation.beginIndex());
+            return (String) el.resolveElExpression(lineAnnotation.xpath());
+        }
+        throw new TesterException("@Line must be defined.");
     }
 
     @SuppressWarnings("unchecked")
