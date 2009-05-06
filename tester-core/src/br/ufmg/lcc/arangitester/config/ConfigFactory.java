@@ -17,7 +17,6 @@ package br.ufmg.lcc.arangitester.config;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;

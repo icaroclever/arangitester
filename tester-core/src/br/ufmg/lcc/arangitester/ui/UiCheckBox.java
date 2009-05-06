@@ -15,16 +15,12 @@
  */
 package br.ufmg.lcc.arangitester.ui;
 
-import br.ufmg.lcc.arangitester.Context;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.exceptions.LccException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.ICreate;
-import br.ufmg.lcc.arangitester.log.IResult;
 
 public class UiCheckBox extends UiClickable implements ICreate{
-	
-	private IResult log = Context.getInstance().getResult();
 	
 	public String getStatus() {
 		return getSel().getValue(getComponentLocator());
