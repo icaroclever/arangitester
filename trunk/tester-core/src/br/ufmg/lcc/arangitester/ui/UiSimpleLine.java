@@ -123,7 +123,7 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
 
     @Logger("Clicking at line [#index]")
     public void click() {
-        String xpath = "xpath=//" + super.locator.getHtmlNameSpace() + "table[@id='" + getComponentId() + "']/" + super.locator.getHtmlNameSpace() + "tbody/" + super.locator.getHtmlNameSpace() + "tr[" + index + "]";
+        String xpath = this.getComponentLocator();
         getSel().click(xpath);
     }
 
