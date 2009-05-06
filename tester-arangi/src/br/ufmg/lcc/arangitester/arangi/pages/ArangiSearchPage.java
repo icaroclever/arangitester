@@ -15,20 +15,13 @@
  */
 package br.ufmg.lcc.arangitester.arangi.pages;
 
-import java.util.Iterator;
-
 import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.arangi.ui.UiArangiPage;
 import br.ufmg.lcc.arangitester.boot.Reactor;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.ui.GenericLine;
-import br.ufmg.lcc.arangitester.ui.IUiComponent;
-import br.ufmg.lcc.arangitester.ui.IUiLine;
-import br.ufmg.lcc.arangitester.ui.UiLink;
-import br.ufmg.lcc.arangitester.ui.UiPage;
 import br.ufmg.lcc.arangitester.ui.UiTable;
 
 public class ArangiSearchPage extends UiArangiPage{
