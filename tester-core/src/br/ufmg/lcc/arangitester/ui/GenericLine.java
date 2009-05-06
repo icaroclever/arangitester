@@ -57,11 +57,16 @@ public class GenericLine extends UiSimpleLine{
                 IUiComponent ui = (IUiComponent)Refletions.getFieldValue(field, this);
                 String locator = uiConfig.locator();
                 String id = uiConfig.id();
+                String name = uiConfig.name();
                 
                 if (StringUtils.isNotBlank(id)) {
                     id = getParent().getComponentId() + ":#{index}:" + uiConfig.id();
                     ui.setComponentId(LccStringUtils.interpolate(id, this));
                 }
+                else if(StringUtils.isNotBlank(name)) {
+                    id = getParent().getComponentId() + ":#{index}:" + uiConfig.name();
+                    ui.setComponentId(LccStringUtils.interpolate(name, this));
+                } 
                 
                 if (StringUtils.isNotBlank(locator)) {
                     ui.setComponentLocator(LccStringUtils.interpolate(locator, this));
