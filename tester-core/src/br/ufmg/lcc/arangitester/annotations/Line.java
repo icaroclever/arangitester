@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
  *  @Ui(locator = "xpath=//table[@class='tablePadrao']")
  *  public UiTable<Linha> result;
  *
- *  @Line(xpath = "/${tableXpath}/tbody/tr[${index} + 1]")
+ *  @Line(begingIndex=2)
  *  public static class Linha extends UiSimpleLine {
  *       @Ui(locator = "//a[@class='btEditar']")
  *       public UiButton btnEditar;
@@ -26,16 +26,16 @@ import java.lang.annotation.Target;
  * </code> then if involke <code>
  *  result.getLine(0).btnEditar.click();
  *  </code>
- *             the element clicked is //table[@class='tablePadrao']/tbody/tr[1]//a[@class='btEditar']
+ *             the element clicked is //table[@class='tablePadrao']/tbody/tr[2]//a[@class='btEditar']
  * @author Lucas Gonçalves
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Line {
     /**
-     * @return Xpath expression to locate each line. Ex. ${tableXpath}/tbody/tr[${index}].
+     * @return Xpath expression to locate each line. Ex. ${tableXpath}/tbody/tr[${beginIndex} + ${index}].
      */
-    String xpath() default "${tableXpath}/tbody/tr[${beginIndex}]";
+    String xpath() default "${tableXpath}/${htmlNameSpace}tbody/${htmlNameSpace}tr[${beginIndex} + ${index}]";
 
     /**
      * @return Define de beginIndex on default xpath of line "${tableXpath}/tbody/tr[${beginIndex}]". 1 Based index.
