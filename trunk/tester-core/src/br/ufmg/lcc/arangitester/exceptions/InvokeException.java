@@ -15,7 +15,7 @@
  */
 package br.ufmg.lcc.arangitester.exceptions;
 
-public class InvokeException extends LccException {
+public class InvokeException extends ArangiTesterException {
 
 	private static final long serialVersionUID = 1L;
 	

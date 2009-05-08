@@ -23,7 +23,7 @@ import br.ufmg.lcc.arangitester.arangi.annotations.Crud;
 import br.ufmg.lcc.arangitester.arangi.annotations.Field;
 import br.ufmg.lcc.arangitester.arangi.annotations.Tabular;
 import br.ufmg.lcc.arangitester.arangi.pages.ArangiTabularPage;
-import br.ufmg.lcc.arangitester.ui.GenericLine;
+import br.ufmg.lcc.arangitester.arangi.ui.GenericLine;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 
 /**

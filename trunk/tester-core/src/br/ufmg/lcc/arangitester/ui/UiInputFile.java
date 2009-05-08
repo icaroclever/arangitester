@@ -18,7 +18,7 @@ package br.ufmg.lcc.arangitester.ui;
 import java.io.File;
 
 import br.ufmg.lcc.arangitester.annotations.Logger;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 
 /**
  * InputText com type file. Permite o upload de arquivos.
@@ -35,7 +35,7 @@ public class UiInputFile extends UiComponent {
 	 */
 	public void attachFile(File file) {
 		if (!file.exists()) {
-			throw new LccException(String.format("O arquivo %s para upload não existe", file.getAbsolutePath()));
+			throw new ArangiTesterException(String.format("O arquivo %s para upload não existe", file.getAbsolutePath()));
 		}
 		getSel().attachFile(super.getComponentLocator(), file.toURI().toString());
 	}

@@ -23,7 +23,7 @@ import org.apache.commons.lang.StringUtils;
 
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
@@ -102,7 +102,7 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 			if(getSel().getText(xpath).contains(text))
 				return (T)line;
 		}
-		throw new LccException("Nenhuma linha com o texto: " +text);
+		throw new ArangiTesterException("Nenhuma linha com o texto: " +text);
 	}
 	
 	public boolean existLineFromContent(String text)

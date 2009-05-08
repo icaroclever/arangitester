@@ -18,7 +18,7 @@ package br.ufmg.lcc.arangitester.el;
 import javax.el.ELContext;
 import javax.el.ListELResolver;
 
-import br.ufmg.lcc.arangitester.ui.GenericLine;
+import br.ufmg.lcc.arangitester.ui.UiSimpleLine;
 import br.ufmg.lcc.arangitester.ui.UiTable;
 
 /**
@@ -37,7 +37,7 @@ public class ListElResolver extends ListELResolver {
 
 		if (base != null && base instanceof UiTable) {
 			context.setPropertyResolved(true);
-			UiTable<? extends GenericLine> list = (UiTable<? extends GenericLine>) base;
+			UiTable<? extends UiSimpleLine> list = (UiTable<? extends UiSimpleLine>) base;
 			int index = toInteger(property);
 			return list.getLine(index);
 		}

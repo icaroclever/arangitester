@@ -27,11 +27,11 @@ import br.ufmg.lcc.arangitester.arangi.annotations.Crud;
 import br.ufmg.lcc.arangitester.arangi.annotations.Field;
 import br.ufmg.lcc.arangitester.arangi.pages.ArangiSearchPage;
 import br.ufmg.lcc.arangitester.arangi.pages.NullSearchPage;
-import br.ufmg.lcc.arangitester.arangi.ui.UiArangiPage;
+import br.ufmg.lcc.arangitester.arangi.pages.ArangiPage;
+import br.ufmg.lcc.arangitester.arangi.ui.GenericLine;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.ui.Button;
-import br.ufmg.lcc.arangitester.ui.GenericLine;
 import br.ufmg.lcc.arangitester.ui.IRequest;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 import br.ufmg.lcc.arangitester.ui.UiInputText;
@@ -99,7 +99,7 @@ public class CrudPattern extends BasePatterns{
 	 * @see #verifyRedirects()
 	 * @param searchPage
 	 */
-	protected void afterCallEditPage(UiArangiPage page){}
+	protected void afterCallEditPage(ArangiPage page){}
 	
 	/**
 	 * <H2>Verifica fluxo de redirecionamento dos botões.</H2> 
@@ -124,8 +124,8 @@ public class CrudPattern extends BasePatterns{
 		
 		
 		String title;	// The arangi title of current page
-		UiArangiPage editPage = createPage(config.page(), "page"); //edit page
-		UiArangiPage controller; //controller page of this test. Can be search or edit page.
+		ArangiPage editPage = createPage(config.page(), "page"); //edit page
+		ArangiPage controller; //controller page of this test. Can be search or edit page.
 		
 		// Sets the RequestConfig of the cancel button of edit page
 		if(editPage.existEditButton(Button.CANCEL))
@@ -133,7 +133,7 @@ public class CrudPattern extends BasePatterns{
 		
 		if(config.searchPage() != NullSearchPage.class)
 		{
-			UiArangiPage searchPage = createPage(config.searchPage(), "page"); //searchPage
+			ArangiPage searchPage = createPage(config.searchPage(), "page"); //searchPage
 			// novo->cancelar;
 			controller = searchPage;
 			controller.invoke();
@@ -216,7 +216,7 @@ public class CrudPattern extends BasePatterns{
 	 * @see #beforeValidateSearchPage()
 	 * @param page to validate.
 	 */
-	public void beforeValidateEditPage( UiArangiPage page ) {
+	public void beforeValidateEditPage( ArangiPage page ) {
 		
 	}
 	
@@ -225,7 +225,7 @@ public class CrudPattern extends BasePatterns{
 	 */
 	@Test(value="Valida os campos da página de Edição", order=3)
 	public void validateEditPage(){
-		UiArangiPage page = createPage(config.page(), "page");
+		ArangiPage page = createPage(config.page(), "page");
 		page.invoke();
 		
 		beforeValidateEditPage(page);
@@ -256,7 +256,7 @@ public class CrudPattern extends BasePatterns{
 			searchPage.verifySearchButtons();
 		}
 		
-		UiArangiPage page = createPage(config.page(), "page");
+		ArangiPage page = createPage(config.page(), "page");
 		page.invoke();
 		page.verifyEditButtons();
 		
@@ -268,11 +268,11 @@ public class CrudPattern extends BasePatterns{
 	
 	/**
 	 * Open new registry. Click on save button and verify message on {@link Crud#messageRequiredFields()}.
-	 * Only execute if template method {@link #beforeRequiredFields(UiArangiPage)} returns true.
+	 * Only execute if template method {@link #beforeRequiredFields(ArangiPage)} returns true.
 	 */
 	@Test(value="Verificar Campos Obrigatórios", order=5)
 	public void verifyRequiredFields(){
-		UiArangiPage page = createPage(config.page(), "page");
+		ArangiPage page = createPage(config.page(), "page");
 		page.invoke();
 		beforeRequiredFields(page);
 		page.getBtnSave().click();
@@ -285,7 +285,7 @@ public class CrudPattern extends BasePatterns{
 	 * @see #verifyRequiredFields()
 	 * @param page to verify.
 	 */
-	protected void beforeRequiredFields( UiArangiPage page ){
+	protected void beforeRequiredFields( ArangiPage page ){
 	}
 	
 	/**
@@ -323,7 +323,7 @@ public class CrudPattern extends BasePatterns{
 	 */
 	@Test(value="Adicionar Registro", order=7)
 	public void addRegistry(){
-		UiArangiPage page = createPage(config.page(), "page");
+		ArangiPage page = createPage(config.page(), "page");
 		page.invoke();
 		beforeAddRegistry(page);
 		for (Field field: config.fields()){
@@ -385,7 +385,7 @@ public class CrudPattern extends BasePatterns{
 		}
 	}
 	
-	public void beforeAddRegistry(UiArangiPage page)
+	public void beforeAddRegistry(ArangiPage page)
 	{
 	}
 	
@@ -395,7 +395,7 @@ public class CrudPattern extends BasePatterns{
 	 */
 	@Test(value="Verificando duplicidade", dependency="addRegistry", order=8)
 	public void verifyDuplicity(){
-		UiArangiPage page = createPage(config.page(), "page");
+		ArangiPage page = createPage(config.page(), "page");
 		page.invoke();
 
 		for (Field field: config.fields()){
@@ -409,25 +409,25 @@ public class CrudPattern extends BasePatterns{
 	/**
 	 * Template Method. Execute before validate a field.
 	 */
-	public void beforeValidateField(UiArangiPage page, IUiComponent component){
+	public void beforeValidateField(ArangiPage page, IUiComponent component){
 	}
 	
 	/**
 	 * Template Method. Execute after validate field.
 	 */
-	public void afterValidateField(UiArangiPage page, IUiComponent next){
+	public void afterValidateField(ArangiPage page, IUiComponent next){
 	}
 	
 	/**
 	 * Template Method. Execute before fill a field on AddRegistry Test.
 	 */
-	public void beforeFillFieldAddRegistry(UiArangiPage page, Field field){
+	public void beforeFillFieldAddRegistry(ArangiPage page, Field field){
 	}
 	
 	/**
 	 * Template Method. Execute after fill a field on AddRegistry Test.
 	 */
-	public void afterFillFieldAddRegistry(UiArangiPage page, Field field){
+	public void afterFillFieldAddRegistry(ArangiPage page, Field field){
 	}
 
 	
@@ -437,7 +437,7 @@ public class CrudPattern extends BasePatterns{
 	 */
 	@Test(value="Verificando cancelamento de Registro", order=9)
 	public void verifyCancelRegister(){
-		UiArangiPage page = createPage(config.page(), "page");
+		ArangiPage page = createPage(config.page(), "page");
 		ACTION action;
 		if(config.searchPage() == NullSearchPage.class){
 			page.invoke();
@@ -484,20 +484,20 @@ public class CrudPattern extends BasePatterns{
 	/**
 	 * Template Method. Execute before fill a field on AddRegistry Test.
 	 */
-	public boolean beforeFillFieldCancelRegistry(UiArangiPage page, Field field){
+	public boolean beforeFillFieldCancelRegistry(ArangiPage page, Field field){
 		return true;
 	}
 	
 	/**
 	 * Template Method. Execute after fill a field on AddRegistry Test.
 	 */
-	public void afterFillFieldCancelRegistry(UiArangiPage page, Field field){
+	public void afterFillFieldCancelRegistry(ArangiPage page, Field field){
 	}
 	
 	/**
 	 * Call modify page on registry {@link Crud#modifyId()}, fill fields with {@link Field#modifyValue()},
 	 * save, call modify page again and verify modified values.
-	 * Template methods {@link #beforeFillFieldModifyRegistry(UiArangiPage, Field)} and {@link #afterFillFieldModifyRegistry(UiArangiPage, Field)}
+	 * Template methods {@link #beforeFillFieldModifyRegistry(ArangiPage, Field)} and {@link #afterFillFieldModifyRegistry(ArangiPage, Field)}
 	 */
 	@Test(value="Modificar Registro", order=10)
 	public void modifyRegistry(){
@@ -514,7 +514,7 @@ public class CrudPattern extends BasePatterns{
 			return;
 		}
 		
-		UiArangiPage page = createPage(config.page(), "page");
+		ArangiPage page = createPage(config.page(), "page");
 		page.invokeModify(config.modifyId());
 		
 		for (Field field: config.fields()){ //Must be separated. Because dynamic combobox
@@ -536,14 +536,14 @@ public class CrudPattern extends BasePatterns{
 	/**
 	 * Template Method. Execute before fill a field on modifyRegistry Test.
 	 */
-	public boolean beforeFillFieldModifyRegistry(UiArangiPage page, Field field){
+	public boolean beforeFillFieldModifyRegistry(ArangiPage page, Field field){
 		return true;
 	}
 	
 	/**
 	 * Template Method. Execute after fill a field on modifyRegistry Test.
 	 */
-	public void afterFillFieldModifyRegistry(UiArangiPage page, Field field){
+	public void afterFillFieldModifyRegistry(ArangiPage page, Field field){
 	}
 	
 	/**

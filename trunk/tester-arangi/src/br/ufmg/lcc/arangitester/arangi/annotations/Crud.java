@@ -22,8 +22,8 @@ import java.lang.annotation.Target;
 
 import br.ufmg.lcc.arangitester.arangi.pages.ArangiSearchPage;
 import br.ufmg.lcc.arangitester.arangi.pages.NullSearchPage;
+import br.ufmg.lcc.arangitester.arangi.pages.ArangiPage;
 import br.ufmg.lcc.arangitester.arangi.pattern.CrudPattern;
-import br.ufmg.lcc.arangitester.arangi.ui.UiArangiPage;
 
 /**
  * Configuration to use LccCrudPattern. It must be used on subclass of {@link CrudPattern}
@@ -36,7 +36,7 @@ public @interface Crud {
 	/**
 	 * Maintenance page.
 	 */
-	Class<? extends UiArangiPage> page();
+	Class<? extends ArangiPage> page();
 	Class<? extends ArangiSearchPage> searchPage() default NullSearchPage.class;
 	
 	/**

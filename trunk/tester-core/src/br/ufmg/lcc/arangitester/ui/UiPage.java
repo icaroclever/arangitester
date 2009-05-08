@@ -25,12 +25,12 @@ import org.apache.commons.lang.StringUtils;
 import br.ufmg.lcc.arangitester.Context;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.annotations.Page;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.InvokeException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.util.Refletions;
-import br.ufmg.lcc.arangitester.util.LccStringUtils;
+import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.Wait;
@@ -99,7 +99,7 @@ public class UiPage  extends UiComponent implements IUiComposite{
 		String pageUrl = this.getBrowserUrl();
 
 		if( !pageUrl.contains(expectedUrl) ){
-			throw new LccException("A url atual é diferente da esperada.\n" +
+			throw new ArangiTesterException("A url atual é diferente da esperada.\n" +
 									"Url atual: " + pageUrl + "\n" +
 									"Url esperada: " + expectedUrl);
 		}
@@ -109,8 +109,8 @@ public class UiPage  extends UiComponent implements IUiComposite{
 	@Logger("Verifying alert: \"#0\" ")
 	public void verifyAlert(String text){
 		String alert = getSel().getAlert();
-		if ( !LccStringUtils.containsWithoutSpaces(text, alert) ){
-			throw new LccException("Mensagem de alerta esperada: " + text + " \nmas a atual é: " + text);
+		if ( !ArangiTesterStringUtils.containsWithoutSpaces(text, alert) ){
+			throw new ArangiTesterException("Mensagem de alerta esperada: " + text + " \nmas a atual é: " + text);
 		}
 	}
 	

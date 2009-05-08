@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.arangi.ui;
+package br.ufmg.lcc.arangitester.arangi.pages;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +26,7 @@ import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.Ui;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.log.IResult;
@@ -44,7 +44,7 @@ import com.thoughtworks.selenium.SeleniumException;
  * @author Lucas Gonçalves
  * 
  */
-public class UiArangiPage extends UiPage{
+public class ArangiPage extends UiPage{
 
 	private IResult log = Context.getInstance().getResult();
 	
@@ -121,7 +121,7 @@ public class UiArangiPage extends UiPage{
 		}
 
 		if( !pageUrl.contains(expectedUrl) ){
-			throw new LccException("A url atual é diferente da esperada.\n" +
+			throw new ArangiTesterException("A url atual é diferente da esperada.\n" +
 									"Url atual: " + pageUrl + "\n" +
 									"Url esperada: " + expectedUrl);
 		}

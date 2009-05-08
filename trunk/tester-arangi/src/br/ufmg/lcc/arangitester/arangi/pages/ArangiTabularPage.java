@@ -18,9 +18,8 @@ package br.ufmg.lcc.arangitester.arangi.pages;
 import java.util.Iterator;
 import java.util.List;
 
-import br.ufmg.lcc.arangitester.arangi.ui.UiArangiPage;
+import br.ufmg.lcc.arangitester.arangi.ui.GenericLine;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
-import br.ufmg.lcc.arangitester.ui.GenericLine;
 import br.ufmg.lcc.arangitester.ui.IUiLine;
 import br.ufmg.lcc.arangitester.ui.IUiTable;
 import br.ufmg.lcc.arangitester.ui.UiTable;
@@ -31,7 +30,7 @@ import br.ufmg.lcc.arangitester.ui.UiTable;
  *
  * @param <T> Type of line.
  */
-public class ArangiTabularPage<T extends GenericLine> extends UiArangiPage implements IUiTable<T>{
+public class ArangiTabularPage<T extends GenericLine> extends ArangiPage implements IUiTable<T>{
 
 	private UiTable<T> table;
 	

@@ -23,7 +23,7 @@ import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.RequestConfigImp;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.ICreate;
 import br.ufmg.lcc.arangitester.ui.IRequest.IRequestCommand;
@@ -72,7 +72,7 @@ public class UiSelect extends UiComponent implements ICreate{
 			
 			// Testa pós-condição
 			if(!label.equals(getSelectedLabel())){
-				throw new LccException("Erro ao selecionar elemento. Opção '"+
+				throw new ArangiTesterException("Erro ao selecionar elemento. Opção '"+
 						label +"' não foi selecionada corretamente.");
 			}
 			

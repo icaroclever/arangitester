@@ -21,9 +21,9 @@ import java.util.regex.Pattern;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 
-public class LccStringUtils {
+public class ArangiTesterStringUtils {
 
 	public static String interpolate(String text, Object bean){
 		Pattern compile = Pattern.compile("#\\{([\\w]*)\\}");
@@ -55,9 +55,9 @@ public class LccStringUtils {
 		return(text1Ww.equals(text2Ww));
 	}
 	
-	public static String fill( char character, int frequency ) throws LccException {
+	public static String fill( char character, int frequency ) throws ArangiTesterException {
 		if( (frequency < 0) || frequency > Integer.MAX_VALUE ) {
-			throw new LccException("The parameter 'frequency' must be positive and less than Integer.MAX_VALUE");
+			throw new ArangiTesterException("The parameter 'frequency' must be positive and less than Integer.MAX_VALUE");
 		}
 		String newString = "";
 		for( int i = 0; i < frequency; i++ ) {

@@ -26,7 +26,7 @@ import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.log.IResult;
 import br.ufmg.lcc.arangitester.util.ElHelper;
-import br.ufmg.lcc.arangitester.util.LccStringUtils;
+import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 
 import com.thoughtworks.selenium.Wait.WaitTimedOutException;
 
@@ -108,7 +108,7 @@ public class LoggerImpl implements IInterceptor{
 			rep[i] = "#" + i;
 		}
 		
-		text = LccStringUtils.interpolate(text, from);
+		text = ArangiTesterStringUtils.interpolate(text, from);
 		return StringUtils.replaceEach(text, rep, argsStr);
 	}
 

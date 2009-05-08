@@ -32,7 +32,7 @@ import br.ufmg.lcc.arangitester.annotations.Obs;
 import br.ufmg.lcc.arangitester.annotations.Test;
 import br.ufmg.lcc.arangitester.config.ConfigFactory;
 import br.ufmg.lcc.arangitester.db.DbUnitController;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.FatalException;
 import br.ufmg.lcc.arangitester.util.Refletions;
 import br.ufmg.lcc.arangitester.util.StackTraceUtil;
@@ -115,7 +115,7 @@ public class Reactor {
 			if (this.loginController != null) {
 			    loginController.forceLogOff();
 			}
-			List<LccMethod> methods = createLccMethodsList(test);
+			List<ArangiTesterMethod> methods = createLccMethodsList(test);
 			
 			Object testObj = Refletions.createTestClassInstance(test);
 			if (this.loginController != null) {
@@ -123,13 +123,13 @@ public class Reactor {
 			}
 			
 			if (onlyMethod != null) {
-				for (LccMethod method : methods) {
+				for (ArangiTesterMethod method : methods) {
 					if (method.getMethod().equals(onlyMethod)) {
 						executeMethodTest(testObj, methods, method);
 					}
 				}
 			} else {
-				for (LccMethod method : methods) {
+				for (ArangiTesterMethod method : methods) {
 					executeMethodTest(testObj, methods, method);
 				}
 			}
@@ -142,7 +142,7 @@ public class Reactor {
 
 	}
 
-	private void executeMethodTest(Object target, List<LccMethod> methods, LccMethod method) {
+	private void executeMethodTest(Object target, List<ArangiTesterMethod> methods, ArangiTesterMethod method) {
 		if (method.isExecuted() || method.isSkip())
 			return;
 
@@ -174,9 +174,9 @@ public class Reactor {
 				method.getMethod().invoke(target);
 			}
 			catch (Throwable e) {
-				if(method.getMethod().getAnnotation(Test.class)==null || !(e instanceof LccException)){
+				if(method.getMethod().getAnnotation(Test.class)==null || !(e instanceof ArangiTesterException)){
 					
-					if (e.getCause() != null && !(e.getCause() instanceof LccException)){
+					if (e.getCause() != null && !(e.getCause() instanceof ArangiTesterException)){
 						
 						if ( e instanceof InvocationTargetException && e.getCause() != null ){
 							e = e.getCause();
@@ -211,18 +211,18 @@ public class Reactor {
 	/**
 	 * Create a list of method and set depedencies on each method.
 	 */
-	private List<LccMethod> createLccMethodsList(Class<?> clazz) {
-		List<LccMethod> methods = new ArrayList<LccMethod>();
+	private List<ArangiTesterMethod> createLccMethodsList(Class<?> clazz) {
+		List<ArangiTesterMethod> methods = new ArrayList<ArangiTesterMethod>();
 
 		for (Method method : Refletions.getTestMethodsOrdered(clazz)) {
-			methods.add(new LccMethod(method));
+			methods.add(new ArangiTesterMethod(method));
 		}
 
 		// Set Depedencies
-		for (LccMethod method : methods) {
+		for (ArangiTesterMethod method : methods) {
 			Test lccTest = method.getMethod().getAnnotation(Test.class);
 			if (StringUtils.isNotBlank(lccTest.dependency())) {
-				for (LccMethod in : methods) {
+				for (ArangiTesterMethod in : methods) {
 					if (in.getMethod().getName().equals(lccTest.dependency())) {
 						method.setDependency(in);
 					}
@@ -234,14 +234,14 @@ public class Reactor {
 
 }
 
-class LccMethod {
+class ArangiTesterMethod {
 	private boolean executed = false;
 	private Method method = null;
-	private LccMethod dependency = null;
+	private ArangiTesterMethod dependency = null;
 	private boolean error = false;
 	private boolean skip = false;
 
-	public LccMethod(Method method) {
+	public ArangiTesterMethod(Method method) {
 		this.method = method;
 	}
 
@@ -266,11 +266,11 @@ class LccMethod {
 		this.method = method;
 	}
 
-	public LccMethod getDependency() {
+	public ArangiTesterMethod getDependency() {
 		return dependency;
 	}
 
-	public void setDependency(LccMethod dependency) {
+	public void setDependency(ArangiTesterMethod dependency) {
 		this.dependency = dependency;
 	}
 

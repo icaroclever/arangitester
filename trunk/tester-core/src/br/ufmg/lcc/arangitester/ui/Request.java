@@ -20,10 +20,10 @@ import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.RequestConfigImp;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.interceptors.LoggerImpl;
-import br.ufmg.lcc.arangitester.util.LccStringUtils;
+import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 import br.ufmg.lcc.arangitester.util.SeleniumScripts;
 
 import com.thoughtworks.selenium.Selenium;
@@ -56,8 +56,8 @@ public class Request implements IRequest{
 		
 		if ( StringUtils.isNotBlank(getRequestConfig().getAlert()) ){
 			String alertCurrent = sel.getAlert();
-			if ( !LccStringUtils.containsWithoutSpaces(getRequestConfig().getAlert(), alertCurrent) ){
-				throw new LccException("Mensagem de alerta esperada: " + getRequestConfig().getAlert() + " \nmas a atual é: " + alertCurrent);
+			if ( !ArangiTesterStringUtils.containsWithoutSpaces(getRequestConfig().getAlert(), alertCurrent) ){
+				throw new ArangiTesterException("Mensagem de alerta esperada: " + getRequestConfig().getAlert() + " \nmas a atual é: " + alertCurrent);
 			}
 			LOG.info(LoggerImpl.getFormatedStatusMsg("Verificando alerta: " + getRequestConfig().getAlert(), "OK"));
 		}
