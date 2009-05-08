@@ -25,7 +25,7 @@ import br.ufmg.lcc.arangitester.ui.IRequest.IRequestCommand;
  * @author Lucas Gonçalves
  *
  */
-public class UiClickable extends UiComponent implements ICreate{
+public class UiClickable extends UiComponent implements ICreate, IUiClickable{
 	private Request requestDelegate;
 	
 	public void clickWithOutLogger(){

@@ -183,7 +183,7 @@ public abstract class UiComponent implements IUiComponent{
 		
 	}
 	
-	public void validate(UiButton saveButton, UiDiv divMessage){
+	public void validate(IUiClickable saveButton, IUiComponent divMessage){
 		
 	}
 	
