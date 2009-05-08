@@ -60,5 +60,5 @@ public interface IUiComponent extends Iterable<IUiComponent>{
 	/**
 	 * Force validation on field.
 	 */
-	void validade(UiButton button, UiDiv divMessage);
+	void validate(UiButton button, UiDiv divMessage);
 }
