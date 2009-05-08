@@ -195,7 +195,7 @@ public class CrudPattern extends BasePatterns{
 		while (lccFullComponentIterator.hasNext()) {
 			IUiComponent next = lccFullComponentIterator.next();
 			beforeValidateField(searchPage, next);
-			next.validade(searchPage.getBtnSearch(), searchPage.getMessageArea());
+			next.validate(searchPage.getBtnSearch(), searchPage.getMessageArea());
 			afterValidateField(searchPage, next);
 		}
 	}
@@ -238,7 +238,7 @@ public class CrudPattern extends BasePatterns{
 		while (lccFullComponentIterator.hasNext()) {
 			IUiComponent next = lccFullComponentIterator.next();
 			beforeValidateField(page, next);
-			next.validade(page.getBtnSave(), page.getMessageArea());
+			next.validate(page.getBtnSave(), page.getMessageArea());
 			afterValidateField(page, next);
 		}
 	}

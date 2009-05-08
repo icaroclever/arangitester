@@ -299,7 +299,7 @@ public class UiInputText extends UiComponent {
 	}
 	
 	@Override
-	public void validade(UiButton saveButton, UiDiv divMessage) {
+	public void validate(UiButton saveButton, UiDiv divMessage) {
 		
 		Number numberValidation = getConfig(Number.class);
 		
