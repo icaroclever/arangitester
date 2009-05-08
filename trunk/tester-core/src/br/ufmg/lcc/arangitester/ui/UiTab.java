@@ -25,7 +25,7 @@ public class UiTab extends UiClickable {
 	}
 	
 	@Override
-	public void validate(UiButton saveButton, UiDiv divMessage) {
+	public void validate(IUiClickable saveButton, IUiComponent divMessage) {
 		this.clickWithOutLogger();
 	}
 }

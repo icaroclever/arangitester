@@ -299,23 +299,23 @@ public class UiInputText extends UiComponent {
 	}
 	
 	@Override
-	public void validate(UiButton saveButton, UiDiv divMessage) {
+	public void validate(IUiClickable saveButton, IUiComponent divMessage) {
 		
 		Number numberValidation = getConfig(Number.class);
 		
 		try {
 			if ( numberValidation != null ){
-				validateNumber(saveButton, divMessage, numberValidation);
+				validateNumber((UiButton)saveButton,(UiDiv)divMessage, numberValidation);
 			}
 			
 			Length lenghtValidation = getConfig(Length.class);
 			if ( lenghtValidation != null ){
-				validateLength(saveButton, divMessage, lenghtValidation);
+				validateLength((UiButton)saveButton,(UiDiv) divMessage, lenghtValidation);
 			}
 			
 			Date dateValidation = getConfig(Date.class);
 			if ( dateValidation != null ){
-				validateDateFormat(saveButton, divMessage, dateValidation);
+				validateDateFormat((UiButton)saveButton,(UiDiv) divMessage, dateValidation);
 			}
 		}catch( ArangiTesterException e  ) {
 			log.addError(e.getMessage());
