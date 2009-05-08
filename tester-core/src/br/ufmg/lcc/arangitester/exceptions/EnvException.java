@@ -21,7 +21,7 @@ package br.ufmg.lcc.arangitester.exceptions;
  * @author Lucas Gonçalves
  * 
  */
-public class EnvException extends LccException {
+public class EnvException extends ArangiTesterException {
 	private static final long serialVersionUID = 1L;
 
 	public EnvException(String msg, Throwable e) {

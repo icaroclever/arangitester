@@ -22,7 +22,7 @@ import org.apache.commons.lang.StringUtils;
 import br.ufmg.lcc.arangitester.boot.SeleniumController;
 import br.ufmg.lcc.arangitester.config.ConfigEnv;
 import br.ufmg.lcc.arangitester.config.ConfigFactory;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.log.IResult;
 import br.ufmg.lcc.arangitester.log.Result;
 
@@ -89,7 +89,7 @@ public class Context {
 	public File getScreenshotHtmlDir(){
 		if (!this.getScreenshotDir().exists()) {
             if (!this.getScreenshotDir().mkdirs()) {
-                throw new LccException("Erro ao tentar criar o diretorio " + this.getScreenshotDir().getAbsolutePath());
+                throw new ArangiTesterException("Erro ao tentar criar o diretorio " + this.getScreenshotDir().getAbsolutePath());
             }
         }
 		

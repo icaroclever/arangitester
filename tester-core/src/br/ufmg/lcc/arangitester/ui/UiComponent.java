@@ -23,15 +23,15 @@ import java.util.Iterator;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.annotations.Ui;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ui.iterators.ComponentsIterator;
 import br.ufmg.lcc.arangitester.ui.iterators.FullComponentsIterator;
 import br.ufmg.lcc.arangitester.ui.iterators.FullComponentsIteratorWithFirstRealLineOfTables;
 import br.ufmg.lcc.arangitester.ui.iterators.FullComponentsIteratorWithRealLinesOfTable;
-import br.ufmg.lcc.arangitester.util.LccStringUtils;
-import br.ufmg.lcc.arangitester.util.LccWait;
+import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
+import br.ufmg.lcc.arangitester.util.ArangiTesterWait;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
@@ -112,7 +112,7 @@ public abstract class UiComponent implements IUiComponent{
 			return;
 		}
 		if(!expected)
-			throw new LccException("Elemento "+ getComponentDesc() + " presente, quando NÃO deveria estar.");
+			throw new ArangiTesterException("Elemento "+ getComponentDesc() + " presente, quando NÃO deveria estar.");
 	}
 	
 	@Logger("Verifyng Text on #{componentDesc}: \"#0\"")
@@ -123,7 +123,7 @@ public abstract class UiComponent implements IUiComponent{
 	public void verifyTextInsideWithoutLog(final String expectedText){
 		waitElement(getComponentLocator());
 		final String texto = getSel().getText(getComponentLocator());
-		if(!LccStringUtils.containsWithoutSpaces(texto, expectedText)){
+		if(!ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText)){
 			throw new WrongValueException("\nTexto esperado mas não presente: '" +
 					expectedText +
 					"'\nTexto presente: '" +
@@ -135,8 +135,8 @@ public abstract class UiComponent implements IUiComponent{
 	public void verifyTextNotPresent(final String expectedText){
 		waitElement(getComponentLocator());
 		final String texto = getSel().getText(getComponentLocator());
-		if(LccStringUtils.containsWithoutSpaces(texto, expectedText)){
-			throw new LccException("Texto não deveria estar presente, mas está: " + expectedText);
+		if(ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText)){
+			throw new ArangiTesterException("Texto não deveria estar presente, mas está: " + expectedText);
 		}
 	}
 	
@@ -146,10 +146,10 @@ public abstract class UiComponent implements IUiComponent{
 		}
 		final String locator = getComponentLocator();
 		final String texto = getSel().getText(locator);
-		return new LccWait(DEFAULT_ELEMENT_WAIT_TIME){
+		return new ArangiTesterWait(DEFAULT_ELEMENT_WAIT_TIME){
 			@Override
 			public boolean until() {
-				return LccStringUtils.containsWithoutSpaces(texto, expectedText);
+				return ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText);
 			}
 		}.getCondition();
 	}
@@ -158,7 +158,7 @@ public abstract class UiComponent implements IUiComponent{
 		final String locator = getComponentLocator();
 		final String texto = getSel().getText(locator);
 		
-		return LccStringUtils.containsWithoutSpaces(texto, expectedText);
+		return ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText);
 	}
 
 	

@@ -21,7 +21,7 @@ package br.ufmg.lcc.arangitester.exceptions;
  * @author Lucas Gonçalves
  *
  */
-public class WrongValueException extends LccException {
+public class WrongValueException extends ArangiTesterException {
 
 	private static final long serialVersionUID = 1L;
 	private String actualValue;

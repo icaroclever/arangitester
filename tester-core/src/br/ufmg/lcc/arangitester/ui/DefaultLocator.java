@@ -17,7 +17,7 @@ package br.ufmg.lcc.arangitester.ui;
 
 import org.apache.commons.lang.StringUtils;
 
-import br.ufmg.lcc.arangitester.util.LccStringUtils;
+import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 
 public class DefaultLocator implements IComponentLocator {
 
@@ -28,7 +28,7 @@ public class DefaultLocator implements IComponentLocator {
      */
     @Override
     public String getComponentId(String id, IUiComponent component) {
-        return LccStringUtils.interpolate(id, component);
+        return ArangiTesterStringUtils.interpolate(id, component);
     }
 
     /*
@@ -39,7 +39,7 @@ public class DefaultLocator implements IComponentLocator {
     @Override
     public String getComponentLocator(String componentLocator, IUiComponent component) {
         if (StringUtils.isNotBlank(componentLocator)) {
-            return LccStringUtils.interpolate(componentLocator, component);
+            return ArangiTesterStringUtils.interpolate(componentLocator, component);
         } else if (StringUtils.isNotBlank(component.getComponentId())) {
             return "id=" + component.getComponentId();
         } else if (StringUtils.isNotBlank(component.getComponentName())) {
@@ -55,7 +55,7 @@ public class DefaultLocator implements IComponentLocator {
      */
     @Override
     public String getComponentName(String name, IUiComponent component) {
-        return LccStringUtils.interpolate(name, component);
+        return ArangiTesterStringUtils.interpolate(name, component);
     }
 
     /*

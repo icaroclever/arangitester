@@ -16,7 +16,7 @@
 package br.ufmg.lcc.arangitester.ui;
 
 import br.ufmg.lcc.arangitester.annotations.Logger;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.ICreate;
 
@@ -33,7 +33,7 @@ public class UiCheckBox extends UiClickable implements ICreate{
 			getSel().click(getComponentLocator());
 		}
 		
-		if(!isChecked()) throw new LccException("Erro em check. O checkbox não foi marcado com sucesso");
+		if(!isChecked()) throw new ArangiTesterException("Erro em check. O checkbox não foi marcado com sucesso");
 	}
 	
 	@Logger("Preenchendo #{componentDesc}: uncheck")
@@ -43,7 +43,7 @@ public class UiCheckBox extends UiClickable implements ICreate{
 			getSel().click(getComponentLocator());
 		}
 		
-		if(isChecked()) throw new LccException("Erro em check. O checkbox não foi desmarcado com sucesso");
+		if(isChecked()) throw new ArangiTesterException("Erro em check. O checkbox não foi desmarcado com sucesso");
 	}
 	
 	public boolean isChecked(){

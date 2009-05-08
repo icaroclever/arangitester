@@ -17,7 +17,6 @@ package br.ufmg.lcc.arangitester.arangi.pages;
 
 import br.ufmg.lcc.arangitester.annotations.Page;
 import br.ufmg.lcc.arangitester.annotations.Ui;
-import br.ufmg.lcc.arangitester.arangi.ui.UiArangiPage;
 import br.ufmg.lcc.arangitester.ui.UiButton;
 import br.ufmg.lcc.arangitester.ui.UiInputText;
 
@@ -28,7 +27,7 @@ import br.ufmg.lcc.arangitester.ui.UiInputText;
  *
  */
 @Page(url="/")
-public class ArangiLoginPage extends UiArangiPage {
+public class ArangiLoginPage extends ArangiPage {
 
 	@Ui(desc="Autenticar", locator="id=btnOk")
 	private UiButton btnOk;

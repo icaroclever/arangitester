@@ -35,7 +35,7 @@ package br.ufmg.lcc.arangitester.util;
  * </code></p>
  * 
  */
-public abstract class LccWait {
+public abstract class ArangiTesterWait {
     
 	/** Returns true when it's time to stop waiting */
     public abstract boolean until();
@@ -58,7 +58,7 @@ public abstract class LccWait {
      * @param timeoutInMilliseconds the amount of time to wait before giving up
      * @see #until()
      */
-    public LccWait(long timeoutInMilliseconds) {
+    public ArangiTesterWait(long timeoutInMilliseconds) {
         waitReturning(timeoutInMilliseconds, DEFAULT_INTERVAL);
     }
     

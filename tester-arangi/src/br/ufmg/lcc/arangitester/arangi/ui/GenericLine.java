@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.ui;
+package br.ufmg.lcc.arangitester.arangi.ui;
 
 import java.lang.reflect.Field;
 
@@ -21,7 +21,12 @@ import org.apache.commons.lang.StringUtils;
 
 import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.Ui;
-import br.ufmg.lcc.arangitester.util.LccStringUtils;
+import br.ufmg.lcc.arangitester.ui.IRequest;
+import br.ufmg.lcc.arangitester.ui.IUiComponent;
+import br.ufmg.lcc.arangitester.ui.UiCheckBox;
+import br.ufmg.lcc.arangitester.ui.UiImage;
+import br.ufmg.lcc.arangitester.ui.UiSimpleLine;
+import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 import br.ufmg.lcc.arangitester.util.Refletions;
 
 public class GenericLine extends UiSimpleLine{
@@ -61,18 +66,18 @@ public class GenericLine extends UiSimpleLine{
                 
                 if (StringUtils.isNotBlank(id)) {
                     id = getParent().getComponentId() + ":#{index}:" + uiConfig.id();
-                    ui.setComponentId(LccStringUtils.interpolate(id, this));
+                    ui.setComponentId(ArangiTesterStringUtils.interpolate(id, this));
                 }
                 else if(StringUtils.isNotBlank(name)) {
                     id = getParent().getComponentId() + ":#{index}:" + uiConfig.name();
-                    ui.setComponentId(LccStringUtils.interpolate(name, this));
+                    ui.setComponentId(ArangiTesterStringUtils.interpolate(name, this));
                 } 
                 
                 if (StringUtils.isNotBlank(locator)) {
-                    ui.setComponentLocator(LccStringUtils.interpolate(locator, this));
+                    ui.setComponentLocator(ArangiTesterStringUtils.interpolate(locator, this));
                 }
                 
-                ui.setComponentDesc(LccStringUtils.interpolate(uiConfig.desc(), this));
+                ui.setComponentDesc(ArangiTesterStringUtils.interpolate(uiConfig.desc(), this));
                 
                 
             } catch (Exception e) {

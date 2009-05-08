@@ -21,7 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import br.ufmg.lcc.arangitester.arangi.pages.ArangiTabularPage;
-import br.ufmg.lcc.arangitester.ui.GenericLine;
+import br.ufmg.lcc.arangitester.arangi.ui.GenericLine;
 
 /**
  * 	-Verificar cancelar registro

@@ -40,7 +40,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.Context;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.interceptors.LoggerImpl;
 import br.ufmg.lcc.arangitester.util.StackTraceUtil;
 
@@ -113,7 +113,7 @@ public class Result implements IResult{
 	}
 
 	public String getScreenshotName(Date date, Method method){
-		if(date==null) throw new LccException("Erro ao criar nome para o screenshot. " +
+		if(date==null) throw new ArangiTesterException("Erro ao criar nome para o screenshot. " +
 				"Parametro date não pode ser nulo");
 		
 		String methodName = "";
@@ -122,7 +122,7 @@ public class Result implements IResult{
 	}
 
 	public String getScreenshotName(Date date, String name){
-		if(date==null) throw new LccException("Erro ao criar nome para o screenshot. " +
+		if(date==null) throw new ArangiTesterException("Erro ao criar nome para o screenshot. " +
 		"Parametro date não pode ser nulo");
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy--kkmmss_SSS");
@@ -162,7 +162,7 @@ public class Result implements IResult{
 	}
 	
 	public void takeAndAddScreenshot(final String screenShotName){
-		if(screenShotName==null) throw new LccException("Erro ao tirar screenshot. String screenShotName não pode ser nulo.");
+		if(screenShotName==null) throw new ArangiTesterException("Erro ao tirar screenshot. String screenShotName não pode ser nulo.");
 		
 		takeScreenshot(screenShotName);
 		addScreenShot(screenShotName+".png", "info");

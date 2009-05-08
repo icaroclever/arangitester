@@ -20,7 +20,7 @@ package br.ufmg.lcc.arangitester.exceptions;
  * @author Lucas Gonçalves
  *
  */
-public class TesterException extends LccException {
+public class TesterException extends ArangiTesterException {
 
 	private static final long serialVersionUID = 1L;
 

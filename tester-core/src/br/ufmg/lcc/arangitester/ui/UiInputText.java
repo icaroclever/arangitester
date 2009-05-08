@@ -23,10 +23,10 @@ import br.ufmg.lcc.arangitester.annotations.Length;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.annotations.Number;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
-import br.ufmg.lcc.arangitester.exceptions.LccException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.log.IResult;
-import br.ufmg.lcc.arangitester.util.LccStringUtils;
+import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 
 import com.thoughtworks.selenium.SeleniumException;
 
@@ -180,8 +180,8 @@ public class UiInputText extends UiComponent {
 				log.addInfo("verificando valor máximo para campo numérico.");
 				String maxValue = null;
 				try {
-					maxValue = LccStringUtils.fill('9', maxLength);
-				} catch (LccException e) {
+					maxValue = ArangiTesterStringUtils.fill('9', maxLength);
+				} catch (ArangiTesterException e) {
 					maxValue = String.valueOf(Long.MAX_VALUE);
 				}
 				
@@ -317,7 +317,7 @@ public class UiInputText extends UiComponent {
 			if ( dateValidation != null ){
 				validateDateFormat(saveButton, divMessage, dateValidation);
 			}
-		}catch( LccException e  ) {
+		}catch( ArangiTesterException e  ) {
 			log.addError(e.getMessage());
 		}
 	}
