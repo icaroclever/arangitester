@@ -21,9 +21,10 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import br.ufmg.lcc.arangitester.annotations.Line;
 import br.ufmg.lcc.arangitester.annotations.Logger;
-import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
+import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
@@ -174,13 +175,23 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	
 	public int getRealLinesNumber(){
 		try{
-			waitElement(getComponentId());
+			waitElement(getComponentLocator());
 		}catch (ElementNotExistException e) {
 			throw new ElementNotExistException("Erro. Tabela não encontrada. Desc: "+ getComponentDesc()+". Id:  "+ getComponentId());
 		}
 		
-		String xpath = "//"+super.locator.getHtmlNameSpace()+"table[@id='" + getComponentId() +"']/"+super.locator.getHtmlNameSpace()+"tbody/"+super.locator.getHtmlNameSpace()+"tr";
+		String xpath = getComponentLocator() + "/"+super.locator.getHtmlNameSpace()+"tbody/"+super.locator.getHtmlNameSpace()+"tr";
+		if (xpath.indexOf("xpath=") >= 0) {
+		    xpath = xpath.substring(6);
+		}
 		Number eval = getSel().getXpathCount(xpath);
+		Line lineAnnotation = getType().getAnnotation(Line.class);
+		if (lineAnnotation != null) {
+		    eval = Math.max(eval.intValue() - lineAnnotation.beginIndex(), 0);
+		    if (lineAnnotation.footer()) {
+		        eval = Math.max(eval.intValue() - 1, 0);
+		    }
+		}
 		return eval.intValue();
 	}
 	
