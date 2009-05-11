@@ -58,6 +58,7 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
                 el.addVariable("tableId", getParent().getComponentId());
                 el.addVariable("tableName", getParent().getComponentName());
                 el.addVariable("index", index);
+                el.addVariable("htmlNameSpace", super.locator.getHtmlNameSpace());
 
                 if (StringUtils.isNotBlank(id)) {
                     ui.setComponentId((String) el.resolveElExpression(id));
@@ -96,6 +97,7 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
         el.addVariable("tableId", getParent().getComponentId());
         el.addVariable("tableName", getParent().getComponentName());
         el.addVariable("index", index);
+        el.addVariable("htmlNameSpace", super.locator.getHtmlNameSpace());
         Line lineAnnotation = this.getClass().getSuperclass().getAnnotation(Line.class);
         if (lineAnnotation != null) {
             el.addVariable("beginIndex", lineAnnotation.beginIndex());
