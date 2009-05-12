@@ -66,5 +66,10 @@ public class UiRadio extends UiComponent{
 	public void verifyPreviewslyAction() {
 		verifySelect((String)getPreviewslyActionValue());
 	}
+
+	@Override
+	public String getComponentTag() {
+		return "input";
+	}
 	
 }

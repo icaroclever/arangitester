@@ -216,4 +216,9 @@ public class UiPage  extends UiComponent implements IUiComposite{
 	public String getBrowserUrl(){
 		return getSel().getLocation();
 	}
+	@Override
+	public String getComponentTag() {
+		// TODO Auto-generated method stub
+		return "html";
+	}
 }

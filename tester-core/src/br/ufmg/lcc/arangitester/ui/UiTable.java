@@ -25,7 +25,6 @@ import br.ufmg.lcc.arangitester.annotations.Line;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
-import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.ui.iterators.RealLinesIterator;
@@ -114,36 +113,19 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	}
 	
 	/**
-	 * Gets a xPath locator using the table's id or name .
-	 * @return Xpath Locator for table.
-	 */
-	public String getTableLocatorInPath() {
-        if (StringUtils.isNotBlank(super.getComponentId())) {
-            return String.format("xpath=//%stable[@id='%s']", super.locator.getHtmlNameSpace(), super.getComponentId());
-        } else if (StringUtils.isNotBlank(super.getComponentName())) {
-            return String.format("xpath=//%stable[@name='%s']", super.locator.getHtmlNameSpace(), super.getComponentName());
-        } else {
-            if (!super.getComponentLocator().startsWith("xpath=")) {
-                throw new TesterException("Locator for table must be a xpath locator. If possible use id or name attribute on annotation.");
-            }
-            return super.getComponentLocator();
-        }
-    }
-	
-	/**
 	 * 
 	 * @param lineNumber
 	 * @return
 	 */
 	public String getLineContent(int lineNumber){
-	    String xpath = String.format("%s/%stbody/%str[%s]", this.getTableLocatorInPath(), super.locator.getHtmlNameSpace(), super.locator.getHtmlNameSpace(), lineNumber);
-		return getSel().getText(xpath);
+	    String xpath = String.format("%s/%stbody/%str[%s]", this.getXPathLocator(), super.locator.getHtmlNameSpace(), super.locator.getHtmlNameSpace(), lineNumber);
+		return getSel().getText("xpath=/"+xpath);
 	}
 	
 	@Logger("Clicking at line [#0]")
 	public void clickAtLine(int lineNumber){
-	    String xpath = String.format("%s/%stbody/%str[%s]", this.getTableLocatorInPath(), super.locator.getHtmlNameSpace(), super.locator.getHtmlNameSpace(), lineNumber);
-		getSel().click(xpath);
+	    String xpath = String.format("%s/%stbody/%str[%s]", this.getXPathLocator(), super.locator.getHtmlNameSpace(), super.locator.getHtmlNameSpace(), lineNumber);
+		getSel().click("xpath=/"+xpath);
 	}
 	
 	@Override
@@ -182,7 +164,7 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 			throw new ElementNotExistException("Table has not found.\nDescription: "+ getComponentDesc()+".\nId:  "+ getComponentId());
 		}
 		
-		String xpath = String.format("/%1$s/%2$stbody/%2$str", this.getTableLocatorInPath(),super.locator.getHtmlNameSpace()); // Eg.: xpath = "//table[@id='ID'/tbody/tr]";
+		String xpath = String.format("/%1$s/%2$stbody/%2$str", this.getXPathLocator(),super.locator.getHtmlNameSpace()); // Eg.: xpath = "//table[@id='ID'/tbody/tr]";
 				
 		Number eval = getSel().getXpathCount(xpath);
 		
@@ -228,5 +210,10 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 
 	public List<T> getLines() {
 		return lines;
+	}
+
+	@Override
+	public String getComponentTag() {
+		return "table";
 	}
 }

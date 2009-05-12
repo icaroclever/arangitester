@@ -136,4 +136,10 @@ public class UiSelect extends UiComponent implements ICreate{
 	public RequestConfigImp getRequestConfig() {
 		return requestDelegate.getRequestConfig();
 	}
+
+	@Override
+	public String getComponentTag() {
+		// TODO Auto-generated method stub
+		return "select";
+	}
 }

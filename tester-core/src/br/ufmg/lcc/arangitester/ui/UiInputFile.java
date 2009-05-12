@@ -50,4 +50,10 @@ public class UiInputFile extends UiComponent {
 	public void attachFile(String file) {
 		this.attachFile(new File(file));
 	}
+
+	@Override
+	public String getComponentTag() {
+		// TODO Auto-generated method stub
+		return "input";
+	}
 }
