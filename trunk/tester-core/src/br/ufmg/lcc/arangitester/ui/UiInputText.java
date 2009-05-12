@@ -321,4 +321,10 @@ public class UiInputText extends UiComponent {
 			log.addError(e.getMessage());
 		}
 	}
+
+	@Override
+	public String getComponentTag() {
+		// TODO Auto-generated method stub
+		return "input";
+	}
 }

@@ -23,4 +23,10 @@ public class UiCol extends UiComponent {
 	public void verifyText(String text){
 		getSel().getText(getComponentLocator());
 	}
+
+	@Override
+	public String getComponentTag() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

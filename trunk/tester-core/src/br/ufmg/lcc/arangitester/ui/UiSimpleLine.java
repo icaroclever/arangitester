@@ -133,4 +133,9 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
         return index;
     }
 
+	@Override
+	public String getComponentTag() {
+		return "tr";
+	}
+
 }

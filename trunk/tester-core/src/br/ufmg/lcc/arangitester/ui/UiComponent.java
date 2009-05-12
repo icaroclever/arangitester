@@ -20,6 +20,8 @@ import static br.ufmg.lcc.arangitester.Context.getInstance;
 import java.lang.annotation.Annotation;
 import java.util.Iterator;
 
+import org.apache.commons.lang.StringUtils;
+
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.annotations.Ui;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
@@ -59,6 +61,7 @@ public abstract class UiComponent implements IUiComponent{
 	private String componentDesc;
 	private String componentId;
 	private String componentName;
+	private String componentIndex;
 
 	private Object previewslyActionValue;
 	
@@ -302,6 +305,16 @@ public abstract class UiComponent implements IUiComponent{
 		this.componentName = componentName;
 	}
 	
+	public String getComponentIndex() {
+		return componentIndex;
+	}
+
+	public void setComponentIndex(String componentIndex) {
+		this.componentIndex = componentIndex;
+	}
+
+	public abstract String getComponentTag();
+
 	public static Long getDEFAULT_ELEMENT_WAIT_TIME() {
 		return DEFAULT_ELEMENT_WAIT_TIME;
 	}
@@ -309,4 +322,25 @@ public abstract class UiComponent implements IUiComponent{
 	public static void setDEFAULT_ELEMENT_WAIT_TIME(Long default_element_wait_time) {
 		DEFAULT_ELEMENT_WAIT_TIME = default_element_wait_time;
 	}
+	
+	/**
+	 * Gets a xPath locator using the component's id, name or index .
+	 * @return Xpath Locator.
+	 */
+	public String getXPathLocator() {
+		
+		if(!StringUtils.isNotBlank(this.getComponentTag()))
+			throw new TesterException("Component tag has not found.");
+		
+        if (StringUtils.isNotBlank(this.getComponentId()))
+            return String.format("/%s%s[@id='%s']", this.locator.getHtmlNameSpace(),this.getComponentTag(),this.getComponentId());
+        else if (StringUtils.isNotBlank(this.getComponentName())) 
+            return String.format("/%s%s[@name='%s']", this.locator.getHtmlNameSpace(),this.getComponentTag(),this.getComponentName());
+        else if (StringUtils.isNotBlank(this.getComponentIndex()))
+        	return String.format("/%s%s[%s]", this.locator.getHtmlNameSpace(),this.getComponentTag(),this.getComponentIndex());
+        else 
+        {
+            return String.format("/%s%s", this.locator.getHtmlNameSpace(),this.getComponentTag());
+        }
+    }
 }

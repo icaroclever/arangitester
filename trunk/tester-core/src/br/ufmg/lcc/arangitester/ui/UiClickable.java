@@ -59,4 +59,10 @@ public class UiClickable extends UiComponent implements ICreate, IUiClickable{
 		requestDelegate = new Request(getConfig(RequestConfig.class));
 	}
 
+	@Override
+	public String getComponentTag() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
