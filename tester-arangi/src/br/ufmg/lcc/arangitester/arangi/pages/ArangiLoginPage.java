@@ -15,8 +15,8 @@
  */
 package br.ufmg.lcc.arangitester.arangi.pages;
 
-import br.ufmg.lcc.arangitester.annotations.Page;
 import br.ufmg.lcc.arangitester.annotations.Ui;
+import br.ufmg.lcc.arangitester.arangi.annotations.Page;
 import br.ufmg.lcc.arangitester.ui.UiButton;
 import br.ufmg.lcc.arangitester.ui.UiInputText;
 

@@ -56,6 +56,7 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
                 ElHelper el = new ElHelper();
                 el.addVariable("tableXpath", getParent().getComponentLocator());
                 el.addVariable("tableId", getParent().getComponentId());
+                el.addVariable("tableIndex", getParent().getComponentIndex());
                 el.addVariable("tableName", getParent().getComponentName());
                 el.addVariable("index", index);
                 el.addVariable("htmlNameSpace", super.locator.getHtmlNameSpace());
@@ -96,6 +97,7 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
         el.addVariable("tableXpath", getParent().getComponentLocator());
         el.addVariable("tableId", getParent().getComponentId());
         el.addVariable("tableName", getParent().getComponentName());
+        el.addVariable("tableIndex", getParent().getComponentIndex());
         el.addVariable("index", index);
         el.addVariable("htmlNameSpace", super.locator.getHtmlNameSpace());
         Line lineAnnotation = this.getClass().getSuperclass().getAnnotation(Line.class);

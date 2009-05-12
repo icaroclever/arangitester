@@ -21,7 +21,6 @@ public class ArangiTesterException extends RuntimeException {
 
 	public ArangiTesterException(String msg) {
 		super(msg);
-		//LccContext.getInstance().getSeleniumController().getSeleniumClient().captureScreenshot("C:\\screen.png");
 	}
 
 	public ArangiTesterException(String msg, Throwable e) {

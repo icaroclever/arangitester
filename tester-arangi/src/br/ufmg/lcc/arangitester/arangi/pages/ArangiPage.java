@@ -22,6 +22,8 @@ import java.util.List;
 
 import br.ufmg.lcc.arangitester.Context;
 import br.ufmg.lcc.arangitester.annotations.Logger;
+import br.ufmg.lcc.arangitester.arangi.annotations.Page;
+import br.ufmg.lcc.arangitester.arangi.ui.Button;
 import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.Ui;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
@@ -30,7 +32,6 @@ import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.log.IResult;
-import br.ufmg.lcc.arangitester.ui.Button;
 import br.ufmg.lcc.arangitester.ui.IRequest;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 import br.ufmg.lcc.arangitester.ui.UiButton;
@@ -91,6 +92,12 @@ public class ArangiPage extends UiPage{
 		invoke(getPageUrl() + "?event=edit&id=" + id);
 	}
 
+	/**
+	 * Invoke url setted on @Page on the current class.
+	 */
+	public void invoke() {
+		invoke(getPageUrl());
+	}
 
 	/**
 	 * Invoke url to VIEW a registry already in database based on url setted on @Page on the current class.
@@ -375,4 +382,24 @@ public class ArangiPage extends UiPage{
 	public void setBtnPrint(UiButton btnPrint) {
 		this.btnPrint = btnPrint;
 	}
+	
+	/**
+	 * Return Page annotated on subclass of UiPage
+	 * @return null if not exist
+	 */
+	public Page getConfig(){
+		return this.getClass().getSuperclass().getAnnotation(Page.class);
+	}
+	
+	/**
+	 * Returns the url of the page based on annotatin and the context setted
+	 * @return Url based on the annotation setted on page
+	 */
+	public String getPageUrl() {
+		String url = getConfig().url();
+		if (!url.startsWith("/"))
+			url = "/" + url;
+		return Context.getInstance().getConfig().getPath() + url;
+	}
+
 }

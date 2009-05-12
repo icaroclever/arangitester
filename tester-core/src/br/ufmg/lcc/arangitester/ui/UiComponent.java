@@ -53,7 +53,7 @@ public abstract class UiComponent implements IUiComponent{
 	/**
 	 * In mileseconds
 	 */
-	public static Long DEFAULT_ELEMENT_WAIT_TIME = 10000L;
+	public static Long DEFAULT_ELEMENT_WAIT_TIME = 10000L;// 10 seconds
 	
 	private Annotation[] configs;
 	
@@ -90,6 +90,7 @@ public abstract class UiComponent implements IUiComponent{
 		setComponentDesc(basicConfig.desc());
 		setComponentId(basicConfig.id());
 		setComponentName(basicConfig.name());
+		setComponentIndex(basicConfig.index());
 	}
 
 	/**
