@@ -31,6 +31,7 @@ import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.ui.iterators.RealLinesIterator;
 
 public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<T>{
+	
 	private Class<T> type;
 	
 	private List<T> lines = new ArrayList<T>();
@@ -113,7 +114,7 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	}
 	
 	/**
-	 * Trasfome Component id or name in a xpath locator.
+	 * Gets a xPath locator using the table's id or name .
 	 * @return Xpath Locator for table.
 	 */
 	public String getTableLocatorInPath() {
@@ -174,17 +175,17 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	}
 	
 	public int getRealLinesNumber(){
+		
 		try{
 			waitElement(getComponentLocator());
 		}catch (ElementNotExistException e) {
-			throw new ElementNotExistException("Erro. Tabela não encontrada. Desc: "+ getComponentDesc()+". Id:  "+ getComponentId());
+			throw new ElementNotExistException("Table has not found.\nDescription: "+ getComponentDesc()+".\nId:  "+ getComponentId());
 		}
 		
-		String xpath = getComponentLocator() + "/"+super.locator.getHtmlNameSpace()+"tbody/"+super.locator.getHtmlNameSpace()+"tr";
-		if (xpath.indexOf("xpath=") >= 0) {
-		    xpath = xpath.substring(6);
-		}
+		String xpath = String.format("/%1$s/%2$stbody/%2$str", this.getTableLocatorInPath(),super.locator.getHtmlNameSpace()); // Eg.: xpath = "//table[@id='ID'/tbody/tr]";
+				
 		Number eval = getSel().getXpathCount(xpath);
+		
 		Line lineAnnotation = getType().getAnnotation(Line.class);
 		if (lineAnnotation != null) {
 		    eval = Math.max(eval.intValue() - lineAnnotation.beginIndex(), 0);
