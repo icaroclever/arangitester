@@ -25,10 +25,10 @@ public class ElementNotExistException extends ArangiTesterException{
 	private static final long serialVersionUID = 1L;
 
 	public ElementNotExistException(String msg){
-		super(msg);
+		super("ERROR: "+msg);
 	}
 	
 	public ElementNotExistException(String msg, Throwable e){
-		super(msg, e);
+		super("ERROR: "+msg, e);
 	}
 }
