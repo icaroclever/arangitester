@@ -45,6 +45,9 @@ public interface IUiComponent extends Iterable<IUiComponent>{
 	void setParent(IUiComponent parent);
 	IUiComponent getParent();
 	
+	String getComponentIndex();
+	void setComponentIndex(String id);
+	
 	/**
 	 * Verify value in the component based on preview action executed.
 	 * Components that implement this method must verify if previews action is not null

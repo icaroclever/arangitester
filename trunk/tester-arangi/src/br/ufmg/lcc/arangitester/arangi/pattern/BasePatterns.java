@@ -238,7 +238,8 @@ public abstract class BasePatterns implements ITestCase{
 	
 }
 
-class FieldImpl implements Field{
+
+class FieldImpl implements Field {
 	private String name;
 	private String addValue;
 	private String cancelValue;

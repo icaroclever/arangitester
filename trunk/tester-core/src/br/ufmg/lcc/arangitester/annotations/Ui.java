@@ -36,4 +36,12 @@ public @interface Ui{
 	String locator() default "";
 	
 	String name() default "";
+	
+	
+	/**
+	 * Index of element. If the id or name of the element in html page has not been informed,
+	 * the index of the object page can be used. Eg.: /table[1] is the first table found in the 
+	 * page. 
+	 */
+	String index() default "";
 }
