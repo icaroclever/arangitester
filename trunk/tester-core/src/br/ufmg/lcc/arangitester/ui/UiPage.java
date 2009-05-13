@@ -36,9 +36,7 @@ import com.thoughtworks.selenium.Wait.WaitTimedOutException;
 
 public class UiPage  extends UiComponent implements IUiComposite{
 	
-	/*	In mileseconds	*/
-	public final static String DEFAULT_PAGE_WAIT_TIME = "50000";// 50 seconds
-	
+	public static String DEFAULT_PAGE_WAIT_TIME = "50000";// In miliseconds: 50000 = 50 seconds
 
 	/**
 	 * Invoke a url. Url must be Complete. Ex.: http://localhost:8080/app/test.faces
