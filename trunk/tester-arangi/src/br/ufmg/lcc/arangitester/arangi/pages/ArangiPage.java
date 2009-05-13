@@ -27,10 +27,8 @@ import br.ufmg.lcc.arangitester.arangi.ui.Button;
 import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.Ui;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
-import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
-import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.log.IResult;
 import br.ufmg.lcc.arangitester.ui.IRequest;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
@@ -266,7 +264,8 @@ public class ArangiPage extends UiPage{
 	 * Get the title of the page.
 	 * @return The title, like Pesquisa de Processamento, or Repositorio de Dados, etc. 
 	 */
-	public String getTitle(){
+	@Override
+	public String getPageTitle(){
 		String title = "";
 		String xpath = String.format("xpath=//%sspan[@class='title' or @class='titulo']", super.locator.getHtmlNameSpace());
 		
@@ -278,25 +277,6 @@ public class ArangiPage extends UiPage{
 		}
 		
 		return title;
-	}
-	
-	
-	/**
-	 * Verifyes the Arangi title of the page.
-	 * A blank String is accepted as param too, and will be compared to the
-	 * title of the page.
-	 * A null param is not accepted, and a exception will be thrown. 
-	 * @param expectedTitle
-	 */
-	@Logger("Verifying title: #0")
-	public void verifyTitle(String expectedTitle){
-		if(expectedTitle==null) throw new EnvException("Parametro expectedTitle não pode ser nulo!");
-		
-		String title = getTitle();
-		if(!expectedTitle.equals(title))
-			throw new WrongValueException("O título da página não corresponde ao esperado." +
-					"\nTítulo da página: " + title +
-					"\nTítulo esperado: " + expectedTitle);
 	}
 	
 	/**
@@ -390,6 +370,8 @@ public class ArangiPage extends UiPage{
 	public Page getConfig(){
 		return this.getClass().getSuperclass().getAnnotation(Page.class);
 	}
+	
+	
 	
 	/**
 	 * Returns the url of the page based on annotatin and the context setted

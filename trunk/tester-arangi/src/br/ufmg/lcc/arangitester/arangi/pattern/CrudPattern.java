@@ -144,7 +144,7 @@ public class CrudPattern extends BasePatterns{
 				afterCallEditPage(controller);
 				controller.verifyUrl();
 				title = controller.getConfig().includeTitle();
-				if(!StringUtils.isBlank(title)) controller.verifyTitle(title);
+				if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
 				
 				if(controller.existSearchButton(Button.CANCEL))
 				{
@@ -153,7 +153,7 @@ public class CrudPattern extends BasePatterns{
 					controller = searchPage; // Change of page
 					controller.verifyUrl();
 					title = controller.getConfig().searchTitle();
-					if(!StringUtils.isBlank(title)) controller.verifyTitle(title);
+					if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
 				}
 			}
 		}
@@ -164,7 +164,7 @@ public class CrudPattern extends BasePatterns{
 			afterCallEditPage(controller);
 			controller.verifyUrl();
 			title = controller.getConfig().includeTitle();
-			if(!StringUtils.isBlank(title)) controller.verifyTitle(title);
+			if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
 		}
 	}
 	
@@ -188,7 +188,7 @@ public class CrudPattern extends BasePatterns{
 		
 		// Valida o título da página de pesquisa
 		if(StringUtils.isNotBlank(searchPage.getConfig().searchTitle())){
-			searchPage.verifyTitle(searchPage.getConfig().searchTitle());
+			searchPage.verifyPageTitle(searchPage.getConfig().searchTitle());
 		}
 		
 		Iterator<IUiComponent> lccFullComponentIterator = searchPage.singleWithClosedTableItemsIterator();
@@ -232,7 +232,7 @@ public class CrudPattern extends BasePatterns{
 		
 		// Valida o título da página de edição
 		if(StringUtils.isNotBlank(page.getConfig().includeTitle())){
-			page.verifyTitle(page.getConfig().includeTitle());
+			page.verifyPageTitle(page.getConfig().includeTitle());
 		}
 		Iterator<IUiComponent> lccFullComponentIterator = page.singleWithClosedTableItemsIterator();
 		while (lccFullComponentIterator.hasNext()) {

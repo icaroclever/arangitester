@@ -24,6 +24,7 @@ import org.apache.commons.lang.StringUtils;
 
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
+import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.InvokeException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.util.Refletions;
@@ -34,23 +35,36 @@ import com.thoughtworks.selenium.Wait;
 import com.thoughtworks.selenium.Wait.WaitTimedOutException;
 
 public class UiPage  extends UiComponent implements IUiComposite{
-	/**
-	 * In mileseconds
-	 */
-	public static String DEFAULT_PAGE_WAIT_TIME = "50000";// 50 seconds
+	
+	/*	In mileseconds	*/
+	public final static String DEFAULT_PAGE_WAIT_TIME = "50000";// 50 seconds
 	
 
 	/**
 	 * Invoke a url. Url must be Complete. Ex.: http://localhost:8080/app/test.faces
 	 * To get http://localhost:8080/app from server.properties use LccContext.getInstance().getConfig().getPath()
+	 * @param url		URL requested
 	 */
 	@Logger("Invoking Url: #0")
 	public void invoke(String url){
+		invoke(url,null);
+	}
+	
+	/**
+	 * Invoke a url. Url must be Complete. Ex.: http://localhost:8080/app/test.faces
+	 * To get http://localhost:8080/app from server.properties use LccContext.getInstance().getConfig().getPath()
+	 * @param url		URL requested
+	 * @param title		Expected page title
+	 */
+	@Logger("Invoking Url: #0")
+	public void invoke(String url,String title){
 		getSel().open(url);
 		getSel().waitForPageToLoad(DEFAULT_PAGE_WAIT_TIME);
 
 		try{
 			verifyUrl(url);
+			if(title != null)
+				verifyPageTitle(title);
 		}catch (Exception e) {
 			throw new InvokeException("URL cannot be loaded.");
 		}
@@ -58,6 +72,7 @@ public class UiPage  extends UiComponent implements IUiComposite{
 	
 	/**
 	 * Return a instance of interface Selenium. It is the only way for interaction with the browser.
+	 * @return Selenium instance
 	 */
 	protected static Selenium getSel() {
 		return getInstance().getSeleniumController().getSeleniumClient();
@@ -72,6 +87,11 @@ public class UiPage  extends UiComponent implements IUiComposite{
 		getSel().selectWindow(null);
 	}
 	
+	
+	/**
+	 * Verify if the loaded page URL is the same of the requested URL
+	 * @param expectedUrl	URL requested
+	 */
 	@Logger("Verifying url: \"#0\" ")
 	public void verifyUrl(String expectedUrl){
 		String pageUrl = this.getBrowserUrl();
@@ -83,7 +103,10 @@ public class UiPage  extends UiComponent implements IUiComposite{
 		}
 	}
 	
-	
+	/**
+	 * Verify if the showed page alert is the expected alert.
+	 * @param text	Expected alert text
+	 */
 	@Logger("Verifying alert: \"#0\" ")
 	public void verifyAlert(String text){
 		String alert = getSel().getAlert();
@@ -174,9 +197,35 @@ public class UiPage  extends UiComponent implements IUiComposite{
 	
 	/**
 	 * Returns the url of the page. Based on Selenium method getUrl().
+	 * @return Page Location
 	 */
 	public String getBrowserUrl(){
 		return getSel().getLocation();
+	}
+	
+	/**
+	 * This method return the title of the current page which was loaded by Selenium
+	 * @return Page Title
+	 */
+	public String getPageTitle()
+	{
+		return getSel().getTitle();
+	}
+	
+	/**
+	 * Verify the title of the page.
+	 * A blank String is accepted as param too, and will be compared to the
+	 * title of the page.
+	 * A null param is not accepted, and a exception will be thrown. 
+	 * @param title		expected title
+	 */
+	@Logger("Verifying title: #0")
+	public void verifyPageTitle(String title)
+	{
+		if(title==null) throw new EnvException("Parametro expectedTitle não pode ser nulo!");
+		
+		if(!getPageTitle().equalsIgnoreCase(title))
+			throw new TesterException(String.format("Current title '%s' is unexpected. The expected title is '%s'",getPageTitle(),title));
 	}
 	
 	@Override
