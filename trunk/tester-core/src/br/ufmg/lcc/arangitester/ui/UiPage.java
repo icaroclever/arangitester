@@ -45,7 +45,7 @@ public abstract class UiPage  extends UiComponent implements IUiComposite{
 	 */
 	@Logger("Invoking Url: #0")
 	public void invoke(String url){
-		invoke(url,null);
+		invoke(url,"");
 	}
 	
 	/**
@@ -54,14 +54,18 @@ public abstract class UiPage  extends UiComponent implements IUiComposite{
 	 * @param url		URL requested
 	 * @param title		Expected page title
 	 */
-	@Logger("Invoking Url: #0")
+	@Logger("Invoking Url: #0 \tTitle: #1")
 	public void invoke(String url,String title){
+		
+		if(title == null)
+			throw new InvokeException("Title parameter cannot be null.");
+		
 		getSel().open(url);
 		getSel().waitForPageToLoad(DEFAULT_PAGE_WAIT_TIME);
 
 		try{
 			verifyUrl(url);
-			if(title != null || !title.equals(""))
+			if(!title.equals(""))
 				verifyPageTitle(title);
 		}catch (Exception e) {
 			throw new InvokeException("URL cannot be loaded.");
