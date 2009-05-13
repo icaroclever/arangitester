@@ -26,6 +26,7 @@ import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.log.IResult;
+import br.ufmg.lcc.arangitester.ui.actions.IUiClickable;
 import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 
 import com.thoughtworks.selenium.SeleniumException;

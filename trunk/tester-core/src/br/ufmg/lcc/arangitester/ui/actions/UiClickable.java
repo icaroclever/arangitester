@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.ui;
+package br.ufmg.lcc.arangitester.ui.actions;
 
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.RequestConfigImp;
 import br.ufmg.lcc.arangitester.ioc.ICreate;
-import br.ufmg.lcc.arangitester.ui.IRequest.IRequestCommand;
+import br.ufmg.lcc.arangitester.ui.UiComponent;
+import br.ufmg.lcc.arangitester.ui.actions.IRequest.IRequestCommand;
 /**
  * Permit a common action click().
  * @author Lucas Gonçalves

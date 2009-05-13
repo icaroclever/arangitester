@@ -23,6 +23,7 @@ import br.ufmg.lcc.arangitester.annotations.TabDef;
 import br.ufmg.lcc.arangitester.annotations.TabDefs;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.ioc.ICreate;
+import br.ufmg.lcc.arangitester.ui.actions.UiClickable;
 
 public class UiTabs extends UiClickable implements ICreate{
 	private List<String> ids = new ArrayList<String>();

@@ -17,6 +17,8 @@ package br.ufmg.lcc.arangitester.ui;
 
 import java.lang.annotation.Annotation;
 
+import br.ufmg.lcc.arangitester.ui.actions.IUiClickable;
+
 /**
  * Components that represent Tags on HTML. Like inputtext, div, select...
  * It use Composite Pattern, permiting create components bigger then one tag, like tables

@@ -32,9 +32,9 @@ import br.ufmg.lcc.arangitester.arangi.ui.Button;
 import br.ufmg.lcc.arangitester.arangi.ui.GenericLine;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
-import br.ufmg.lcc.arangitester.ui.IRequest;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 import br.ufmg.lcc.arangitester.ui.UiInputText;
+import br.ufmg.lcc.arangitester.ui.actions.IRequest;
 
 /**
  * Contains many commons test methods for Arangi pattern CRUD, Master Detail and Search.

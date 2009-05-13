@@ -28,6 +28,7 @@ import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
+import br.ufmg.lcc.arangitester.ui.actions.IUiClickable;
 import br.ufmg.lcc.arangitester.ui.iterators.ComponentsIterator;
 import br.ufmg.lcc.arangitester.ui.iterators.FullComponentsIterator;
 import br.ufmg.lcc.arangitester.ui.iterators.FullComponentsIteratorWithFirstRealLineOfTables;

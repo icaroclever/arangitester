@@ -32,15 +32,15 @@ import br.ufmg.lcc.arangitester.arangi.pages.ArangiSearchPage;
 import br.ufmg.lcc.arangitester.arangi.pages.NullSearchPage;
 import br.ufmg.lcc.arangitester.el.CompositeResolver;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
-import br.ufmg.lcc.arangitester.ui.IRequest;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 import br.ufmg.lcc.arangitester.ui.UiButton;
 import br.ufmg.lcc.arangitester.ui.UiCheckBox;
-import br.ufmg.lcc.arangitester.ui.UiClickable;
 import br.ufmg.lcc.arangitester.ui.UiInputText;
 import br.ufmg.lcc.arangitester.ui.UiRadio;
 import br.ufmg.lcc.arangitester.ui.UiSelect;
 import br.ufmg.lcc.arangitester.ui.UiTab;
+import br.ufmg.lcc.arangitester.ui.actions.IRequest;
+import br.ufmg.lcc.arangitester.ui.actions.UiClickable;
 
 import com.thoughtworks.selenium.Selenium;
 

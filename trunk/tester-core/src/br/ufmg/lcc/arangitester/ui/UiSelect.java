@@ -26,7 +26,8 @@ import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.ICreate;
-import br.ufmg.lcc.arangitester.ui.IRequest.IRequestCommand;
+import br.ufmg.lcc.arangitester.ui.actions.Request;
+import br.ufmg.lcc.arangitester.ui.actions.IRequest.IRequestCommand;
 
 import com.thoughtworks.selenium.Wait;
 import com.thoughtworks.selenium.Wait.WaitTimedOutException;

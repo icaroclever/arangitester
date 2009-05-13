@@ -30,11 +30,11 @@ import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.log.IResult;
-import br.ufmg.lcc.arangitester.ui.IRequest;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 import br.ufmg.lcc.arangitester.ui.UiButton;
 import br.ufmg.lcc.arangitester.ui.UiDiv;
 import br.ufmg.lcc.arangitester.ui.UiPage;
+import br.ufmg.lcc.arangitester.ui.actions.IRequest;
 
 import com.thoughtworks.selenium.SeleniumException;
 
