@@ -180,7 +180,7 @@ public class UiPage  extends UiComponent implements IUiComposite{
 	}
 	
 	@Override
-	public String getComponentTag() {
+	public final String getComponentTag() {
 		return "html";
 	}
 }
