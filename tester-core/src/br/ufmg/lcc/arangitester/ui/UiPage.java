@@ -34,7 +34,7 @@ import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.Wait;
 import com.thoughtworks.selenium.Wait.WaitTimedOutException;
 
-public class UiPage  extends UiComponent implements IUiComposite{
+public abstract class UiPage  extends UiComponent implements IUiComposite{
 	
 	public static String DEFAULT_PAGE_WAIT_TIME = "50000";// In miliseconds: 50000 = 50 seconds
 
@@ -61,7 +61,7 @@ public class UiPage  extends UiComponent implements IUiComposite{
 
 		try{
 			verifyUrl(url);
-			if(title != null)
+			if(title != null || !title.equals(""))
 				verifyPageTitle(title);
 		}catch (Exception e) {
 			throw new InvokeException("URL cannot be loaded.");
