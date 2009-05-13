@@ -47,13 +47,10 @@ import com.thoughtworks.selenium.Wait;
  */
 public abstract class UiComponent implements IUiComponent{
 	
+	public static Long DEFAULT_ELEMENT_WAIT_TIME = 10000L;// Number in mileseconds: 10000L = 10 seconds
+	
 	private IUiComponent parent;
 	protected IComponentLocator locator = LocatorFactory.getLocator();
-	
-	/**
-	 * In mileseconds
-	 */
-	public static Long DEFAULT_ELEMENT_WAIT_TIME = 10000L;// 10 seconds
 	
 	private Annotation[] configs;
 	
@@ -65,14 +62,6 @@ public abstract class UiComponent implements IUiComponent{
 
 	private Object previewslyActionValue;
 	
-	public void setParent(IUiComponent parent){
-		this.parent = parent;
-	}
-	
-	public IUiComponent getParent(){
-		return parent;
-	}
-
 	@SuppressWarnings("unchecked")
 	public <T extends Annotation> T getConfig(Class<T> annotation){
 		for ( Annotation config: configs ){
@@ -165,6 +154,7 @@ public abstract class UiComponent implements IUiComponent{
 		return ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText);
 	}
 
+	
 	
 	@Override
 	public Iterator<IUiComponent> iterator() {
@@ -265,6 +255,14 @@ public abstract class UiComponent implements IUiComponent{
 	protected static Selenium getSel() {
 		return getInstance().getSeleniumController().getSeleniumClient();
 	}
+
+	public void setParent(IUiComponent parent){
+		this.parent = parent;
+	}
+	
+	public IUiComponent getParent(){
+		return parent;
+	}
 	
 	public String getComponentDesc() {
 		return componentDesc;
@@ -314,6 +312,10 @@ public abstract class UiComponent implements IUiComponent{
 		this.componentIndex = componentIndex;
 	}
 
+	/**
+	 * Component HTML tag representation
+	 * @return HTML tag representation 
+	 */
 	public abstract String getComponentTag();
 
 	public static Long getDEFAULT_ELEMENT_WAIT_TIME() {
