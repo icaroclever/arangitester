@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.ufmg.lcc.arangitester.ui;
+package br.ufmg.lcc.arangitester.ui.actions;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -23,6 +23,7 @@ import br.ufmg.lcc.arangitester.annotations.RequestConfigImp;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.interceptors.LoggerImpl;
+import br.ufmg.lcc.arangitester.ui.UiPage;
 import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 import br.ufmg.lcc.arangitester.util.SeleniumScripts;
 

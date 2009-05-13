@@ -15,6 +15,9 @@
  */
 package br.ufmg.lcc.arangitester.ui;
 
+import br.ufmg.lcc.arangitester.ui.actions.IUiClickable;
+import br.ufmg.lcc.arangitester.ui.actions.UiClickable;
+
 /**
  * Implements a tab. 
  */

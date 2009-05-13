@@ -15,8 +15,8 @@
  */
 package br.ufmg.lcc.arangitester.annotations;
 
-import br.ufmg.lcc.arangitester.ui.IRequest.Confirmation;
-import br.ufmg.lcc.arangitester.ui.IRequest.Window;
+import br.ufmg.lcc.arangitester.ui.actions.IRequest.Confirmation;
+import br.ufmg.lcc.arangitester.ui.actions.IRequest.Window;
 
 /**
  * Configuration that get a LccRequestConfig and permit change values since Annotations can't change it's values.

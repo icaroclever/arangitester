@@ -17,6 +17,8 @@ package br.ufmg.lcc.arangitester.ui;
 
 import org.apache.commons.lang.StringUtils;
 
+import br.ufmg.lcc.arangitester.ui.actions.UiClickable;
+
 /**
  * Represent a Div.
  * @author Lucas Gonçalves

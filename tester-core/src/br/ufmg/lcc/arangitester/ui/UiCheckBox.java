@@ -19,6 +19,7 @@ import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.ICreate;
+import br.ufmg.lcc.arangitester.ui.actions.UiClickable;
 
 public class UiCheckBox extends UiClickable implements ICreate{
 	

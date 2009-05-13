@@ -15,6 +15,8 @@
  */
 package br.ufmg.lcc.arangitester.ui;
 
+import br.ufmg.lcc.arangitester.ui.actions.UiClickable;
+
 
 
 public class UiButton extends UiClickable{

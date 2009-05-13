@@ -21,11 +21,11 @@ import org.apache.commons.lang.StringUtils;
 
 import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.Ui;
-import br.ufmg.lcc.arangitester.ui.IRequest;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 import br.ufmg.lcc.arangitester.ui.UiCheckBox;
 import br.ufmg.lcc.arangitester.ui.UiImage;
 import br.ufmg.lcc.arangitester.ui.UiSimpleLine;
+import br.ufmg.lcc.arangitester.ui.actions.IRequest;
 import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 import br.ufmg.lcc.arangitester.util.Refletions;
 

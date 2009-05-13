@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.ufmg.lcc.arangitester.ui;
+package br.ufmg.lcc.arangitester.ui.actions;
 
 public interface IUiClickable {
 	public void click();

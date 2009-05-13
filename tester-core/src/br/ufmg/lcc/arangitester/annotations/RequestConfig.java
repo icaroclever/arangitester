@@ -20,7 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import br.ufmg.lcc.arangitester.ui.IRequest;
+import br.ufmg.lcc.arangitester.ui.actions.IRequest;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
