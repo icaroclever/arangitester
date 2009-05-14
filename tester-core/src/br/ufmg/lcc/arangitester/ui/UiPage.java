@@ -250,7 +250,7 @@ public class UiPage  extends UiComponent implements IUiComposite{
 	 * @return null if not exist
 	 */
 	public Page getConfig(){
-		return this.getClass().getSuperclass().getAnnotation(Page.class);
+		return super.getClass().getSuperclass().getAnnotation(Page.class);
 	}
 	
 	/**
@@ -260,15 +260,9 @@ public class UiPage  extends UiComponent implements IUiComposite{
 	public String getPageUrl() {
 		
 		if(getConfig() == null)
-			throw new ArangiTesterException("Problema ao capturar a anotação");
-		if(getConfig().url() == null)	
-			throw new ArangiTesterException("URL da anotação está vazia");
+			throw new ArangiTesterException("Annotation cannot be loaded");
 		if(Context.getInstance() == null)
-			throw new ArangiTesterException("Instancia está nula");
-		if(Context.getInstance().getConfig() == null)
-			throw new ArangiTesterException("getConfig da instancia está nula");
-		if(Context.getInstance().getConfig().getPath() == null)
-			throw new ArangiTesterException("getConfig.getPath da instancia está nula");
+			throw new ArangiTesterException("Context instance is null");
 		
 		String url = getConfig().url();
 		if (!url.startsWith("/"))
