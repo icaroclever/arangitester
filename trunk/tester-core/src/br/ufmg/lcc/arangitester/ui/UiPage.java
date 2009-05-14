@@ -250,7 +250,7 @@ public class UiPage  extends UiComponent implements IUiComposite{
 	 * @return null if not exist
 	 */
 	public Page getConfig(){
-		return super.getClass().getSuperclass().getAnnotation(Page.class);
+		return this.getClass().getSuperclass().getAnnotation(Page.class);
 	}
 	
 	/**
