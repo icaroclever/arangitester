@@ -143,7 +143,7 @@ public class CrudPattern extends BasePatterns{
 				controller = editPage; // Change of page
 				afterCallEditPage(controller);
 				controller.verifyUrl();
-				title = controller.getConfig().includeTitle();
+				title = controller.getArangiConfig().includeTitle();
 				if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
 				
 				if(controller.existSearchButton(Button.CANCEL))
@@ -152,7 +152,7 @@ public class CrudPattern extends BasePatterns{
 				
 					controller = searchPage; // Change of page
 					controller.verifyUrl();
-					title = controller.getConfig().searchTitle();
+					title = controller.getArangiConfig().searchTitle();
 					if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
 				}
 			}
@@ -163,7 +163,7 @@ public class CrudPattern extends BasePatterns{
 			controller = editPage; // Change of page
 			afterCallEditPage(controller);
 			controller.verifyUrl();
-			title = controller.getConfig().includeTitle();
+			title = controller.getArangiConfig().includeTitle();
 			if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
 		}
 	}
@@ -187,8 +187,8 @@ public class CrudPattern extends BasePatterns{
 		beforeValidateSearchPage(searchPage);
 		
 		// Valida o título da página de pesquisa
-		if(StringUtils.isNotBlank(searchPage.getConfig().searchTitle())){
-			searchPage.verifyPageTitle(searchPage.getConfig().searchTitle());
+		if(StringUtils.isNotBlank(searchPage.getArangiConfig().searchTitle())){
+			searchPage.verifyPageTitle(searchPage.getArangiConfig().searchTitle());
 		}
 		
 		Iterator<IUiComponent> lccFullComponentIterator = searchPage.singleWithClosedTableItemsIterator();
@@ -231,8 +231,8 @@ public class CrudPattern extends BasePatterns{
 		beforeValidateEditPage(page);
 		
 		// Valida o título da página de edição
-		if(StringUtils.isNotBlank(page.getConfig().includeTitle())){
-			page.verifyPageTitle(page.getConfig().includeTitle());
+		if(StringUtils.isNotBlank(page.getArangiConfig().includeTitle())){
+			page.verifyPageTitle(page.getArangiConfig().includeTitle());
 		}
 		Iterator<IUiComponent> lccFullComponentIterator = page.singleWithClosedTableItemsIterator();
 		while (lccFullComponentIterator.hasNext()) {

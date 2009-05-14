@@ -93,6 +93,7 @@ public class ArangiPage extends UiPage{
 	/**
 	 * Invoke url setted on @Page on the current class.
 	 */
+	@Override
 	public void invoke() {
 		invoke(getPageUrl());
 	}
@@ -146,7 +147,7 @@ public class ArangiPage extends UiPage{
 	 */
 	@Logger("Verificando botões Edit Page")
 	public void verifyEditButtons(){
-		verifyButtons(getConfig().editButtons());
+		verifyButtons(getArangiConfig().editButtons());
 	}
 	
 	/**
@@ -154,7 +155,7 @@ public class ArangiPage extends UiPage{
 	 */
 	@Logger("Verificando botões View Page")
 	public void verifyViewButtons(){
-		verifyButtons(getConfig().viewButtons());
+		verifyButtons(getArangiConfig().viewButtons());
 	}
 	
 	/**
@@ -162,7 +163,7 @@ public class ArangiPage extends UiPage{
 	 */
 	@Logger("Verificando botões Search Page")
 	public void verifySearchButtons(){
-		verifyButtons(getConfig().searchButtons());
+		verifyButtons(getArangiConfig().searchButtons());
 	}
 	
 	public void verifyButtons(Button[] present) {
@@ -223,19 +224,19 @@ public class ArangiPage extends UiPage{
 	// TODO Documentação do método existEditButton
 	public boolean existEditButton(Button button)
 	{
-		return existButton(button, getConfig().editButtons());
+		return existButton(button, getArangiConfig().editButtons());
 	}
 	
 	// TODO Documentação do método existSearchButton
 	public boolean existSearchButton(Button button)
 	{
-		return existButton(button, getConfig().searchButtons());
+		return existButton(button, getArangiConfig().searchButtons());
 	}
 	
 	// TODO Documentação do método existViewButton
 	public boolean existViewButton(Button button)
 	{
-		return existButton(button, getConfig().viewButtons());
+		return existButton(button, getArangiConfig().viewButtons());
 	}
 	
 	/**
@@ -367,18 +368,17 @@ public class ArangiPage extends UiPage{
 	 * Return Page annotated on subclass of UiPage
 	 * @return null if not exist
 	 */
-	public Page getConfig(){
+	public Page getArangiConfig(){
 		return this.getClass().getSuperclass().getAnnotation(Page.class);
-	}
-	
-	
+	}	
 	
 	/**
 	 * Returns the url of the page based on annotatin and the context setted
 	 * @return Url based on the annotation setted on page
 	 */
+	@Override
 	public String getPageUrl() {
-		String url = getConfig().url();
+		String url = getArangiConfig().url();
 		if (!url.startsWith("/"))
 			url = "/" + url;
 		return Context.getInstance().getConfig().getPath() + url;
