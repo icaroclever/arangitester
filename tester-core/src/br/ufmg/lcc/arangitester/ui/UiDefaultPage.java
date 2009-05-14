@@ -23,7 +23,7 @@ public class UiDefaultPage extends UiPage {
 	 * @return null if not exist
 	 */
 	public Page getConfig(){
-		return this.getClass().getSuperclass().getAnnotation(Page.class);
+		return super.getClass().getSuperclass().getAnnotation(Page.class);
 	}
 	
 	/**
