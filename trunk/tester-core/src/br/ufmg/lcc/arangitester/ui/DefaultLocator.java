@@ -28,7 +28,10 @@ public class DefaultLocator implements IComponentLocator {
      */
     @Override
     public String getComponentId(String id, IUiComponent component) {
-        return ArangiTesterStringUtils.interpolate(id, component);
+    	if(id == null)
+    		return id;
+    	
+    	return ArangiTesterStringUtils.interpolate(id, component);
     }
 
     /*
@@ -55,6 +58,9 @@ public class DefaultLocator implements IComponentLocator {
      */
     @Override
     public String getComponentName(String name, IUiComponent component) {
+    	if(name == null)
+    		return name;
+    	
         return ArangiTesterStringUtils.interpolate(name, component);
     }
 

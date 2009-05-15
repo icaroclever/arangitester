@@ -26,6 +26,13 @@ import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 public class ArangiTesterStringUtils {
 
 	public static String interpolate(String text, Object bean){
+		
+		if(text == null)
+			throw new ArangiTesterException("Cannot interpolate because text has been null.");
+		
+		if(bean == null)
+			throw new ArangiTesterException("Cannot interpolate because bean has been null.");
+		
 		Pattern compile = Pattern.compile("#\\{([\\w]*)\\}");
 		Matcher m= compile.matcher(text);
 		while (m.find ()){
