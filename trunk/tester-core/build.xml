@@ -4,9 +4,10 @@
 
 	<dirname property="at.dir" file="${ant.file}" />
 	<basename property="project.name" file="${basedir}" />
-
+	
 	<property name="at.bin.dir" value="${basedir}/../temp/tester-core" />
-	<property name="extension.bin.dir" value="${basedir}/../temp/${extension}" />
+	<property name="at.bin.dir" value="${basedir}/../temp/tester-core" />
+	<property name="tomcat.ajp.port" value="18009" />
 
 	<property name="extension.dir" value="${at.dir}/../${extension}" />
 	<property name="project.bin.dir" value="${basedir}/../temp/${project.name}" />
@@ -77,6 +78,7 @@
 			<configuration home="${workspace}/tomcat">
 				<property name="cargo.servlet.users" value="${tester-config.tomcat-users}" />
 				<property name="cargo.servlet.port" value="${tomcat.port}" />
+				<property name="cargo.servlet.ajp.port" value="${tomcat.ajp.port}" />
 				<property name="cargo.logging" value="high" />
 				<deployable type="war" file="${war.file}" />
 			</configuration>
