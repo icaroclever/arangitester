@@ -31,6 +31,7 @@ import br.ufmg.lcc.arangitester.arangi.annotations.PopUp;
 import br.ufmg.lcc.arangitester.arangi.pages.ArangiSearchPage;
 import br.ufmg.lcc.arangitester.arangi.pages.NullSearchPage;
 import br.ufmg.lcc.arangitester.el.CompositeResolver;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 import br.ufmg.lcc.arangitester.ui.UiButton;
@@ -111,16 +112,34 @@ public abstract class BasePatterns implements ITestCase{
 	 */
 	protected void fill(Object target, Field fieldConfig, ACTION action){
 		LOG.debug("Preenchendo valor do campo: " + fieldConfig.name());
+		boolean closed = false;
+		
 		if ( isPopup(fieldConfig) ){
-			fillPopup(target, fieldConfig, action);
-			for(int i=1; i < getSel().getAllWindowIds().length && getSel().getAllWindowIds().length > 1;i++)
-			{
-				getSel().selectWindow(getSel().getAllWindowNames()[i]);
+			int tryCount = 0;
+			for(tryCount=0; tryCount < 2 && !closed; tryCount++){
+				closed = true;
+				fillPopup(target, fieldConfig, action);
+				int allOpenedWindowsNumber = getSel().getAllWindowIds().length;
+				
+				for(int i=1; i < allOpenedWindowsNumber;i++)
+				{
+					if(getSel().getAllWindowNames()[i].equals("null"))
+						continue;
+					getSel().selectWindow(getSel().getAllWindowNames()[i]);
+					getSel().windowFocus();
+					getSel().close();
+					closed = false;
+					LOG.warn("Selenium had a problem with the javascript page.");
+				}
+				getSel().selectWindow("null");
 				getSel().windowFocus();
-				getSel().close();
 			}
-			getSel().selectWindow(null);
-			getSel().windowFocus();
+			
+			if(tryCount == 2 && closed == false)
+			{
+				throw new ArangiTesterException("The page cannot be closed");
+			}
+			
 			return;
 		}
 		
