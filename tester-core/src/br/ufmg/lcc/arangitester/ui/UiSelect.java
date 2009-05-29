@@ -71,12 +71,6 @@ public class UiSelect extends UiComponent implements ICreate{
 		
 			requestDelegate.execute(action, getSel());
 			
-			// Testa pós-condição
-			if(!label.equals(getSelectedLabel())){
-				throw new ArangiTesterException("Erro ao selecionar elemento. Opção '"+
-						label +"' não foi selecionada corretamente.");
-			}
-			
 			setPreviewslyActionValue(label);
 		}	
 
