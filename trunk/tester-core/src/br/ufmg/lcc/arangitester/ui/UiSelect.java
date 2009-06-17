@@ -23,7 +23,6 @@ import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.RequestConfigImp;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
-import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.ICreate;
 import br.ufmg.lcc.arangitester.ui.actions.Request;
