@@ -145,7 +145,7 @@ public class UiPage  extends UiComponent implements IUiComposite{
 				}
 			}.wait(locator, UiComponent.DEFAULT_ELEMENT_WAIT_TIME);
 		}catch (WaitTimedOutException e){
-			throw new TesterException("Text unexpected but found : '" + expectedText +"'");
+			throw new TesterException("Text expected but not found : '" + expectedText +"'");
 		}
 	}
 

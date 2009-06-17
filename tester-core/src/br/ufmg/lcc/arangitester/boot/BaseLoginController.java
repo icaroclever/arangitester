@@ -53,6 +53,7 @@ public abstract class BaseLoginController implements ILoginController {
 		Login login = target.getClass().getAnnotation(Login.class);
 		
 		Login methodLogin = null;
+		Field[] extraFields = login.fields();
 		
 		if ( method != null ){
 			methodLogin = method.getAnnotation(Login.class);	
@@ -63,8 +64,9 @@ public abstract class BaseLoginController implements ILoginController {
 		
 		if (( methodLogin != null && !user.equals(methodLogin.user()))){
 			forceLogOff();
-			username = methodLogin.user();
-			password = methodLogin.password();
+			username    = methodLogin.user();
+			password    = methodLogin.password();
+			extraFields = methodLogin.fields();
 		} else if(login != null){
 			if (login.user().equals("NULL")){
 				if (StringUtils.isNotBlank(ConfigFactory.getConfig().getDefaultLoginUsername())){
@@ -87,8 +89,11 @@ public abstract class BaseLoginController implements ILoginController {
 		}
 		
 		if ( login != null && alreadyLogged == false){
-			login(username, password, login.fields());
-			user = login.user();
+			login(username, password, extraFields);
+			if ( methodLogin != null)
+				user = methodLogin.user();
+			else
+				user = login.user();
 			alreadyLogged = true;
 		}
 	}
