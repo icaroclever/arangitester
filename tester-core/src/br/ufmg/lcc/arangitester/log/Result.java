@@ -134,7 +134,7 @@ public class Result implements IResult{
 		File diretorioScreenShotPngs = Context.getInstance().getScreenshotPngDir();
 		Selenium sel = Context.getInstance().getSeleniumController().getSeleniumClient();
 		
-		File screenShotHtml = new File(diretirioScreenshotHtmls.getAbsoluteFile(), screenShotName + ".html");
+		File screenShotHtml = new File(diretirioScreenshotHtmls.getAbsoluteFile(), screenShotName + ".png.html");
 		
 		// Saves html screenshot
 		try {
