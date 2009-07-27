@@ -15,12 +15,13 @@
  */
 package br.ufmg.lcc.arangitester.ui;
 
+
 import org.apache.commons.lang.StringUtils;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 
 public class UiRadio extends UiComponent{
-
+	public String[] radioOptions = null;
 	@Logger("Clicking on radio #{componentDesc} with value '#0'")
 	public void select(String value){
 		String xpath = getXPath(value);
