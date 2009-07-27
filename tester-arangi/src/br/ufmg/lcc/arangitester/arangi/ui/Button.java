@@ -21,5 +21,5 @@ package br.ufmg.lcc.arangitester.arangi.ui;
  *
  */
 public enum Button {
-	NEW, SEARCH, OPEN, DELETE, CANCEL, SAVE, EDIT, PRINT
+	NEW, SEARCH, OPEN, DELETE, CANCEL, SAVE, EDIT, PRINT, CLOSE
 }
