@@ -46,24 +46,28 @@ import com.thoughtworks.selenium.SeleniumException;
 public class ArangiPage extends UiPage{
 
 	private IResult log = Context.getInstance().getResult();
-	
+
 	//************************************************************************
 	// Common UiComponents on Arangi Pages
 	// 
 	//************************************************************************
 	@Ui(desc = "MessageArea", id = "messageId")
 	private UiDiv messageArea;
-
+	
+	@Ui(desc="Close", locator="id=registerForm:buttonClose")
+	@RequestConfig(window=IRequest.Window.CLOSE)
+	private UiButton btnClose;
+	
 	@Ui(desc="Print", locator="id=registerForm:buttonPrint")
 	private UiButton btnPrint;
 
 	@RequestConfig(confirmation=IRequest.Confirmation.OK)
 	@Ui(desc="Delete", locator="id=registerForm:buttonDelete")
 	private UiButton btnDelete;
-	
+
 	@Ui(desc="Save", locator="id=registerForm:buttonSave")
 	private UiButton btnSave;
-	
+
 	@Ui(desc="New", locator="id=registerForm:buttonNew")
 	private UiButton btnNew;
 
@@ -72,13 +76,13 @@ public class ArangiPage extends UiPage{
 
 	@Ui(desc="Search (Open)", locator="id=registerForm:buttonOpen")
 	private UiButton btnOpen;
-	
+
 	@Ui(desc="Cancel", locator="id=registerForm:buttonCancel")
 	private UiButton btnCancel;
 
 	@Ui(desc="Edit", locator="id=registerForm:buttonEdit")
 	private UiButton btnEdit;
-	
+
 	/**
 	 * Invoke url to modify a registry already in database based on url setted on @Page on the current class.
 	 * @param id of registry. To discovery id, go to search page, stop mouse over the magnifying glass and look on status bar
@@ -108,7 +112,7 @@ public class ArangiPage extends UiPage{
 	public void invokeView(int id) {
 		invoke(getPageUrl() + "?event=view&id=" + id);
 	}
-	
+
 	/**
 	 * Verifyies if te url passed as param is compatible with the url of the page 
 	 */
@@ -117,7 +121,7 @@ public class ArangiPage extends UiPage{
 	public void verifyUrl(String expectedUrl){
 		String pageUrl = this.getBrowserUrl();
 		String expectedUrlBuckup = new String(expectedUrl);
-		
+
 		// Tries to get only the page part of the string. Like Process.faces or EtlSearch.faces 
 		try{
 			expectedUrl = expectedUrl.substring(expectedUrl.lastIndexOf('/') + 1);
@@ -128,11 +132,11 @@ public class ArangiPage extends UiPage{
 
 		if( !pageUrl.contains(expectedUrl) ){
 			throw new ArangiTesterException("A url atual é diferente da esperada.\n" +
-									"Url atual: " + pageUrl + "\n" +
-									"Url esperada: " + expectedUrl);
+					"Url atual: " + pageUrl + "\n" +
+					"Url esperada: " + expectedUrl);
 		}
 	}
-	
+
 	/**
 	 * Verifyies if te url setted on the annotation of the page is compatible 
 	 * with the url of this page. 
@@ -141,7 +145,7 @@ public class ArangiPage extends UiPage{
 		String expectedUrl = getPageUrl();
 		verifyUrl(expectedUrl);
 	}
-	
+
 	/**
 	 * Verify all buttons declared on LccPage(editButtons).
 	 */
@@ -149,7 +153,7 @@ public class ArangiPage extends UiPage{
 	public void verifyEditButtons(){
 		verifyButtons(getArangiConfig().editButtons());
 	}
-	
+
 	/**
 	 * Verify all buttons declared on LccPage(viewButtons).
 	 */
@@ -157,7 +161,7 @@ public class ArangiPage extends UiPage{
 	public void verifyViewButtons(){
 		verifyButtons(getArangiConfig().viewButtons());
 	}
-	
+
 	/**
 	 * Verify all buttons declared on LccPage(searchButtons).
 	 */
@@ -165,7 +169,7 @@ public class ArangiPage extends UiPage{
 	public void verifySearchButtons(){
 		verifyButtons(getArangiConfig().searchButtons());
 	}
-	
+
 	public void verifyButtons(Button[] present) {
 		for ( Button p: present ){
 			log.addInfo("Verificando botão esperado: " + p.toString() );
@@ -173,13 +177,13 @@ public class ArangiPage extends UiPage{
 				throw new ElementNotExistException("Botão " + p + " não existe!");
 			}
 		}
-		
+
 		List<Button> all = new ArrayList<Button>();
 		Collections.addAll(all, Button.values());
 		for ( Button p: present ){
 			all.remove(p);
 		}
-		
+
 		for ( Button p: all){
 			log.addInfo("Verificando botão não esperado: " + p.toString() );
 			if ( getButton(p).exist() ){
@@ -187,7 +191,7 @@ public class ArangiPage extends UiPage{
 			}
 		}
 	}
-	
+
 	private UiButton getButton(Button constant){
 		if ( constant == Button.NEW ){
 			return getBtnNew();
@@ -205,12 +209,14 @@ public class ArangiPage extends UiPage{
 			return getBtnEdit();
 		}else if ( constant == Button.PRINT ){
 			return getBtnPrint();
+		}else if ( constant == Button.CLOSE ){
+			return getBtnClose();
 		}
 		return null;
 	}
-	
+
 	// TODO Documentação do método existButton
-	
+
 	private boolean existButton(Button button,Button[] present)
 	{
 		for ( Button p: present){
@@ -220,25 +226,25 @@ public class ArangiPage extends UiPage{
 		}
 		return false;
 	}
-	
+
 	// TODO Documentação do método existEditButton
 	public boolean existEditButton(Button button)
 	{
 		return existButton(button, getArangiConfig().editButtons());
 	}
-	
+
 	// TODO Documentação do método existSearchButton
 	public boolean existSearchButton(Button button)
 	{
 		return existButton(button, getArangiConfig().searchButtons());
 	}
-	
+
 	// TODO Documentação do método existViewButton
 	public boolean existViewButton(Button button)
 	{
 		return existButton(button, getArangiConfig().viewButtons());
 	}
-	
+
 	/**
 	 * Verify if a message is present on page.
 	 * It's important to notice that it compares the expected message with the 
@@ -249,7 +255,7 @@ public class ArangiPage extends UiPage{
 	public void verifyMessagePresent(final String expectedMessage){
 		getMessageArea().verifyTextInsideWithoutLog(expectedMessage);
 	}
-	
+
 	/**
 	 * Verify if a message is NOT present on the page message area.
 	 * @param unExpectedMessage
@@ -260,7 +266,7 @@ public class ArangiPage extends UiPage{
 			throw new TesterException("Mensagem NÃO esperada mas existente: '" + unExpectedMessage +"'");
 		}
 	}
-	
+
 	/**
 	 * Get the title of the page.
 	 * @return The title, like Pesquisa de Processamento, or Repositorio de Dados, etc. 
@@ -269,17 +275,17 @@ public class ArangiPage extends UiPage{
 	public String getPageTitle(){
 		String title = "";
 		String xpath = String.format("xpath=//%sspan[@class='title' or @class='titulo']", super.locator.getHtmlNameSpace());
-		
+
 		try{
 			title = getSel().getText(xpath);
 		} catch (SeleniumException e) {
 			throw new ElementNotExistException("Esta página não possui título.\n" +
-												"Locator utilizado para o título = " + xpath);
+					"Locator utilizado para o título = " + xpath);
 		}
-		
+
 		return title;
 	}
-	
+
 	/**
 	 * Recursive call clearPreviewslyAction in all UiComponents on this page.
 	 */
@@ -298,7 +304,7 @@ public class ArangiPage extends UiPage{
 		this.btnSave = btnSave;
 	}
 
-	
+
 	public UiButton getBtnDelete() {
 		return btnDelete;
 	}
@@ -355,7 +361,7 @@ public class ArangiPage extends UiPage{
 		this.messageArea = messageArea;
 	}
 
-	
+
 	public UiButton getBtnPrint() {
 		return btnPrint;
 	}
@@ -364,6 +370,14 @@ public class ArangiPage extends UiPage{
 		this.btnPrint = btnPrint;
 	}
 	
+	public UiButton getBtnClose() {
+		return btnClose;
+	}
+
+	public void setBtnClose(UiButton btnClose) {
+		this.btnClose = btnClose;
+	}
+
 	/**
 	 * Return Page annotated on subclass of UiPage
 	 * @return null if not exist
@@ -371,7 +385,7 @@ public class ArangiPage extends UiPage{
 	public Page getArangiConfig(){
 		return this.getClass().getSuperclass().getAnnotation(Page.class);
 	}	
-	
+
 	/**
 	 * Returns the url of the page based on annotatin and the context setted
 	 * @return Url based on the annotation setted on page
