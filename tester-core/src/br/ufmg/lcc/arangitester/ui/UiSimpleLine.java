@@ -134,13 +134,24 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @Logger("Clicking at line [#{index}]")
     public void click() {
-        String xpath = this.getComponentLocator();
-        super.waitElement(xpath);
-        getSel().click(xpath);
+    	super.click();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Logger("Double Clicking at line [#{index}]")
+    public void doubleClick() {
+    	super.doubleClick();
+    }
+    
     public int getIndex() {
         return index;
     }
