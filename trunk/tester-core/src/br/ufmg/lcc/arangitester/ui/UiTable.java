@@ -83,6 +83,23 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	}
 	
 	/**
+	 * Gets a xPath locator using the table's id or name .
+	 * @return Xpath Locator for table.
+	 */
+	public String getTableLocatorInXPath() {
+        if (StringUtils.isNotBlank(super.getComponentId())) {
+            return String.format("xpath=//%stable[@id='%s']", super.locator.getHtmlNameSpace(), super.getComponentId());
+        } else if (StringUtils.isNotBlank(super.getComponentName())) {
+            return String.format("xpath=//%stable[@name='%s']", super.locator.getHtmlNameSpace(), super.getComponentName());
+        } else {
+            if (!super.getComponentLocator().startsWith("xpath=")) {
+                throw new ArangiTesterException("Locator for table must be a xpath locator. If possible use id or name attribute on annotation.");
+            }
+            return super.getComponentLocator();
+        }
+    }
+	
+	/**
 	 * Returns the number of the first line which text contains the string 
 	 * passed as param. 
 	 * @param text
@@ -113,19 +130,21 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	}
 	
 	/**
+	 * @deprecated use getLine(lineNumber).getContext()
+	 * Retrive all texts inside line.
+	 * @param lineNumber to get text.
 	 * 
-	 * @param lineNumber
-	 * @return
+	 * @see IUiLine
 	 */
 	public String getLineContent(int lineNumber){
-	    String xpath = String.format("%s/%stbody/%str[%s]", this.getXPathLocator(), super.locator.getHtmlNameSpace(), super.locator.getHtmlNameSpace(), lineNumber);
-		return getSel().getText("xpath=/"+xpath);
+		return getLine(lineNumber).getContent();
 	}
 	
-	@Logger("Clicking at line [#0]")
+	/**
+	 * @deprecated use getLine(lineNumber).click();
+	 */
 	public void clickAtLine(int lineNumber){
-	    String xpath = String.format("%s/%stbody/%str[%s]", this.getXPathLocator(), super.locator.getHtmlNameSpace(), super.locator.getHtmlNameSpace(), lineNumber);
-		getSel().click("xpath=/"+xpath);
+		getLine(lineNumber).click();
 	}
 	
 	@Override
@@ -157,14 +176,13 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	}
 	
 	public int getRealLinesNumber(){
-		
 		try{
 			waitElement(getComponentLocator());
 		}catch (ElementNotExistException e) {
 			throw new ElementNotExistException("Table has not found.\nDescription: "+ getComponentDesc()+".\nId:  "+ getComponentId());
 		}
 		
-		String xpath = String.format("/%1$s/%2$stbody/%2$str", this.getXPathLocator(),super.locator.getHtmlNameSpace()); // Eg.: xpath = "//table[@id='ID'/tbody/tr]";
+		String xpath = String.format("/%1$s/%2$stbody/%2$str", this.getXPathLocator() ,super.locator.getHtmlNameSpace()); // Eg.: xpath = "//table[@id='ID'/tbody/tr]";
 				
 		Number eval = getSel().getXpathCount(xpath);
 		

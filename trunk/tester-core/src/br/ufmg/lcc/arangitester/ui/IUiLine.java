@@ -29,4 +29,9 @@ public interface IUiLine extends IUiComponent, IUiComposite{
 	 */
 	void setIndex(int index);
 	int getIndex();
+	
+	/**
+	 * Retrive all texts inside line. 
+	 */
+	String getContent();
 }
