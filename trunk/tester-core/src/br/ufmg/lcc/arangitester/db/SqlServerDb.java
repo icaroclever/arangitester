@@ -21,7 +21,7 @@ import br.ufmg.lcc.arangitester.config.ConfigDumpFile;
  *
  */
 public class SqlServerDb implements DriverDb {
-
+	
 	@Override
 	public void export(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
@@ -31,11 +31,11 @@ public class SqlServerDb implements DriverDb {
 
 		IDataSet dataset = connection.createDataSet();
 		IDataSet filteredDs = new FilteredDataSet(DbHelper.getIncludeExcludeFilter(schema), dataset);
-
+		DbHelper.printStatistics(filteredDs);
+		
 		XmlDataSet.write(filteredDs, new FileOutputStream(schema.getName() + ".xml"));
 
 		connection.close();
-
 	}
 
 	@Override
@@ -45,9 +45,16 @@ public class SqlServerDb implements DriverDb {
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, schema.getQualifiedTableName());
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, schema.getCaseSensetive());
 		IDataSet ds = new XmlDataSet(new FileInputStream(schema.getName() + ".xml"));
+		jdbcConnection.setAutoCommit(false);
+		jdbcConnection.createStatement().execute("exec sp_MSforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'");
+		jdbcConnection.createStatement().execute("exec sp_MSforeachtable 'ALTER TABLE ? DISABLE TRIGGER ALL'");
 		
 		InsertIdentityOperation.CLEAN_INSERT.execute(connection, ds);
+		
+		jdbcConnection.createStatement().execute("exec sp_MSforeachtable 'ALTER TABLE ? CHECK CONSTRAINT ALL'");
+		jdbcConnection.createStatement().execute("exec sp_MSforeachtable 'ALTER TABLE ? ENABLE TRIGGER ALL'");
 
+		jdbcConnection.commit();
 		connection.close();
 	}
 

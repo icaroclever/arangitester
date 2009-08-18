@@ -15,6 +15,9 @@
  */
 package br.ufmg.lcc.arangitester.db;
 
+import org.apache.log4j.Logger;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.filter.DefaultTableFilter;
 
 import br.ufmg.lcc.arangitester.config.ConfigDumpFile;
@@ -25,7 +28,28 @@ import br.ufmg.lcc.arangitester.config.ConfigTable;
  * 
  */
 public class DbHelper {
-
+	
+	
+	public static void printStatistics(IDataSet filteredDs) {
+		Logger log = Logger.getLogger("DB_EXPORT");
+		try {
+			int total = 0;
+			for (String name: filteredDs.getTableNames()) {
+				ITable table = filteredDs.getTable(name);
+				int rowCount = table.getRowCount();
+				total += rowCount;
+				if (rowCount > 100) {
+					log.warn(String.format("%s: %s",name ,rowCount ));
+				} else {
+					log.debug(String.format("%s: %s",name ,rowCount ));
+				}
+			}
+			log.info("Total Lines: " + total);
+		} catch (Exception e) {
+			log.error("Printing statistics");
+		}
+	}
+	
 	public static DefaultTableFilter getIncludeExcludeFilter(ConfigDumpFile dumpFileConfig) {
 		DefaultTableFilter filter = new DefaultTableFilter();
 		if (dumpFileConfig.getTables()!= null) {

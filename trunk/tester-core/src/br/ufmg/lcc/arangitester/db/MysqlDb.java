@@ -47,7 +47,7 @@ public class MysqlDb implements DriverDb {
 
 		IDataSet dataset = connection.createDataSet();
 		IDataSet filteredDs = new FilteredDataSet(DbHelper.getIncludeExcludeFilter(schema), dataset);
-
+		DbHelper.printStatistics(filteredDs);
 		XmlDataSet.write(filteredDs, new FileOutputStream(schema.getName() + ".xml"));
 
 		connection.close();
