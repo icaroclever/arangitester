@@ -95,9 +95,7 @@ public class DbUnitController {
 	 */
 	public void reload(Class<?> clazz) {
 		Db lccDb = clazz.getAnnotation(Db.class);
-		if (lccDb == null) {
-			verifyWitchFileToApply((String[]) null, false);
-		} else {
+		if (lccDb != null) {
 			verifyWitchFileToApply(lccDb.value(), false);
 		}
 	}
@@ -167,6 +165,8 @@ public class DbUnitController {
 				db = new PostgresDb();
 			} else if (database.getDriver().contains("mysql")) {
 				db = new MysqlDb();
+			} else if (database.getDriver().contains("sqlserver")) {
+				db = new SqlServerDb();
 			}
 			db.export(database, dumpFile);
 			LOG.info("Esquema exportado com sucesso!");
@@ -187,6 +187,8 @@ public class DbUnitController {
 				db = new PostgresDb();
 			} else if (database.getDriver().contains("mysql")) {
 				db = new MysqlDb();
+			} else if (database.getDriver().contains("sqlserver")) {
+				db = new SqlServerDb();
 			}
 			db.reload(database, schema);
 			LOG.info("Esquema recarregado com sucesso!");
