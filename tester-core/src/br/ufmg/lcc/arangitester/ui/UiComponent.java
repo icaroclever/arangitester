@@ -92,6 +92,7 @@ public abstract class UiComponent implements IUiComponent{
 	public void doubleClick() {
         String xpath = this.getComponentLocator();
         this.waitElement(xpath);
+        getSel().click(xpath);
         getSel().doubleClick(xpath);
 	}
 	
