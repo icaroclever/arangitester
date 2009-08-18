@@ -73,6 +73,28 @@ public abstract class UiComponent implements IUiComponent{
 		return null;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Logger("Clicking at:  #{componentDesc}")
+	public void click() {
+        String xpath = this.getComponentLocator();
+        this.waitElement(xpath);
+        getSel().click(xpath);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Logger("Double Clicking at:  #{componentDesc}")
+	public void doubleClick() {
+        String xpath = this.getComponentLocator();
+        this.waitElement(xpath);
+        getSel().doubleClick(xpath);
+	}
+	
 	public void setConfigs(Annotation[] configs){
 		this.configs = configs;
 		Ui basicConfig = getConfig(Ui.class);

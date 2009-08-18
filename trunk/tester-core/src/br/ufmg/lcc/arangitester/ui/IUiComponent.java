@@ -61,6 +61,9 @@ public interface IUiComponent extends Iterable<IUiComponent>{
 	void verifyIsEnable(boolean enable);
 	boolean exist();
 	
+	void click();
+	void doubleClick();
+	
 	String getText();
 	/**
 	 * Force validation on field.
