@@ -49,7 +49,8 @@ public class PostgresDb implements DriverDb {
 
 		// ITableFilter filter = new DatabaseSequenceFilter(connection);
 		IDataSet fullDataSet = new FilteredDataSet(DbHelper.getIncludeExcludeFilter(schema), dataset);
-
+		DbHelper.printStatistics(fullDataSet);
+		
 		XmlDataSet.write(fullDataSet, new FileOutputStream(schema.getName() + ".xml"));
 
 		connection.close();

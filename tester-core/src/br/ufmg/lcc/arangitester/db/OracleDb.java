@@ -69,7 +69,7 @@ public class OracleDb implements DriverDb {
 		}
 
 		prop.store(new FileWriter(fileConfig.getName() + "_sequences.txt"), "Sequences");
-
+		DbHelper.printStatistics(filteredDs);
 		XmlDataSet.write(filteredDs, new FileOutputStream(fileConfig.getName() + ".xml"));
 
 		connection.close();
