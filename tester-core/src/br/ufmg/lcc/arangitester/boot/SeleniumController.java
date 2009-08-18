@@ -35,6 +35,7 @@ public class SeleniumController {
 	private SeleniumServer seleniumServer;
 	private Selenium seleniumClient;
 	private ConfigEnv config;
+	private static final Integer DEFAULT_SELENIUM_SERVER_PORT=6889;
 	
 	public SeleniumController(ConfigEnv config){
 		this.config = config;
@@ -92,6 +93,7 @@ public class SeleniumController {
 				remoteControlConfiguration.setDontTouchLogging(true);
 				remoteControlConfiguration.setMultiWindow(false);
 				remoteControlConfiguration.setReuseBrowserSessions(false);
+				remoteControlConfiguration.setPort(DEFAULT_SELENIUM_SERVER_PORT);
 				seleniumServer = new SeleniumServer(remoteControlConfiguration);
 				seleniumServer.start();
 			} catch (Exception e) {

@@ -42,6 +42,15 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public String getContent() {
+    	String xpath = this.getComponentLocator();
+    	super.waitElement(xpath);
+    	return getSel().getText(xpath);
+    }
+    
+    /**
      * Change all ids, locators and desc of this line children.
      */
     public void setIndex(int index) {
@@ -94,7 +103,7 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
     @Override
     public String getComponentLocator() {
         ElHelper el = new ElHelper();
-        el.addVariable("tableXpath", getParent().getComponentLocator());
+        el.addVariable("tableXpath", ((UiTable<?>) getParent()).getTableLocatorInXPath());
         el.addVariable("tableId", getParent().getComponentId());
         el.addVariable("tableName", getParent().getComponentName());
         el.addVariable("tableIndex", getParent().getComponentIndex());
@@ -125,9 +134,10 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
         }
     }
 
-    @Logger("Clicking at line [#index]")
+    @Logger("Clicking at line [#{index}]")
     public void click() {
         String xpath = this.getComponentLocator();
+        super.waitElement(xpath);
         getSel().click(xpath);
     }
 
