@@ -90,8 +90,9 @@ public class SeleniumController {
 			try{
 				//log.debug("Starting selenium server");
 				RemoteControlConfiguration remoteControlConfiguration = new RemoteControlConfiguration();
+				remoteControlConfiguration.setSingleWindow(true);
 				remoteControlConfiguration.setDontTouchLogging(true);
-				remoteControlConfiguration.setMultiWindow(false);
+				remoteControlConfiguration.setBrowserSideLogEnabled(false);
 				remoteControlConfiguration.setReuseBrowserSessions(false);
 				remoteControlConfiguration.setPort(DEFAULT_SELENIUM_SERVER_PORT);
 				seleniumServer = new SeleniumServer(remoteControlConfiguration);
