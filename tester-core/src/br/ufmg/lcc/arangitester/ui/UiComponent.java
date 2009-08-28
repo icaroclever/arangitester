@@ -223,8 +223,18 @@ public abstract class UiComponent implements IUiComponent{
 	}
 	
 	@Logger("Verify if #{componentDesc} is enable(#0)")
-	public void verifyIsEnable(boolean enable){
+	public void verifyIsEnable(final boolean enable){
 		waitElement(getComponentLocator());
+		new Wait(){
+			@Override
+			public boolean until() {
+				if (enable) {
+					return getSel().isEditable(getComponentLocator()) && !isReadOnly();	
+				} else {
+					return !getSel().isEditable(getComponentLocator()) && !isReadOnly();
+				}
+			}
+		}.wait("Error", DEFAULT_ELEMENT_WAIT_TIME);
 		
 		boolean editable = getSel().isEditable(getComponentLocator()) && !isReadOnly();
 		
