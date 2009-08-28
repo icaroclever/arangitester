@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.thoughtworks.selenium.Wait;
 import br.ufmg.lcc.arangitester.annotations.Line;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
@@ -74,7 +75,14 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	}
 	
 	@Logger("Verifing number of lines in a table #{componentDesc}: #0")
-	public void verifyBodyLines(int number){
+	public void verifyBodyLines(final int number){
+		new Wait(){
+			@Override
+			public boolean until() {
+				return (getRealLinesNumber()== number);
+			}
+		}.wait("Error", DEFAULT_ELEMENT_WAIT_TIME); 
+		
 		int realLines = getRealLinesNumber();
 		if ( realLines != number ){
 			throw new WrongValueException("Expected " + number + " lines on table " + getComponentDesc() 
