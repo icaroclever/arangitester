@@ -209,39 +209,38 @@ public abstract class UiComponent implements IUiComponent{
 		previewslyActionValue = null;
 	}
 	
-	protected void waitElement(final String locator){
+	protected void waitElement(final String loc){
 		try{
 			new Wait(){
 				@Override
 				public boolean until() {
-					return getSel().isElementPresent(locator);
+					return getSel().isElementPresent(loc);
 				}
-			}.wait(locator, DEFAULT_ELEMENT_WAIT_TIME);
+			}.wait(loc, DEFAULT_ELEMENT_WAIT_TIME);
 		}catch (Throwable e){
-			throw new ElementNotExistException("Elemento "+ locator + " não presente.", e);
+			throw new ElementNotExistException("Elemento "+ loc + " não presente.", e);
 		}
 	}
 	
 	@Logger("Verify if #{componentDesc} is enable(#0)")
 	public void verifyIsEnable(final boolean enable){
-		waitElement(getComponentLocator());
-		new Wait(){
-			@Override
-			public boolean until() {
-				if (enable) {
-					return getSel().isEditable(getComponentLocator()) && !isReadOnly();	
-				} else {
-					return !getSel().isEditable(getComponentLocator()) && !isReadOnly();
+		try{
+			new Wait(){
+				@Override
+				public boolean until() {
+					if (enable) {
+						return getSel().isEditable(getComponentLocator()) && !isReadOnly();	
+					} else {
+						return !getSel().isEditable(getComponentLocator()) || !isReadOnly();
+					}
 				}
-			}
-		}.wait("Error", DEFAULT_ELEMENT_WAIT_TIME);
-		
-		boolean editable = getSel().isEditable(getComponentLocator()) && !isReadOnly();
-		
-		if ( editable && !enable ){
-			throw new WrongValueException ("Element is enable but should be disabled");
-		}else if ( !editable && enable){
-			throw new WrongValueException ("Element is disable but should be enabled");
+			}.wait("", DEFAULT_ELEMENT_WAIT_TIME);
+		}catch (Throwable e){
+			if (enable){
+				throw new WrongValueException ("Element is NOT editable but should be.");
+			} else {
+				throw new WrongValueException ("Element is Editable but shouldn´t be.");
+			}		
 		}
 	}
 	

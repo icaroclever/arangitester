@@ -58,6 +58,12 @@ public interface IUiComponent extends Iterable<IUiComponent>{
 	Object getPreviewslyActionValue();
 	void clearPreviewslyAction();
 	
+	
+	/**
+	 * Element is enabled when it is ENABLED and NOT READ-ONLY.
+	 * and is not enable when it is DISABLED OR READ-ONLY.
+	 * 
+	 */
 	void verifyIsEnable(boolean enable);
 	boolean exist();
 	
