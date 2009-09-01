@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.Context;
 import br.ufmg.lcc.arangitester.ITestCase;
+import br.ufmg.lcc.arangitester.annotations.DisableAjaxVerification;
 import br.ufmg.lcc.arangitester.annotations.Obs;
 import br.ufmg.lcc.arangitester.annotations.Test;
 import br.ufmg.lcc.arangitester.config.ConfigFactory;
@@ -171,6 +172,7 @@ public class Reactor {
 				if (this.loginController != null) {
 				    loginController.loginIfNeed(target, method.getMethod());
 				}
+				this.setVerifyAjax(target, method.getMethod());
 				method.getMethod().invoke(target);
 			}
 			catch (Throwable e) {
@@ -199,6 +201,15 @@ public class Reactor {
 
 	}
 
+	private void setVerifyAjax(Object target, Method method) {
+		DisableAjaxVerification methodAnnotation = method.getAnnotation(DisableAjaxVerification.class);
+		DisableAjaxVerification classAnnotation = target.getClass().getAnnotation(DisableAjaxVerification.class);
+		if (classAnnotation != null || methodAnnotation != null) {
+			Context.getInstance().setVerifyAjaxRequest(false);
+		} else {
+			Context.getInstance().setVerifyAjaxRequest(true);
+		}
+	}
 
 	public static String getTestName(Method method) {
 		Test annotation = method.getAnnotation(Test.class);

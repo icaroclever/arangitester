@@ -15,6 +15,8 @@
  */
 package br.ufmg.lcc.arangitester.ui;
 
+import br.ufmg.lcc.arangitester.annotations.VerifyAjax;
+
 /**
  * Component that has other components inside it.
  * @author Lucas Gonçalves
@@ -29,6 +31,7 @@ public interface IUiComposite extends IUiComponent{
 	 * @param enable true enable, false disable
 	 */
 	@SuppressWarnings("unchecked")
+	@VerifyAjax
 	void verifyAllEnabled(boolean enable, Class... components);
 
 	/**
@@ -36,11 +39,13 @@ public interface IUiComposite extends IUiComponent{
 	 * On tables, start with index 0 and go on tring adding +1 on index until it doesn't exist.
 	 * @param enable true enable, false disable
 	 */
+	@VerifyAjax
 	public void verifyAllEnable(boolean enable);
 	
 	/**
 	 * Recursive call verifyPreviewslyAction on components inside this container
 	 */
+	@VerifyAjax
 	public void verifyAllPreviewslyActions();
 	
 }
