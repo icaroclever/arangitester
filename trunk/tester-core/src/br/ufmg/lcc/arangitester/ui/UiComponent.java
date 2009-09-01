@@ -24,6 +24,7 @@ import org.apache.commons.lang.StringUtils;
 
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.annotations.Ui;
+import br.ufmg.lcc.arangitester.annotations.VerifyAjax;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
@@ -209,6 +210,7 @@ public abstract class UiComponent implements IUiComponent{
 		previewslyActionValue = null;
 	}
 	
+	@VerifyAjax
 	protected void waitElement(final String loc){
 		try{
 			new Wait(){
@@ -223,6 +225,7 @@ public abstract class UiComponent implements IUiComponent{
 	}
 	
 	@Logger("Verify if #{componentDesc} is enable(#0)")
+	@VerifyAjax
 	public void verifyIsEnable(final boolean enable){
 		try{
 			new Wait(){

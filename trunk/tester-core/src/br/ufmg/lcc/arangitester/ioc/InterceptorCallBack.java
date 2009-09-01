@@ -20,6 +20,8 @@ import java.lang.reflect.Method;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 import br.ufmg.lcc.arangitester.annotations.Logger;
+import br.ufmg.lcc.arangitester.annotations.VerifyAjax;
+import br.ufmg.lcc.arangitester.interceptors.AjaxVerifcationImpl;
 import br.ufmg.lcc.arangitester.interceptors.IInterceptor;
 import br.ufmg.lcc.arangitester.interceptors.LoggerImpl;
 
@@ -32,13 +34,15 @@ import br.ufmg.lcc.arangitester.interceptors.LoggerImpl;
  */
 public class InterceptorCallBack implements MethodInterceptor{
 	private static IInterceptor loggerInterceptor = new LoggerImpl();
+	private static IInterceptor ajaxInterceptor = new AjaxVerifcationImpl();
 	
 	@Override
 	public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
 		Logger loggerConfig = method.getAnnotation(Logger.class);
+		VerifyAjax ajaxAnnotation = method.getAnnotation(VerifyAjax.class);
 
 		if ( loggerConfig != null ) loggerInterceptor.before(method, args, loggerConfig,obj);		
-		
+		if ( ajaxAnnotation != null ) ajaxInterceptor.before(method, args, ajaxAnnotation, obj);
 		try{
 			Object returnValue = proxy.invokeSuper(obj, args);
 			

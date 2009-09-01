@@ -19,6 +19,7 @@ import java.io.File;
 
 import org.apache.commons.lang.StringUtils;
 
+import br.ufmg.lcc.arangitester.annotations.VerifyAjax;
 import br.ufmg.lcc.arangitester.boot.SeleniumController;
 import br.ufmg.lcc.arangitester.config.ConfigEnv;
 import br.ufmg.lcc.arangitester.config.ConfigFactory;
@@ -40,6 +41,12 @@ public class Context {
 	private ConfigEnv serverConfig;
 	
 	private static File tempDir = null;
+	
+	/**
+	 * If false disable {@link VerifyAjax}.
+	 * 
+	 */
+	private boolean verifyAjaxRequest = true;
 	
 	/**
 	 * Result of executions.
@@ -114,5 +121,13 @@ public class Context {
 	
 	public ConfigEnv getConfig() {
 		return serverConfig;
+	}
+
+	public boolean isVerifyAjaxRequest() {
+		return verifyAjaxRequest;
+	}
+
+	public void setVerifyAjaxRequest(boolean verifyAjaxRequest) {
+		this.verifyAjaxRequest = verifyAjaxRequest;
 	}
 }
