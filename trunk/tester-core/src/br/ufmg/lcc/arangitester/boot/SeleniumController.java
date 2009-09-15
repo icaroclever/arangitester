@@ -15,6 +15,8 @@
  */
 package br.ufmg.lcc.arangitester.boot;
 
+import java.io.File;
+
 import org.openqa.selenium.server.RemoteControlConfiguration;
 import org.openqa.selenium.server.SeleniumServer;
 
@@ -95,6 +97,8 @@ public class SeleniumController {
 				remoteControlConfiguration.setBrowserSideLogEnabled(false);
 				remoteControlConfiguration.setReuseBrowserSessions(false);
 				remoteControlConfiguration.setPort(DEFAULT_SELENIUM_SERVER_PORT);
+				if(config.getFirefoxProfile() != null && !config.getFirefoxProfile().equals(""))
+					remoteControlConfiguration.setFirefoxProfileTemplate(new File(config.getFirefoxProfile()));
 				seleniumServer = new SeleniumServer(remoteControlConfiguration);
 				seleniumServer.start();
 			} catch (Exception e) {
