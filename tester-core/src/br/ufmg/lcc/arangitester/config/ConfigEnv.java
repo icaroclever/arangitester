@@ -33,6 +33,7 @@ public class ConfigEnv {
 	private String host;
 	private int port;
 	private String browser;
+	private String firefoxProfile;
 	
 	@XStreamImplicit
 	private List<ConfigDatabase> databases;
@@ -96,6 +97,14 @@ public class ConfigEnv {
 
 	public void setDatabases(List<ConfigDatabase> databases) {
 		this.databases = databases;
+	}
+
+	public void setFirefoxProfile(String firefoxProfile) {
+		this.firefoxProfile = firefoxProfile;
+	}
+
+	public String getFirefoxProfile() {
+		return firefoxProfile;
 	}
 
 }
