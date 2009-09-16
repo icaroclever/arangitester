@@ -33,7 +33,12 @@ public class ConfigEnv {
 	private String host;
 	private int port;
 	private String browser;
+	
+	@XStreamAlias("firefox-profile-dir")
 	private String firefoxProfile;
+	
+	@XStreamAlias("selenium-proxy-port")
+	private String seleniumServerPort;
 	
 	@XStreamImplicit
 	private List<ConfigDatabase> databases;
@@ -105,6 +110,14 @@ public class ConfigEnv {
 
 	public String getFirefoxProfile() {
 		return firefoxProfile;
+	}
+
+	public void setSeleniumServerPort(String seleniumServerPort) {
+		this.seleniumServerPort = seleniumServerPort;
+	}
+
+	public String getSeleniumServerPort() {
+		return seleniumServerPort;
 	}
 
 }

@@ -88,15 +88,19 @@ public class SeleniumController {
 	}
 	
 	private SeleniumServer getServer(){
+		
 		if ( seleniumServer == null ){
 			try{
+				int selServerPort = (config.getSeleniumServerPort()!=null && !config.getSeleniumServerPort().equals(""))?
+						new Integer(config.getSeleniumServerPort()).intValue():DEFAULT_SELENIUM_SERVER_PORT;
+				
 				//log.debug("Starting selenium server");
 				RemoteControlConfiguration remoteControlConfiguration = new RemoteControlConfiguration();
 				remoteControlConfiguration.setSingleWindow(true);
 				remoteControlConfiguration.setDontTouchLogging(true);
 				remoteControlConfiguration.setBrowserSideLogEnabled(false);
 				remoteControlConfiguration.setReuseBrowserSessions(false);
-				remoteControlConfiguration.setPort(DEFAULT_SELENIUM_SERVER_PORT);
+				remoteControlConfiguration.setPort(selServerPort);
 				if(config.getFirefoxProfile() != null && !config.getFirefoxProfile().equals(""))
 					remoteControlConfiguration.setFirefoxProfileTemplate(new File(config.getFirefoxProfile()));
 				seleniumServer = new SeleniumServer(remoteControlConfiguration);
