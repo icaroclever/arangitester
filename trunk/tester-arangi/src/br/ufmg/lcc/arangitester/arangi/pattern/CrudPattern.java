@@ -272,6 +272,7 @@ public class CrudPattern extends BasePatterns{
 	 */
 	@Test(value="Verificar Campos Obrigatórios", order=5)
 	public void verifyRequiredFields(){
+		//TODO Esse método não verifica cada campo obrigatório para verificar se ele estando nulo está ok
 		ArangiPage page = createPage(config.page(), "page");
 		page.invoke();
 		beforeRequiredFields(page);
@@ -378,6 +379,9 @@ public class CrudPattern extends BasePatterns{
 		
 		for (Field field: config.fields()){
 			IUiComponent fieldOnPage = resolveElExpression(field.name(), "page");
+			if(field.noVerify()){
+				return;
+			}
 			if ( fieldOnPage == null ){
 				throw new TesterException("O componente " + field.name() + " não existe na página " + config.page().getSimpleName());
 			}
@@ -530,7 +534,17 @@ public class CrudPattern extends BasePatterns{
 		page.verifyMessagePresent(config.saveMessage());
 		
 		page.invokeModify(config.modifyId());
-		page.verifyAllPreviewslyActions();
+
+		for (Field field: config.fields()){
+			IUiComponent fieldOnPage = resolveElExpression(field.name(), "page");
+			if(field.noVerify()){
+				return;
+			}
+			if ( fieldOnPage == null ){
+				throw new TesterException("O componente " + field.name() + " não existe na página " + config.page().getSimpleName());
+			}
+			fieldOnPage.verifyPreviewslyAction();
+		}
 	}
 	
 	/**

@@ -188,6 +188,7 @@ public abstract class BasePatterns implements ITestCase{
 			return;
 		}
 		
+		
 		String actionValue = null;
 		if ( action == ACTION.ADD){
 			actionValue = fieldConfig.addValue();
@@ -299,6 +300,11 @@ class FieldImpl implements Field {
 	@Override
 	public Class<? extends Annotation> annotationType() {
 		return null;
+	}
+
+	@Override
+	public boolean noVerify() {
+		return false;
 	}
 	
 }
