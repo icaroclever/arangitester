@@ -20,5 +20,6 @@ public @interface Field {
 	String cancelValue() default "";
 	String modifyValue() default "";
 	String addValue() default "";
+	boolean noVerify() default false;
 	PopUp popup() default @PopUp;
 }
