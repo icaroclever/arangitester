@@ -64,11 +64,6 @@
 	</target>
 
 	<target name="start-tomcat" if="start-tomcat">
-		<condition property="jvm.args">
-			<not>
-				<property name="jvm.args" value="" />
-			</not>
-		</condition>
 		<xmlproperty file="${basedir}/tester-config.xml" />
 		<property name="tester-config.tomcat-users" value="admin:senha:manager" />
 		<property name="tomcat.wait" value="false" />
