@@ -1,5 +1,6 @@
 <project default="execute">
 	<xmlproperty file="${basedir}/tester-config.xml" />
+	<property name="jvm.args" value="" />
 	<property name="extension" value="${tester-config(extension)}" />
 
 	<dirname property="at.dir" file="${ant.file}" />
