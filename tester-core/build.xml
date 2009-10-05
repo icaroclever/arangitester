@@ -64,11 +64,17 @@
 	</target>
 
 	<target name="start-tomcat" if="start-tomcat">
+		<condition property="jvm.args">
+			<not>
+				<property name="jvm.args" value="" />
+			</not>
+		</condition>
 		<xmlproperty file="${basedir}/tester-config.xml" />
 		<property name="tester-config.tomcat-users" value="admin:senha:manager" />
 		<property name="tomcat.wait" value="false" />
 		<echo level="info" message="Tomcat Users: ${tester-config.tomcat-users}" />
 		<echo level="info" message="Catalina Home: ${catalina.home}" />
+		<echo level="info" message="JVM ARGS: ${jvm.args}" />
 		<echo level="info" message="Workspace: ${workspace}" />
 		<echo level="info" message="Tomcat Port: ${tomcat.port}" />
 		<echo level="info" message="War File: ${war.file}" />
@@ -77,6 +83,7 @@
 			<sysproperty key="LccTestEnv" value="true" />
 			<configuration home="${workspace}/tomcat">
 				<property name="cargo.servlet.users" value="${tester-config.tomcat-users}" />
+				<property name="cargo.jvmargs" value="${jvm.args}" />
 				<property name="cargo.servlet.port" value="${tomcat.port}" />
 				<property name="cargo.servlet.ajp.port" value="${tomcat.ajp.port}" />
 				<property name="cargo.logging" value="high" />
