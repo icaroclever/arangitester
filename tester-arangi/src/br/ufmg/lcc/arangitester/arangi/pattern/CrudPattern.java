@@ -153,7 +153,7 @@ public class CrudPattern extends BasePatterns{
 					controller = searchPage; // Change of page
 					controller.verifyUrl();
 					title = controller.getArangiConfig().searchTitle();
-					if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
+					//if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
 				}
 			}
 		}
@@ -164,7 +164,7 @@ public class CrudPattern extends BasePatterns{
 			afterCallEditPage(controller);
 			controller.verifyUrl();
 			title = controller.getArangiConfig().includeTitle();
-			if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
+			//if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
 		}
 	}
 	
