@@ -274,7 +274,7 @@ public class ArangiPage extends UiPage{
 	@Override
 	public String getPageTitle(){
 		String title = "";
-		String xpath = String.format("xpath=//%sspan[@class='title' or @class='titulo']", super.locator.getHtmlNameSpace());
+		String xpath = String.format("xpath=//%sspan[@class='pageTitle' or @class='titulo']", super.locator.getHtmlNameSpace());
 
 		try{
 			title = getSel().getText(xpath);
