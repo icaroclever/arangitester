@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.thoughtworks.selenium.Wait;
 import br.ufmg.lcc.arangitester.annotations.Line;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
@@ -28,8 +29,6 @@ import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.ui.iterators.RealLinesIterator;
-
-import com.thoughtworks.selenium.Wait;
 
 public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<T> {
 

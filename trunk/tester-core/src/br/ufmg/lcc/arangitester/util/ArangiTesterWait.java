@@ -79,7 +79,10 @@ public abstract class ArangiTesterWait {
 		long start = System.currentTimeMillis();
 		long end = start + timeoutInMilliseconds;
 		while (System.currentTimeMillis() < end) {
-			if (until()) condition = true;
+			if (until()) {
+				condition = true;
+				return;
+			}
 			try {
 				Thread.sleep(intervalInMilliseconds);
 			} catch (InterruptedException e) {

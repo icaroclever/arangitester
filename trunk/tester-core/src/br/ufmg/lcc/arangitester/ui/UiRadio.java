@@ -16,7 +16,6 @@
 package br.ufmg.lcc.arangitester.ui;
 
 import org.apache.commons.lang.StringUtils;
-
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 

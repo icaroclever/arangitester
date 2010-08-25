@@ -31,10 +31,13 @@ package br.ufmg.lcc.arangitester.log;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.xml.transform.Transformer;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -264,6 +267,13 @@ public class Result implements IResult {
 	public void save(File file) {
 		XmlResult xml = new XmlResult();
 		xml.save(file, getTest());
+		File fileOut = new File(file.getParentFile(), StringUtils.substringBefore(file.getName(), ".") + ".html");
+		try {
+			InputStream xslIs = this.getClass().getClassLoader().getResourceAsStream("toHtml.xsl");
+			br.ufmg.lcc.arangitester.transformers.Transformer.tranform(file, fileOut, xslIs);
+		} catch (Exception e) {
+			LOG.error("Fail create html result file", e);
+		}
 	}
 
 	public void addObs(String annotation) {
