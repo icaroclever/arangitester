@@ -21,8 +21,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.TYPE})
-public @interface Ui{
+@Target( { ElementType.FIELD, ElementType.TYPE })
+public @interface Ui {
 
 	/**
 	 * Id of element. If it has setted locator() will be discarted.
@@ -30,18 +30,17 @@ public @interface Ui{
 	 * define id on table object, and on element (inside table) put id=FIELDNAME.
 	 */
 	String id() default "";
-	
+
 	String desc() default "";
 
 	String locator() default "";
-	
+
 	String name() default "";
-	
-	
+
 	/**
 	 * Index of element. If the id or name of the element in html page has not been informed,
-	 * the index of the object page can be used. Eg.: /table[1] is the first table found in the 
-	 * page. 
+	 * the index of the object page can be used. Eg.: /table[1] is the first table found in the
+	 * page.
 	 */
 	String index() default "";
 }

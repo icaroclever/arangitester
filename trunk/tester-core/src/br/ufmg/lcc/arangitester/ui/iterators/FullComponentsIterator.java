@@ -17,7 +17,6 @@ package br.ufmg.lcc.arangitester.ui.iterators;
 
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 
-
 /**
  * Iterator for UiComponents. It iterate recursively to all child components
  * 
@@ -26,7 +25,7 @@ import br.ufmg.lcc.arangitester.ui.IUiComponent;
  */
 
 public class FullComponentsIterator extends ComponentsIteratorBase {
-	private IUiComponent root;
+	private IUiComponent	root;
 
 	public FullComponentsIterator(IUiComponent root) {
 		this.root = root;

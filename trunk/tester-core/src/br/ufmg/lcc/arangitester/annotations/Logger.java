@@ -23,12 +23,13 @@ import java.lang.annotation.Target;
 /**
  * Send a message to logger. The message is formated like this:
  * 
- * MESSAGE          :OK on success
- * MESSAGE       :ERROR on failure
+ * MESSAGE :OK on success
+ * MESSAGE :ERROR on failure
  * 
  * Error message is printed on exception throw.
+ * 
  * @author Lucas Gonçalves
- *
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

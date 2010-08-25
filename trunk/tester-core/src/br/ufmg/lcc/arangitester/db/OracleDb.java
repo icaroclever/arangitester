@@ -51,14 +51,14 @@ public class OracleDb implements DriverDb {
 	public void export(ConfigDatabase database, ConfigDumpFile fileConfig) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		String schemaName = fileConfig.getSchema();
-        if (schemaName != null) {
-            schemaName = schemaName.toUpperCase();
-        }
+		if (schemaName != null) {
+			schemaName = schemaName.toUpperCase();
+		}
 		IDatabaseConnection connection = new OracleConnection(jdbcConnection, schemaName);
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_SKIP_ORACLE_RECYCLEBIN_TABLES, true);
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, fileConfig.getQualifiedTableName());
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, fileConfig.getCaseSensetive());
-		
+
 		IDataSet dataset = connection.createDataSet();
 		IDataSet filteredDs = new FilteredDataSet(DbHelper.getIncludeExcludeFilter(fileConfig), dataset);
 
@@ -76,7 +76,8 @@ public class OracleDb implements DriverDb {
 	}
 
 	/**
-	 * Reload the oracle database, including sequences. It loads the file sequences.txt wich is a property file that must contain all the last_number of all sequences (check the analytical table
+	 * Reload the oracle database, including sequences. It loads the file sequences.txt wich is a property file that must contain all the last_number of all sequences (check the
+	 * analytical table
 	 * all_sequences: select * from all_sequences). <br>
 	 * <br>
 	 * It assumes that all the sequences have the following characteristics: <br>
@@ -86,7 +87,8 @@ public class OracleDb implements DriverDb {
 	 * It changes the MIN_VALUE to 0.
 	 * 
 	 * 
-	 * Parte do pressuposto de que as sequencias tem os seguintes atributos setados como: INCREMENT_BY=1 MIN_VALUE=1 E necessario refatorar este metodo para que ele fique mais generico. O ideal eh q o
+	 * Parte do pressuposto de que as sequencias tem os seguintes atributos setados como: INCREMENT_BY=1 MIN_VALUE=1 E necessario refatorar este metodo para que ele fique mais
+	 * generico. O ideal eh q o
 	 * arquivo sequences.txt contivesse todos os atributos das sequencias, para que eles fossem recuperados a partir deste metodo.
 	 */
 	@Override
@@ -94,12 +96,12 @@ public class OracleDb implements DriverDb {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		String schemaName = fileConfig.getSchema();
 		if (schemaName != null) {
-		    schemaName = schemaName.toUpperCase();
+			schemaName = schemaName.toUpperCase();
 		}
-        IDatabaseConnection connection = new OracleConnection(jdbcConnection, schemaName);
-        connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, fileConfig.getQualifiedTableName());
-        connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, fileConfig.getCaseSensetive());
-        
+		IDatabaseConnection connection = new OracleConnection(jdbcConnection, schemaName);
+		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, fileConfig.getQualifiedTableName());
+		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, fileConfig.getCaseSensetive());
+
 		Properties prop = new Properties();
 		FileReader file = new FileReader(fileConfig.getName() + "_sequences.txt");
 		if (file == null)
@@ -135,15 +137,16 @@ public class OracleDb implements DriverDb {
 	 */
 	private HashMap<String, Long> getSequences(ConfigDatabase database, IDatabaseConnection connection, ConfigDumpFile file) throws Exception {
 		HashMap<String, Long> map = new HashMap<String, Long>();
-		for (String schema: StringUtils.split(file.getSchemasequences(), ",")){
-		    ResultSet seqResult = connection.getConnection().createStatement().executeQuery("select SEQUENCE_NAME, LAST_NUMBER from all_sequences where SEQUENCE_OWNER = '" + schema + "'");
-		      while (seqResult.next()) {
-		            String name = schema + "." + seqResult.getString(1);
-		            Long lastValue = seqResult.getLong(2);
-		            map.put(name, lastValue);
-		        }
+		for (String schema : StringUtils.split(file.getSchemasequences(), ",")) {
+			ResultSet seqResult = connection.getConnection().createStatement().executeQuery(
+					"select SEQUENCE_NAME, LAST_NUMBER from all_sequences where SEQUENCE_OWNER = '" + schema + "'");
+			while (seqResult.next()) {
+				String name = schema + "." + seqResult.getString(1);
+				Long lastValue = seqResult.getLong(2);
+				map.put(name, lastValue);
+			}
 		}
-		
+
 		return map;
 	}
 

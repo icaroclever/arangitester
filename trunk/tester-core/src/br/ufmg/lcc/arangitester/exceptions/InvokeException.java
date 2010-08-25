@@ -17,14 +17,14 @@ package br.ufmg.lcc.arangitester.exceptions;
 
 public class InvokeException extends ArangiTesterException {
 
-	private static final long serialVersionUID = 1L;
-	
+	private static final long	serialVersionUID	= 1L;
+
 	public InvokeException(String msg) {
-		super("ERROR: Loading Page Error: "+msg);
+		super("ERROR: Loading Page Error: " + msg);
 	}
-	
+
 	public InvokeException(String msg, Throwable e) {
-		super("ERROR: Loading Page Error: "+msg, e);
+		super("ERROR: Loading Page Error: " + msg, e);
 	}
-	
+
 }

@@ -16,22 +16,23 @@
 package br.ufmg.lcc.arangitester.log;
 
 public class Info {
-	
-	public Info(String message){
+
+	public Info(String message) {
 		this.message = message;
 	}
-	
+
 	public Info() {
-		
+
 	}
 
 	/**
 	 * This variable contain a information about the test
 	 */
-	private String message;
+	private String	message;
 
 	/**
 	 * Get the object's info message
+	 * 
 	 * @return message
 	 */
 	public String getMessage() {
@@ -40,10 +41,11 @@ public class Info {
 
 	/**
 	 * Set the object's info message
+	 * 
 	 * @param message
 	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
 }

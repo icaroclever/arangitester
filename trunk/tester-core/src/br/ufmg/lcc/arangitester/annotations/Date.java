@@ -27,18 +27,19 @@ import java.lang.annotation.Target;
  * 
  * For example, 04/12/2008 must be declared like 4122008.
  * Another example, 04/12/2008 12:00 must be declared like 41220081200L
- * We must not include de first character if it is a number zero, because it will convert the date to an octal format. 
+ * We must not include de first character if it is a number zero, because it will convert the date to an octal format.
  * 
  * If min() == max() it won't validate limits.
  * 
  * @author lukasmeirelles
- *
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Date {
 	long min() default 0;
+
 	long max() default 0;
-	
+
 	String[] msg() default {};
 }

@@ -28,14 +28,14 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 @XStreamAlias("database")
 public class ConfigDatabase {
-	private String driver;
-	private String user;
-	private String password;
-	private String url;
-	private String listener;
-	
+	private String					driver;
+	private String					user;
+	private String					password;
+	private String					url;
+	private String					listener;
+
 	@XStreamImplicit
-	private List<ConfigDumpFile> file;
+	private List<ConfigDumpFile>	file;
 
 	public String getDriver() {
 		return driver;
@@ -77,12 +77,12 @@ public class ConfigDatabase {
 		this.url = url;
 	}
 
-    public String getListener() {
-        return listener;
-    }
+	public String getListener() {
+		return listener;
+	}
 
-    public void setListener(String listener) {
-        this.listener = listener;
-    }
-	
+	public void setListener(String listener) {
+		this.listener = listener;
+	}
+
 }

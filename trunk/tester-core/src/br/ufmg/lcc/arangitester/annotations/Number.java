@@ -25,24 +25,25 @@ import java.lang.annotation.Target;
  * If min() == max() it won't validate limits, but still verifing if it is a number.
  * 
  * @author Lucas Gonçalves
- *
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Number {
 	int min() default 0;
+
 	int max() default 0;
-	
+
 	/**
 	 * Message showing when a number is less than the min value allowed
 	 */
 	String msgMinValue();
-	
+
 	/**
 	 * Message showing when a number is greater than the max value allowed
 	 */
 	String msgMaxValue();
-	
+
 	/**
 	 * Message showing when the input is not a number
 	 */

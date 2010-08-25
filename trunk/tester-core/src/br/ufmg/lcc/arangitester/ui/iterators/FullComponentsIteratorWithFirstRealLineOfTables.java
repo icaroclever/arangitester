@@ -27,37 +27,37 @@ import br.ufmg.lcc.arangitester.ui.IUiTable;
  * too, on that case saving a lot of time of test execution.
  * 
  * @author Lucas Gonçalves
- *
+ * 
  */
 public class FullComponentsIteratorWithFirstRealLineOfTables extends ComponentsIteratorBase {
 
-		private IUiComponent root;
+	private IUiComponent	root;
 
-		public FullComponentsIteratorWithFirstRealLineOfTables(IUiComponent root) {
-			this.root = root;
-		}
+	public FullComponentsIteratorWithFirstRealLineOfTables(IUiComponent root) {
+		this.root = root;
+	}
 
-		@SuppressWarnings("unchecked")
-		private void createList(IUiComponent comp) {
-			getComponentsList().add(comp);
-			if ( comp instanceof IUiTable){
-				IUiTable<? extends IUiLine> table = (IUiTable<? extends IUiLine>)comp;
-				Iterator<IUiLine> lineIterator = table.createRealLinesIterator();
-				while (lineIterator.hasNext()) {
-					IUiLine line = (IUiLine) lineIterator.next();
-					createList(line);
-				}
-			}else{
-				for (IUiComponent child: comp) {
-					createList(child);
-				}
+	@SuppressWarnings("unchecked")
+	private void createList(IUiComponent comp) {
+		getComponentsList().add(comp);
+		if (comp instanceof IUiTable) {
+			IUiTable<? extends IUiLine> table = (IUiTable<? extends IUiLine>) comp;
+			Iterator<IUiLine> lineIterator = table.createRealLinesIterator();
+			while (lineIterator.hasNext()) {
+				IUiLine line = (IUiLine) lineIterator.next();
+				createList(line);
+			}
+		} else {
+			for (IUiComponent child : comp) {
+				createList(child);
 			}
 		}
+	}
 
-		@Override
-		protected void createList() {
-			createList(root);
-			getComponentsList().remove(0);
-		}
-	
+	@Override
+	protected void createList() {
+		createList(root);
+		getComponentsList().remove(0);
+	}
+
 }

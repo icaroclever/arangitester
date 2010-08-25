@@ -17,18 +17,19 @@ package br.ufmg.lcc.arangitester.exceptions;
 
 /**
  * If element is not present on page
+ * 
  * @author Lucas Gonçalves
- *
+ * 
  */
-public class ElementNotExistException extends ArangiTesterException{
+public class ElementNotExistException extends ArangiTesterException {
 
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-	public ElementNotExistException(String msg){
-		super("ERROR: "+msg);
+	public ElementNotExistException(String msg) {
+		super("ERROR: " + msg);
 	}
-	
-	public ElementNotExistException(String msg, Throwable e){
-		super("ERROR: "+msg, e);
+
+	public ElementNotExistException(String msg, Throwable e) {
+		super("ERROR: " + msg, e);
 	}
 }

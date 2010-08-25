@@ -22,8 +22,9 @@ import javax.el.ELContext;
 
 /**
  * Resolve methods for annotations.
+ * 
  * @author Lucas Gonçalves
- *
+ * 
  */
 public class AnnotationResolver extends BeanELResolver {
 	public Object getValue(ELContext context, Object base, Object property) {

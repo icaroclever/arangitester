@@ -17,20 +17,24 @@ package br.ufmg.lcc.arangitester.ui;
 
 /**
  * Represent a single line in a table
+ * 
  * @author Lucas Gonçalves
- *
+ * 
  */
-public interface IUiLine extends IUiComponent, IUiComposite{
-	
+public interface IUiLine extends IUiComponent, IUiComposite {
+
 	/**
-	 * Called when the line is added to a table. It sets the new index to the children of this line 
-	 * @param index on table
+	 * Called when the line is added to a table. It sets the new index to the children of this line
+	 * 
+	 * @param index
+	 *            on table
 	 */
 	void setIndex(int index);
+
 	int getIndex();
-	
+
 	/**
-	 * Retrive all texts inside line. 
+	 * Retrive all texts inside line.
 	 */
 	String getContent();
 }

@@ -22,12 +22,12 @@ package br.ufmg.lcc.arangitester.exceptions;
  * 
  */
 public class EnvException extends ArangiTesterException {
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
 	public EnvException(String msg, Throwable e) {
 		super(msg, e);
 	}
-	
+
 	public EnvException(String msg) {
 		super(msg);
 	}

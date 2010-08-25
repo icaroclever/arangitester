@@ -1,13 +1,13 @@
 package br.ufmg.lcc.arangitester.annotations;
 
 public @interface Field {
-    /**
-     * Field Name.
-     */
-    String name();
+	/**
+	 * Field Name.
+	 */
+	String name();
 
-    /**
-     * Message to print.
-     */
-    String value();
+	/**
+	 * Message to print.
+	 */
+	String value();
 }

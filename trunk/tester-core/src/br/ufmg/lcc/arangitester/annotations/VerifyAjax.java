@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * To disable this verification use {@link DisableAjaxVerification} on test class or test method.
  * 
  * @author Lucas Gonçalves
- *
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

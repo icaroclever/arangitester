@@ -25,136 +25,136 @@ import br.ufmg.lcc.arangitester.util.Refletions;
  * @author Lucas Gonçalves
  */
 public class UiSimpleLine extends UiComponent implements IUiLine {
-    protected int index;
+	protected int	index;
 
-    public UiSimpleLine() {
-        this.setComponentDesc("");
-    }
-    
-    @Override
-    public Iterator<IUiComponent> iterator() {
-        return new ComponentsIterator(this);
-    }
+	public UiSimpleLine() {
+		this.setComponentDesc("");
+	}
 
-    @Override
-    public String getComponentId() {
-        return super.getComponentId();
-    }
+	@Override
+	public Iterator<IUiComponent> iterator() {
+		return new ComponentsIterator(this);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getContent() {
-    	String xpath = this.getComponentLocator();
-    	super.waitElement(xpath);
-    	return getSel().getText(xpath);
-    }
-    
-    /**
-     * Change all ids, locators and desc of this line children.
-     */
-    public void setIndex(int index) {
-        this.index = index;
-        for (Field field : Refletions.getFields(this.getClass(), Ui.class)) {
-            Ui uiConfig = field.getAnnotation(Ui.class);
-            try {
-                IUiComponent ui = (IUiComponent) Refletions.getFieldValue(field, this);
-                String locator = uiConfig.locator();
-                String id = uiConfig.id();
+	@Override
+	public String getComponentId() {
+		return super.getComponentId();
+	}
 
-                ElHelper el = new ElHelper();
-                el.addVariable("tableXpath", getParent().getComponentLocator());
-                el.addVariable("tableId", getParent().getComponentId());
-                el.addVariable("tableIndex", getParent().getComponentIndex());
-                el.addVariable("tableName", getParent().getComponentName());
-                el.addVariable("index", index);
-                el.addVariable("htmlNameSpace", super.locator.getHtmlNameSpace());
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getContent() {
+		String xpath = this.getComponentLocator();
+		super.waitElement(xpath);
+		return getSel().getText(xpath);
+	}
 
-                if (StringUtils.isNotBlank(id)) {
-                    ui.setComponentId((String) el.resolveElExpression(id));
-                }
+	/**
+	 * Change all ids, locators and desc of this line children.
+	 */
+	public void setIndex(int index) {
+		this.index = index;
+		for (Field field : Refletions.getFields(this.getClass(), Ui.class)) {
+			Ui uiConfig = field.getAnnotation(Ui.class);
+			try {
+				IUiComponent ui = (IUiComponent) Refletions.getFieldValue(field, this);
+				String locator = uiConfig.locator();
+				String id = uiConfig.id();
 
-                if (StringUtils.isNotBlank(locator)) {
-                    Line lineAnnotation = this.getClass().getSuperclass().getAnnotation(Line.class);
-                    if (lineAnnotation != null) {
-                        el.addVariable("beginIndex", lineAnnotation.beginIndex());
-                        ui.setComponentLocator((String) el.resolveElExpression(lineAnnotation.xpath() + locator));
-                    } else {
-                        ui.setComponentLocator((String) el.resolveElExpression(locator));
-                    }
-                }
+				ElHelper el = new ElHelper();
+				el.addVariable("tableXpath", getParent().getComponentLocator());
+				el.addVariable("tableId", getParent().getComponentId());
+				el.addVariable("tableIndex", getParent().getComponentIndex());
+				el.addVariable("tableName", getParent().getComponentName());
+				el.addVariable("index", index);
+				el.addVariable("htmlNameSpace", super.locator.getHtmlNameSpace());
 
-                ui.setComponentDesc((String) el.resolveElExpression(uiConfig.desc()));
+				if (StringUtils.isNotBlank(id)) {
+					ui.setComponentId((String) el.resolveElExpression(id));
+				}
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+				if (StringUtils.isNotBlank(locator)) {
+					Line lineAnnotation = this.getClass().getSuperclass().getAnnotation(Line.class);
+					if (lineAnnotation != null) {
+						el.addVariable("beginIndex", lineAnnotation.beginIndex());
+						ui.setComponentLocator((String) el.resolveElExpression(lineAnnotation.xpath() + locator));
+					} else {
+						ui.setComponentLocator((String) el.resolveElExpression(locator));
+					}
+				}
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public void verifyAllEnabled(boolean enable, Class... components) {
-        for (IUiComponent component : Refletions.getAllUiComponents(this, components)) {
-            component.verifyIsEnable(enable);
-        }
-    }
+				ui.setComponentDesc((String) el.resolveElExpression(uiConfig.desc()));
 
-    @Override
-    public String getComponentLocator() {
-        ElHelper el = new ElHelper();
-        el.addVariable("tableXpath", ((UiTable<?>) getParent()).getTableLocatorInXPath());
-        el.addVariable("tableId", getParent().getComponentId());
-        el.addVariable("tableName", getParent().getComponentName());
-        el.addVariable("tableIndex", getParent().getComponentIndex());
-        el.addVariable("index", index);
-        el.addVariable("htmlNameSpace", super.locator.getHtmlNameSpace());
-        Line lineAnnotation = this.getClass().getSuperclass().getAnnotation(Line.class);
-        if (lineAnnotation != null) {
-            el.addVariable("beginIndex", lineAnnotation.beginIndex());
-            return (String) el.resolveElExpression(lineAnnotation.xpath());
-        }
-        throw new TesterException("@Line must be defined.");
-    }
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public void verifyAllEnable(boolean enable) {
-        Class[] components = new Class[] {UiInputText.class, UiCheckBox.class, UiSelect.class};
-        for (IUiComponent component : Refletions.getAllUiComponents(this, components)) {
-            if (component.exist())
-                component.verifyIsEnable(enable);
-        }
-    }
+	@Override
+	@SuppressWarnings("unchecked")
+	public void verifyAllEnabled(boolean enable, Class... components) {
+		for (IUiComponent component : Refletions.getAllUiComponents(this, components)) {
+			component.verifyIsEnable(enable);
+		}
+	}
 
-    @Override
-    public void verifyAllPreviewslyActions() {
-        for (IUiComponent component : Refletions.getAllUiComponents(this.getClass(), this)) {
-            component.verifyPreviewslyAction();
-        }
-    }
+	@Override
+	public String getComponentLocator() {
+		ElHelper el = new ElHelper();
+		el.addVariable("tableXpath", ((UiTable<?>) getParent()).getTableLocatorInXPath());
+		el.addVariable("tableId", getParent().getComponentId());
+		el.addVariable("tableName", getParent().getComponentName());
+		el.addVariable("tableIndex", getParent().getComponentIndex());
+		el.addVariable("index", index);
+		el.addVariable("htmlNameSpace", super.locator.getHtmlNameSpace());
+		Line lineAnnotation = this.getClass().getSuperclass().getAnnotation(Line.class);
+		if (lineAnnotation != null) {
+			el.addVariable("beginIndex", lineAnnotation.beginIndex());
+			return (String) el.resolveElExpression(lineAnnotation.xpath());
+		}
+		throw new TesterException("@Line must be defined.");
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Logger("Clicking at line [#{index}]")
-    public void click() {
-    	super.click();
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public void verifyAllEnable(boolean enable) {
+		Class[] components = new Class[] { UiInputText.class, UiCheckBox.class, UiSelect.class };
+		for (IUiComponent component : Refletions.getAllUiComponents(this, components)) {
+			if (component.exist())
+				component.verifyIsEnable(enable);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Logger("Double Clicking at line [#{index}]")
-    public void doubleClick() {
-    	super.doubleClick();
-    }
-    
-    public int getIndex() {
-        return index;
-    }
+	@Override
+	public void verifyAllPreviewslyActions() {
+		for (IUiComponent component : Refletions.getAllUiComponents(this.getClass(), this)) {
+			component.verifyPreviewslyAction();
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Logger("Clicking at line [#{index}]")
+	public void click() {
+		super.click();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Logger("Double Clicking at line [#{index}]")
+	public void doubleClick() {
+		super.doubleClick();
+	}
+
+	public int getIndex() {
+		return index;
+	}
 
 	@Override
 	public String getComponentTag() {

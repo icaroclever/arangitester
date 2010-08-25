@@ -29,47 +29,50 @@ import br.ufmg.lcc.arangitester.util.ComponentElUtil;
 
 /**
  * @author Lucas Gonçalves
- *
+ * 
  */
 public abstract class BaseLoginController implements ILoginController {
-	private boolean alreadyLogged = false;
-	private String user;
+	private boolean	alreadyLogged	= false;
+	private String	user;
 
 	protected abstract void login(String user, String password, Field[] fields) throws FatalException;
 
 	/**
-	 * Fill field on login page with values come from @Login. 
-	 * @param fields Extra Fields to be filled.
-	 * @param pageLogin Login page with the fields.
+	 * Fill field on login page with values come from @Login.
+	 * 
+	 * @param fields
+	 *            Extra Fields to be filled.
+	 * @param pageLogin
+	 *            Login page with the fields.
 	 */
 	protected void fillExtraFields(Field[] fields, UiPage pageLogin) {
-		for (Field field: fields) {
+		for (Field field : fields) {
 			ComponentElUtil.fill(field.name(), field.value(), pageLogin);
 		}
 	}
-	
+
 	@Override
-	public void loginIfNeed(Object target, Method method) throws FatalException{
+	public void loginIfNeed(Object target, Method method) throws FatalException {
 		Login login = target.getClass().getAnnotation(Login.class);
-		
+
 		Login methodLogin = null;
 		Field[] extraFields = login.fields();
-		
-		if ( method != null ){
-			methodLogin = method.getAnnotation(Login.class);	
+
+		if (method != null) {
+			methodLogin = method.getAnnotation(Login.class);
 		}
-		
+
 		String username = null;
 		String password = null;
-		
-		if (( methodLogin != null && !user.equals(methodLogin.user()))){
+
+		if ((methodLogin != null && !user.equals(methodLogin.user()))) {
 			forceLogOff();
-			username    = methodLogin.user();
-			password    = methodLogin.password();
+			username = methodLogin.user();
+			password = methodLogin.password();
 			extraFields = methodLogin.fields();
-		} else if(login != null){
-			if (login.user().equals("NULL")){
-				if (StringUtils.isNotBlank(ConfigFactory.getConfig().getDefaultLoginUsername())){
+		} else if (login != null) {
+			if (login.user().equals("NULL")) {
+				if (StringUtils.isNotBlank(ConfigFactory.getConfig().getDefaultLoginUsername())) {
 					username = ConfigFactory.getConfig().getDefaultLoginUsername();
 				} else {
 					username = "admin";
@@ -77,8 +80,8 @@ public abstract class BaseLoginController implements ILoginController {
 			} else {
 				username = login.user();
 			}
-			if (login.password().equals("NULL")){
-				if (StringUtils.isNotBlank(ConfigFactory.getConfig().getDefaultLoginPassword())){
+			if (login.password().equals("NULL")) {
+				if (StringUtils.isNotBlank(ConfigFactory.getConfig().getDefaultLoginPassword())) {
 					password = ConfigFactory.getConfig().getDefaultLoginPassword();
 				} else {
 					password = "senha";
@@ -87,10 +90,10 @@ public abstract class BaseLoginController implements ILoginController {
 				password = login.password();
 			}
 		}
-		
-		if ( login != null && alreadyLogged == false){
+
+		if (login != null && alreadyLogged == false) {
 			login(username, password, extraFields);
-			if ( methodLogin != null)
+			if (methodLogin != null)
 				user = methodLogin.user();
 			else
 				user = login.user();
@@ -99,15 +102,15 @@ public abstract class BaseLoginController implements ILoginController {
 	}
 
 	@Override
-	public void forceLogOff() throws FatalException{
-		try{
+	public void forceLogOff() throws FatalException {
+		try {
 			Context.getInstance().getSeleniumController().getSeleniumClient().deleteAllVisibleCookies();
-		}catch (Throwable e){
-			Context.getInstance().getResult().addError("Nao foi possivel deletar os cookies",e);
+		} catch (Throwable e) {
+			Context.getInstance().getResult().addError("Nao foi possivel deletar os cookies", e);
 			Context.getInstance().getSeleniumController().killClient();
-		}finally{
+		} finally {
 			setAlreadyLogged(false);
-		}	
+		}
 	}
 
 	@Override

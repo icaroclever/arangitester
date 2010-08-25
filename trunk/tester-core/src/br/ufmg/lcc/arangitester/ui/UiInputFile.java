@@ -46,7 +46,7 @@ public class UiInputFile extends UiComponent {
 	 * @param file
 	 *            Arquivo que deseja fazer upload.
 	 */
-	@Logger(value="Anexando arquivo")
+	@Logger(value = "Anexando arquivo")
 	public void attachFile(String file) {
 		this.attachFile(new File(file));
 	}

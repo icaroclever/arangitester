@@ -31,12 +31,13 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * Find class finish with TestCase or FunctionalTest
+ * 
  * @author Lucas Gonçalves
- *
+ * 
  */
 public class Scanner {
-	private List<Class<?>> tests = new ArrayList<Class<?>>();
-	
+	private List<Class<?>>	tests	= new ArrayList<Class<?>>();
+
 	private void handle(Set<String> paths) {
 		for (String urlPath : paths) {
 			try {
@@ -52,36 +53,31 @@ public class Scanner {
 		}
 	}
 
-	public void scan() throws IOException{
+	public void scan() throws IOException {
 		Set<String> paths = new HashSet<String>();
 		String resourceName = "lcc.properties";
 		Enumeration<URL> urlEnum = getClass().getClassLoader().getResources(resourceName);
-        while ( urlEnum.hasMoreElements() )
-        {
-           String urlPath = urlEnum.nextElement().getFile();
-           urlPath = URLDecoder.decode(urlPath, "UTF-8");
-           if ( urlPath.startsWith("file:") )
-           {
-                 urlPath = urlPath.substring(5);
-           }
-           if ( urlPath.indexOf('!')>0 )
-           {
-              urlPath = urlPath.substring(0, urlPath.indexOf('!'));
-           }
-           else
-           {
-              File dirOrArchive = new File(urlPath);
-              if ( resourceName!=null && resourceName.lastIndexOf('/')>0 )
-              {
-                 //for META-INF/components.xml
-                 dirOrArchive = dirOrArchive.getParentFile();
-              }
-              urlPath = dirOrArchive.getParent();
-           }
-           paths.add(urlPath);
-        }
-        handle(paths);
+		while (urlEnum.hasMoreElements()) {
+			String urlPath = urlEnum.nextElement().getFile();
+			urlPath = URLDecoder.decode(urlPath, "UTF-8");
+			if (urlPath.startsWith("file:")) {
+				urlPath = urlPath.substring(5);
+			}
+			if (urlPath.indexOf('!') > 0) {
+				urlPath = urlPath.substring(0, urlPath.indexOf('!'));
+			} else {
+				File dirOrArchive = new File(urlPath);
+				if (resourceName != null && resourceName.lastIndexOf('/') > 0) {
+					// for META-INF/components.xml
+					dirOrArchive = dirOrArchive.getParentFile();
+				}
+				urlPath = dirOrArchive.getParent();
+			}
+			paths.add(urlPath);
+		}
+		handle(paths);
 	}
+
 	private void handleArchiveByFile(File file) throws IOException {
 		ZipFile zip = new ZipFile(file);
 		Enumeration<? extends ZipEntry> entries = zip.entries();
@@ -121,5 +117,5 @@ public class Scanner {
 	public void setTests(List<Class<?>> tests) {
 		this.tests = tests;
 	}
-	
+
 }

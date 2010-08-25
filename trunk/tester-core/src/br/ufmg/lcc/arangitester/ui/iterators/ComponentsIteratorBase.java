@@ -27,25 +27,25 @@ import br.ufmg.lcc.arangitester.ui.IUiComponent;
  * abstract method createList on subclasses.
  * 
  * @author Lucas Gonçalves
- *
+ * 
  */
-public abstract class ComponentsIteratorBase implements Iterator<IUiComponent>{
-	private List<IUiComponent> componentsList;
-	private int position = -1;
-	
+public abstract class ComponentsIteratorBase implements Iterator<IUiComponent> {
+	private List<IUiComponent>	componentsList;
+	private int					position	= -1;
+
 	protected abstract void createList();
-	
-	public List<IUiComponent> getComponentsList(){
-		if ( componentsList == null ){
+
+	public List<IUiComponent> getComponentsList() {
+		if (componentsList == null) {
 			componentsList = new ArrayList<IUiComponent>();
 			createList();
 		}
 		return componentsList;
 	}
-	
+
 	@Override
 	public boolean hasNext() {
-		if ( getComponentsList().size() > position + 1){
+		if (getComponentsList().size() > position + 1) {
 			return true;
 		}
 		return false;
@@ -58,7 +58,6 @@ public abstract class ComponentsIteratorBase implements Iterator<IUiComponent>{
 	}
 
 	@Override
-	public void remove() {
-	}
+	public void remove() {}
 
 }

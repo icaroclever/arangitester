@@ -17,7 +17,7 @@ package br.ufmg.lcc.arangitester.exceptions;
 
 public class ArangiTesterException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
 	public ArangiTesterException(String msg) {
 		super(msg);

@@ -29,108 +29,107 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
  */
 @XStreamAlias("file")
 public class ConfigDumpFile {
-    @XStreamAsAttribute
-    private String name;
+	@XStreamAsAttribute
+	private String	name;
 
-    @XStreamAsAttribute
-    @XStreamAlias("casesensetive")
-    private Boolean caseSensetive;
+	@XStreamAsAttribute
+	@XStreamAlias("casesensetive")
+	private Boolean	caseSensetive;
 
-    @XStreamAsAttribute
-    @XStreamAlias("qualifiedtablename")
-    private Boolean qualifiedTableName;
+	@XStreamAsAttribute
+	@XStreamAlias("qualifiedtablename")
+	private Boolean	qualifiedTableName;
 
-    @XStreamAsAttribute
-    private String schema;
+	@XStreamAsAttribute
+	private String	schema;
 
-    @XStreamAsAttribute
-    @XStreamAlias("schemasequences")
-    private String schemasequences;
-    
-    public Boolean getQualifiedTableName() {
-        if (this.qualifiedTableName == null) {
-            return false;
-        }
-        return qualifiedTableName;
-    }
+	@XStreamAsAttribute
+	@XStreamAlias("schemasequences")
+	private String	schemasequences;
 
-    public void setQualifiedTableName(Boolean qualifiedTableName) {
-        this.qualifiedTableName = qualifiedTableName;
-    }
+	public Boolean getQualifiedTableName() {
+		if (this.qualifiedTableName == null) {
+			return false;
+		}
+		return qualifiedTableName;
+	}
 
-    
-    public String getSchemasequences() {
-        if (this.schemasequences == null) {
-            return "";
-        }
-        return schemasequences;
-    }
+	public void setQualifiedTableName(Boolean qualifiedTableName) {
+		this.qualifiedTableName = qualifiedTableName;
+	}
 
-    public void setSchemasequences(String schemasequences) {
-        this.schemasequences = schemasequences;
-    }
+	public String getSchemasequences() {
+		if (this.schemasequences == null) {
+			return "";
+		}
+		return schemasequences;
+	}
 
-    public Boolean getCaseSensetive() {
-        if (this.caseSensetive == null) {
-            return false;
-        }
-        return caseSensetive;
-    }
+	public void setSchemasequences(String schemasequences) {
+		this.schemasequences = schemasequences;
+	}
 
-    public void setCaseSensetive(Boolean caseSensetive) {
-        this.caseSensetive = caseSensetive;
-    }
+	public Boolean getCaseSensetive() {
+		if (this.caseSensetive == null) {
+			return false;
+		}
+		return caseSensetive;
+	}
 
-    public String getSchema() {
-        return schema;
-    }
+	public void setCaseSensetive(Boolean caseSensetive) {
+		this.caseSensetive = caseSensetive;
+	}
 
-    public void setSchema(String schema) {
-        this.schema = schema;
-    }
+	public String getSchema() {
+		return schema;
+	}
 
-    @XStreamImplicit
-    private List<ConfigTable> tables;
+	public void setSchema(String schema) {
+		this.schema = schema;
+	}
 
-    public String getName() {
-        return name;
-    }
+	@XStreamImplicit
+	private List<ConfigTable>	tables;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String[] getNotTablesNames() {
-        List<String> nots = new ArrayList<String>();
-        if (tables != null) {
-            for (ConfigTable table : tables) {
-                if (table.isNot()) {
-                    nots.add(table.getName());
-                }
-            }
-        }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-        return nots.toArray(new String[0]);
-    }
+	public String[] getNotTablesNames() {
+		List<String> nots = new ArrayList<String>();
+		if (tables != null) {
+			for (ConfigTable table : tables) {
+				if (table.isNot()) {
+					nots.add(table.getName());
+				}
+			}
+		}
 
-    public String[] getTablesNames() {
-        List<String> in = new ArrayList<String>();
-        if (tables != null) {
-            for (ConfigTable table : tables) {
-                if (!table.isNot()) {
-                    in.add(table.getName());
-                }
-            }
-        }
+		return nots.toArray(new String[0]);
+	}
 
-        return in.toArray(new String[0]);
-    }
+	public String[] getTablesNames() {
+		List<String> in = new ArrayList<String>();
+		if (tables != null) {
+			for (ConfigTable table : tables) {
+				if (!table.isNot()) {
+					in.add(table.getName());
+				}
+			}
+		}
 
-    public List<ConfigTable> getTables() {
-        return tables;
-    }
+		return in.toArray(new String[0]);
+	}
 
-    public void setTables(List<ConfigTable> tables) {
-        this.tables = tables;
-    }
+	public List<ConfigTable> getTables() {
+		return tables;
+	}
+
+	public void setTables(List<ConfigTable> tables) {
+		this.tables = tables;
+	}
 }

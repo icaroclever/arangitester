@@ -22,21 +22,21 @@ import br.ufmg.lcc.arangitester.ui.actions.IRequest.Window;
  * Configuration that get a LccRequestConfig and permit change values since Annotations can't change it's values.
  * 
  * @author Lucas Gonçalves
- *
+ * 
  */
-public class RequestConfigImp{
-	private int forceWait = 0;
-	private Window window = Window.CONTINUE;
-	private Confirmation confirmation = Confirmation.NONE;
-	private boolean ajax = false;
-	private boolean submit = true;
-	private String alert = null;
-	
-	public RequestConfigImp(){
-		
+public class RequestConfigImp {
+	private int				forceWait		= 0;
+	private Window			window			= Window.CONTINUE;
+	private Confirmation	confirmation	= Confirmation.NONE;
+	private boolean			ajax			= false;
+	private boolean			submit			= true;
+	private String			alert			= null;
+
+	public RequestConfigImp() {
+
 	}
-	
-	public RequestConfigImp(int wait, Window window, Confirmation confirmation, boolean ajax, boolean submit, String alert){
+
+	public RequestConfigImp(int wait, Window window, Confirmation confirmation, boolean ajax, boolean submit, String alert) {
 		this.forceWait = wait;
 		this.window = window;
 		this.confirmation = confirmation;
@@ -44,9 +44,9 @@ public class RequestConfigImp{
 		this.submit = submit;
 		this.alert = alert;
 	}
-	
-	public RequestConfigImp(RequestConfig config){
-		if ( config != null ){
+
+	public RequestConfigImp(RequestConfig config) {
+		if (config != null) {
 			forceWait = config.forceWait();
 			window = config.window();
 			confirmation = config.confirmation();
@@ -95,7 +95,7 @@ public class RequestConfigImp{
 	public void setSubmit(boolean submit) {
 		this.submit = submit;
 	}
-	
+
 	public String getAlert() {
 		return alert;
 	}

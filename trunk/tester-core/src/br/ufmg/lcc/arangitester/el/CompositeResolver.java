@@ -23,10 +23,11 @@ import javax.el.ResourceBundleELResolver;
 
 /**
  * Needed to add the LccResolver.
+ * 
  * @author Lucas Gonçalves
- *
+ * 
  */
-public class CompositeResolver extends CompositeELResolver{
+public class CompositeResolver extends CompositeELResolver {
 	public CompositeResolver() {
 		add(new ArrayELResolver(false));
 		add(new ListELResolver(false));
