@@ -55,6 +55,10 @@ public class UiSelect extends UiComponent implements ICreate {
 	 */
 	@Logger("Selecionando opção em #{componentDesc}: '#0'")
 	public void select(final String label) {
+		selectWithOutLog(label);
+	}
+
+	public void selectWithOutLog(final String label) {
 		waitElement(getComponentLocator());
 		waitOption(getComponentLocator(), label);
 
@@ -73,7 +77,6 @@ public class UiSelect extends UiComponent implements ICreate {
 
 			setPreviewslyActionValue(label);
 		}
-
 	}
 
 	@Logger("Verificando '#{componentDesc}': '#0'")

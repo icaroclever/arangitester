@@ -15,9 +15,7 @@
  */
 package br.ufmg.lcc.arangitester.util;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 
 /**
  * Simple utilities to return the stack trace of an

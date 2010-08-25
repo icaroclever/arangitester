@@ -29,8 +29,8 @@ import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.InvokeException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
-import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 import br.ufmg.lcc.arangitester.util.Refletions;
+import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.Wait;

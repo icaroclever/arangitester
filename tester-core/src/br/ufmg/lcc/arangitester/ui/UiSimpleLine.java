@@ -63,7 +63,7 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
 				String id = uiConfig.id();
 
 				ElHelper el = new ElHelper();
-				el.addVariable("tableXpath", getParent().getComponentLocator());
+				el.addVariable("tableXpath", ((UiTable<?>) getParent()).getTableLocatorInXPath());
 				el.addVariable("tableId", getParent().getComponentId());
 				el.addVariable("tableIndex", getParent().getComponentIndex());
 				el.addVariable("tableName", getParent().getComponentName());

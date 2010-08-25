@@ -23,8 +23,8 @@ import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.annotations.Db;
 import br.ufmg.lcc.arangitester.config.ConfigDatabase;
-import br.ufmg.lcc.arangitester.config.ConfigDumpFile;
 import br.ufmg.lcc.arangitester.config.ConfigFactory;
+import br.ufmg.lcc.arangitester.config.ConfigDumpFile;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.util.TimerHelper;

@@ -25,8 +25,8 @@ import org.apache.commons.lang.StringUtils;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.annotations.Ui;
 import br.ufmg.lcc.arangitester.annotations.VerifyAjax;
-import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ui.actions.IUiClickable;
@@ -67,11 +67,12 @@ public abstract class UiComponent implements IUiComponent {
 
 	@SuppressWarnings("unchecked")
 	public <T extends Annotation> T getConfig(Class<T> annotation) {
-		for (Annotation config : configs) {
-			if (annotation.isAssignableFrom(config.getClass())) {
-				return (T) config;
+		if (configs != null)
+			for (Annotation config : configs) {
+				if (annotation.isAssignableFrom(config.getClass())) {
+					return (T) config;
+				}
 			}
-		}
 		return null;
 	}
 
@@ -142,43 +143,36 @@ public abstract class UiComponent implements IUiComponent {
 	}
 
 	public void verifyTextInsideWithoutLog(final String expectedText) {
-		waitElement(getComponentLocator());
-		final String texto = getSel().getText(getComponentLocator());
-		if (!ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText)) {
-			throw new WrongValueException("\nTexto esperado mas não presente: '" +
-					expectedText +
-					"'\nTexto presente: '" +
-					getText() + "'", expectedText, texto);
+		if (!isTextInside(expectedText)) {
+			final String texto = getSel().getText(getComponentLocator());
+			throw new WrongValueException("\nTexto esperado mas não presente: '" + expectedText + "'\nTexto presente: '" + getText() + "'", expectedText, texto);
 		}
 	}
 
 	@Logger("Verifyng text not present on #{componentDesc}: \"#0\"")
 	public void verifyTextNotPresent(final String expectedText) {
-		waitElement(getComponentLocator());
-		final String texto = getSel().getText(getComponentLocator());
-		if (ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText)) {
+		if (isTextInside(expectedText))
 			throw new ArangiTesterException("Texto não deveria estar presente, mas está: " + expectedText);
-		}
 	}
 
 	public boolean isTextInside(final String expectedText) {
 		if (this instanceof UiPage) {
 			throw new TesterException("Este método não deve ser chamado em uma página. Utilize verifyTextPresent(txt)");
 		}
-		final String locator = getComponentLocator();
-		final String texto = getSel().getText(locator);
+
+		waitElement(getComponentLocator());
+
 		return new ArangiTesterWait(DEFAULT_ELEMENT_WAIT_TIME) {
 			@Override
 			public boolean until() {
+				final String texto = getSel().getText(getComponentLocator());
 				return ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText);
 			}
 		}.getCondition();
 	}
 
 	public boolean isTextInsideWithoutWait(final String expectedText) {
-		final String locator = getComponentLocator();
-		final String texto = getSel().getText(locator);
-
+		final String texto = getSel().getText(getComponentLocator());
 		return ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText);
 	}
 
