@@ -21,56 +21,60 @@ import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 
 public class DefaultLocator implements IComponentLocator {
 
-    /*
-     * (non-Javadoc)
-     * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getComponentId(java.lang.String,
-     *      br.ufmg.lcc.arangitester.ui.LccIUiComponent)
-     */
-    @Override
-    public String getComponentId(String id, IUiComponent component) {
-    	if(id == null)
-    		return id;
-    	
-    	return ArangiTesterStringUtils.interpolate(id, component);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getComponentId(java.lang.String,
+	 * br.ufmg.lcc.arangitester.ui.LccIUiComponent)
+	 */
+	@Override
+	public String getComponentId(String id, IUiComponent component) {
+		if (id == null)
+			return id;
 
-    /*
-     * (non-Javadoc)
-     * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getComponentLocator(java.lang.String,
-     *      br.ufmg.lcc.arangitester.ui.LccIUiComponent)
-     */
-    @Override
-    public String getComponentLocator(String componentLocator, IUiComponent component) {
-        if (StringUtils.isNotBlank(componentLocator)) {
-            return ArangiTesterStringUtils.interpolate(componentLocator, component);
-        } else if (StringUtils.isNotBlank(component.getComponentId())) {
-            return "id=" + component.getComponentId();
-        } else if (StringUtils.isNotBlank(component.getComponentName())) {
-            return "name=" + component.getComponentName();
-        }
-        return null;
-    }
+		return ArangiTesterStringUtils.interpolate(id, component);
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getComponentName(java.lang.String,
-     *      br.ufmg.lcc.arangitester.ui.LccIUiComponent)
-     */
-    @Override
-    public String getComponentName(String name, IUiComponent component) {
-    	if(name == null)
-    		return name;
-    	
-        return ArangiTesterStringUtils.interpolate(name, component);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getComponentLocator(java.lang.String,
+	 * br.ufmg.lcc.arangitester.ui.LccIUiComponent)
+	 */
+	@Override
+	public String getComponentLocator(String componentLocator, IUiComponent component) {
+		if (StringUtils.isNotBlank(componentLocator)) {
+			return ArangiTesterStringUtils.interpolate(componentLocator, component);
+		} else if (StringUtils.isNotBlank(component.getComponentId())) {
+			return "id=" + component.getComponentId();
+		} else if (StringUtils.isNotBlank(component.getComponentName())) {
+			return "name=" + component.getComponentName();
+		}
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getHtmlNameSpace()
-     */
-    @Override
-    public String getHtmlNameSpace() {
-        return "";
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getComponentName(java.lang.String,
+	 * br.ufmg.lcc.arangitester.ui.LccIUiComponent)
+	 */
+	@Override
+	public String getComponentName(String name, IUiComponent component) {
+		if (name == null)
+			return name;
+
+		return ArangiTesterStringUtils.interpolate(name, component);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getHtmlNameSpace()
+	 */
+	@Override
+	public String getHtmlNameSpace() {
+		return "";
+	}
 
 }

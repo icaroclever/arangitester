@@ -25,30 +25,30 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 @XStreamAlias("environment")
 public class ConfigEnv {
-	
+
 	@XStreamAsAttribute
-	private String name;
-	
-	private String path;
-	private String host;
-	private int port;
-	private String browser;
-	
+	private String					name;
+
+	private String					path;
+	private String					host;
+	private int						port;
+	private String					browser;
+
 	@XStreamAlias("firefox-profile-dir")
-	private String firefoxProfile;
-	
+	private String					firefoxProfile;
+
 	@XStreamAlias("selenium-proxy-port")
-	private String seleniumServerPort;
-	
+	private String					seleniumServerPort;
+
 	@XStreamImplicit
-	private List<ConfigDatabase> databases;
-	
+	private List<ConfigDatabase>	databases;
+
 	public String getPath() {
-		if (!path.startsWith("/")){
+		if (!path.startsWith("/")) {
 			path = "/" + path;
 		}
 		if (path.endsWith("/"))
-			path = path.substring(0, path.length()-1);
+			path = path.substring(0, path.length() - 1);
 		return path;
 	}
 
@@ -57,10 +57,10 @@ public class ConfigEnv {
 	}
 
 	public String getHost() {
-	    String extraHost = System.getProperty("app.host");
-        if (StringUtils.isNotBlank(extraHost)){
-	        return extraHost;
-	    }
+		String extraHost = System.getProperty("app.host");
+		if (StringUtils.isNotBlank(extraHost)) {
+			return extraHost;
+		}
 		return host;
 	}
 
@@ -69,10 +69,10 @@ public class ConfigEnv {
 	}
 
 	public int getPort() {
-	    String extraPortStr = System.getProperty("app.port");
-        if (StringUtils.isNotBlank(extraPortStr)){
-            return Integer.valueOf(extraPortStr);
-        }
+		String extraPortStr = System.getProperty("app.port");
+		if (StringUtils.isNotBlank(extraPortStr)) {
+			return Integer.valueOf(extraPortStr);
+		}
 		return port;
 	}
 

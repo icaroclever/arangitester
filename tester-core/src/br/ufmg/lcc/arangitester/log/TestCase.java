@@ -23,26 +23,27 @@ public class TestCase {
 	/*
 	 * List of the informations about the test case
 	 */
-	private List<Object> logs = new ArrayList<Object>();
+	private List<Object>	logs	= new ArrayList<Object>();
 
 	/*
 	 * This variable contain the test case name
 	 */
-	private String testcase;
-	private String javaMethod;			// Defines test case's method name
+	private String			testcase;
+	private String			javaMethod;						// Defines test case's method name
 	/*
 	 * This variable contain the test case's start time
 	 */
-	private Date startTime;
+	private Date			startTime;
 	/*
 	 * This variable contain the test case's end time
 	 */
-	private Date endTime;
-	
-	private boolean skip;
-	
+	private Date			endTime;
+
+	private boolean			skip;
+
 	/**
 	 * Get the test case name
+	 * 
 	 * @return testcase
 	 */
 	public String getTestcase() {
@@ -51,6 +52,7 @@ public class TestCase {
 
 	/**
 	 * Set the test case name
+	 * 
 	 * @param testcase
 	 */
 	public void setTestcase(String testcase) {
@@ -59,6 +61,7 @@ public class TestCase {
 
 	/**
 	 * Get the test case's start time
+	 * 
 	 * @return startTime
 	 */
 	public Date getStartTime() {
@@ -67,6 +70,7 @@ public class TestCase {
 
 	/**
 	 * Set the test case's start time
+	 * 
 	 * @param startTime
 	 */
 	public void setStartTime(Date startTime) {
@@ -75,6 +79,7 @@ public class TestCase {
 
 	/**
 	 * Get the test case's end time
+	 * 
 	 * @return endTime
 	 */
 	public Date getEndTime() {
@@ -83,6 +88,7 @@ public class TestCase {
 
 	/**
 	 * Set the test case's end time
+	 * 
 	 * @param endTime
 	 */
 	public void setEndTime(Date endTime) {
@@ -91,16 +97,17 @@ public class TestCase {
 
 	/**
 	 * Get all informations about this test case
+	 * 
 	 * @return infos
 	 */
 	public List<Object> getlogs() {
 		return logs;
 	}
-	
-	public void addLog(Object log){
+
+	public void addLog(Object log) {
 		logs.add(log);
 	}
-	
+
 	public boolean isSkip() {
 		return skip;
 	}
@@ -116,5 +123,5 @@ public class TestCase {
 	public void setJavaMethod(String javaMethod) {
 		this.javaMethod = javaMethod;
 	}
-	
+
 }

@@ -23,8 +23,8 @@ import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.annotations.Db;
 import br.ufmg.lcc.arangitester.config.ConfigDatabase;
-import br.ufmg.lcc.arangitester.config.ConfigFactory;
 import br.ufmg.lcc.arangitester.config.ConfigDumpFile;
+import br.ufmg.lcc.arangitester.config.ConfigFactory;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.util.TimerHelper;
@@ -36,7 +36,7 @@ import br.ufmg.lcc.arangitester.util.TimerHelper;
  * 
  */
 public class DbUnitController {
-	private static Logger LOG = Logger.getLogger(DbUnitController.class);
+	private static Logger	LOG	= Logger.getLogger(DbUnitController.class);
 
 	/**
 	 * Carrega todos os drivers de todos os bancos de dados configurados no arquivo tester-config.xml
@@ -105,37 +105,37 @@ public class DbUnitController {
 		if (dumpFileName == null || dumpFileName.length == 0) { // Reload todas os arquivos de dump configurados no arquivo tester-config.xml
 			if (databases != null) {
 				for (ConfigDatabase database : databases) {
-				    boolean databaseReloaded = false;
-				    for (ConfigDumpFile dumpFile : database.getFile()) {
+					boolean databaseReloaded = false;
+					for (ConfigDumpFile dumpFile : database.getFile()) {
 						if (export) {
 							export(database, dumpFile);
 						} else {
-						    databaseReloaded = true;
+							databaseReloaded = true;
 							reload(database, dumpFile);
 						}
 					}
 					if (databaseReloaded) {
-                        this.executeListener(database);
-                    }
+						this.executeListener(database);
+					}
 				}
 			}
 		} else {
 			for (String toLoad : dumpFileName) { // Reload APENAS os arquivos de dump passados na linha de comando.
 				for (ConfigDatabase database : databases) {
-				    boolean databaseReloaded = false;
+					boolean databaseReloaded = false;
 					for (ConfigDumpFile dumpFile : database.getFile()) {
 						if (dumpFile.getName().equals(toLoad) || dumpFile.getName().equals(toLoad)) {
 							if (export) {
 								export(database, dumpFile);
 							} else {
-							    databaseReloaded = true;
+								databaseReloaded = true;
 								reload(database, dumpFile);
 							}
 							break;
 						}
 					}
 					if (databaseReloaded) {
-					    this.executeListener(database);
+						this.executeListener(database);
 					}
 				}
 			}
@@ -143,17 +143,17 @@ public class DbUnitController {
 	}
 
 	private void executeListener(ConfigDatabase database) {
-        if (StringUtils.isNotBlank(database.getListener())) {
-            try {
-                Class< ? > listenerClass = Class.forName(database.getListener());
-                IReloadListener newInstance = (IReloadListener) listenerClass.newInstance();
-                newInstance.reload(database);
-            } catch (Exception e) {
-                throw new EnvException(String.format("Error executing listener %s", database.getListener()), e);
-            }
-        }
+		if (StringUtils.isNotBlank(database.getListener())) {
+			try {
+				Class<?> listenerClass = Class.forName(database.getListener());
+				IReloadListener newInstance = (IReloadListener) listenerClass.newInstance();
+				newInstance.reload(database);
+			} catch (Exception e) {
+				throw new EnvException(String.format("Error executing listener %s", database.getListener()), e);
+			}
+		}
 	}
-	
+
 	private void export(ConfigDatabase database, ConfigDumpFile dumpFile) {
 		TimerHelper timer = new TimerHelper();
 		LOG.info("Exportando schema " + dumpFile.getName() + ":" + dumpFile.getName() + ".xml");

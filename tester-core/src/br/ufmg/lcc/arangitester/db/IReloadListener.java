@@ -4,8 +4,8 @@ import br.ufmg.lcc.arangitester.config.ConfigDatabase;
 
 /**
  * @author Lucas Gonçalves
- *
+ * 
  */
 public interface IReloadListener {
-    void reload(ConfigDatabase database);
+	void reload(ConfigDatabase database);
 }

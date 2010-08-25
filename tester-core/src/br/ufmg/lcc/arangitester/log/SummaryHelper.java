@@ -24,12 +24,12 @@ import java.util.Date;
  * 
  */
 public class SummaryHelper {
-	private int total;
-	private int successful;
-	private int fail;
-	private int skip;
-	private int time;
-	
+	private int	total;
+	private int	successful;
+	private int	fail;
+	private int	skip;
+	private int	time;
+
 	public SummaryHelper(FunctionalSuite result) {
 		for (UseCase use : result.getCases()) {
 			for (TestCase test : use.getTestcases()) {
@@ -52,12 +52,12 @@ public class SummaryHelper {
 			}
 		}
 
-		if ( !result.getCases().isEmpty() ){
+		if (!result.getCases().isEmpty()) {
 			UseCase first = result.getCases().get(0);
-			UseCase last = result.getCases().get(result.getCases().size() -1);
+			UseCase last = result.getCases().get(result.getCases().size() - 1);
 			Date start = first.getStartTime();
 			Date end = last.getEndTime();
-			time = (int)(end.getTime() - start.getTime()) / (1000 * 60);
+			time = (int) (end.getTime() - start.getTime()) / (1000 * 60);
 		}
 	}
 
@@ -80,8 +80,8 @@ public class SummaryHelper {
 	public float getPercent() {
 		return (float) ((float) successful / ((float) total - (float) skip) * 100);
 	}
-	
-	public int getTotalTime(){
+
+	public int getTotalTime() {
 		return time;
 	}
 }

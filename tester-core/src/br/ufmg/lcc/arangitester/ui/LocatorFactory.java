@@ -25,30 +25,31 @@ import br.ufmg.lcc.arangitester.exceptions.EnvException;
 /**
  * Create instance of {@link IComponentLocator} from tester-config.xml configuration. If no one is configured
  * then {@link DefaultLocator} will be use.
+ * 
  * @author Lucas Gonçalves
  */
 public class LocatorFactory {
 
-    private static Logger LOG = Logger.getLogger(LoginControllerFactory.class);
+	private static Logger	LOG	= Logger.getLogger(LoginControllerFactory.class);
 
-    public static IComponentLocator getLocator() {
-        String loginController = ConfigFactory.getConfig().getLocatorClass();
+	public static IComponentLocator getLocator() {
+		String loginController = ConfigFactory.getConfig().getLocatorClass();
 
-        try {
-            Class< ? > clazz = null;
+		try {
+			Class<?> clazz = null;
 
-            if (StringUtils.isEmpty(loginController)) {
-                clazz = DefaultLocator.class;
-            } else {
-                clazz = Class.forName(loginController);
-            }
-            LOG.debug("Carregando Login Controller: " + loginController);
-            return (IComponentLocator) clazz.newInstance();
-        } catch (ClassNotFoundException e) {
-            throw new EnvException("Classe Locator não existe: " + loginController);
-        } catch (Exception e) {
-            throw new EnvException("Error ao carregar a classe Locator: " + loginController);
-        }
+			if (StringUtils.isEmpty(loginController)) {
+				clazz = DefaultLocator.class;
+			} else {
+				clazz = Class.forName(loginController);
+			}
+			LOG.debug("Carregando Login Controller: " + loginController);
+			return (IComponentLocator) clazz.newInstance();
+		} catch (ClassNotFoundException e) {
+			throw new EnvException("Classe Locator não existe: " + loginController);
+		} catch (Exception e) {
+			throw new EnvException("Error ao carregar a classe Locator: " + loginController);
+		}
 
-    }
+	}
 }

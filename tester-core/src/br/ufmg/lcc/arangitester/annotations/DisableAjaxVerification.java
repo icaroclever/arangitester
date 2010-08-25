@@ -22,12 +22,13 @@ import java.lang.annotation.Target;
 
 /**
  * Disable AjaxVerification.
+ * 
  * @see VerifyAjax
  * @author Lucas Gonçalves
- *
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target( { ElementType.METHOD, ElementType.TYPE })
 public @interface DisableAjaxVerification {
 
 }

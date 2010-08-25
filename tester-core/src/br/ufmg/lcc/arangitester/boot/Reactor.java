@@ -49,13 +49,14 @@ import com.thoughtworks.selenium.SeleniumException;
  * 
  */
 public class Reactor {
-	private Logger LOG = Logger.getLogger(Reactor.class);
-	private ILoginController loginController = LoginControllerFactory.getLoginController();
-	private DbUnitController dbController = new DbUnitController();
-	
+	private Logger				LOG				= Logger.getLogger(Reactor.class);
+	private ILoginController	loginController	= LoginControllerFactory.getLoginController();
+	private DbUnitController	dbController	= new DbUnitController();
+
 	/**
-	 * Start execution of Tests. 
-	 * <p>Tree ways to execute: 
+	 * Start execution of Tests.
+	 * <p>
+	 * Tree ways to execute:
 	 * <ol>
 	 * <li>Without parameters: Execute all classes that name end with FunctionalTest</li>
 	 * <li>With class name: Execute the class</li>
@@ -65,8 +66,8 @@ public class Reactor {
 	public static void main(String[] args) throws Exception {
 		Reactor lccReactor = new Reactor();
 		ExecutionOptions executionOptions = new ExecutionOptions(args);
-		if (ConfigFactory.getEnvSpecificConfig() == null ) {
-		    throw new Exception(String.format("Environment to user %s don´t exist", System.getProperty("user.name")));
+		if (ConfigFactory.getEnvSpecificConfig() == null) {
+			throw new Exception(String.format("Environment to user %s don´t exist", System.getProperty("user.name")));
 		}
 		lccReactor.startExecution(executionOptions);
 	}
@@ -74,11 +75,11 @@ public class Reactor {
 	/**
 	 * Stops selenium only when all test cases are finished.
 	 * Note that test case is related to test class, not with a test method.
-	 * Test class contains one or many test method. 
+	 * Test class contains one or many test method.
 	 */
-	public void startExecution(ExecutionOptions executionOptions) throws Exception{
+	public void startExecution(ExecutionOptions executionOptions) throws Exception {
 		try {
-			//Logger.getLogger("br.ufmg.lcc").setLevel((Level) Level.DEBUG);
+			// Logger.getLogger("br.ufmg.lcc").setLevel((Level) Level.DEBUG);
 			List<Class<?>> arrayList = new ArrayList<Class<?>>();
 			Method method = null;
 			if (executionOptions.isToExecuteAllClasses()) {
@@ -89,7 +90,7 @@ public class Reactor {
 				arrayList.add(executionOptions.getClassFromCommand());
 			}
 			method = executionOptions.getMethodFromCommand();
-			
+
 			for (Class<?> test : arrayList) {
 				executeTestClass(test, method);
 			}
@@ -106,23 +107,23 @@ public class Reactor {
 
 	private void executeTestClass(Class<?> test, Method onlyMethod) {
 		Obs obs = test.getAnnotation(Obs.class);
-		if ( obs == null ){
-			getInstance().getResult().startUseCase(test.getSimpleName(), null);	
-		}else{
+		if (obs == null) {
+			getInstance().getResult().startUseCase(test.getSimpleName(), null);
+		} else {
 			getInstance().getResult().startUseCase(test.getSimpleName(), obs.value());
 		}
 		try {
 			dbController.reload(test);
 			if (this.loginController != null) {
-			    loginController.forceLogOff();
+				loginController.forceLogOff();
 			}
 			List<ArangiTesterMethod> methods = createLccMethodsList(test);
-			
+
 			Object testObj = Refletions.createTestClassInstance(test);
 			if (this.loginController != null) {
-			    loginController.loginIfNeed(testObj, null);
+				loginController.loginIfNeed(testObj, null);
 			}
-			
+
 			if (onlyMethod != null) {
 				for (ArangiTesterMethod method : methods) {
 					if (method.getMethod().equals(onlyMethod)) {
@@ -136,9 +137,9 @@ public class Reactor {
 			}
 		} catch (FatalException e) {
 			Context.getInstance().getResult().addError("Erro fatal.", e);
-		}finally {
+		} finally {
 			getInstance().getResult().endUseCase();
-			
+
 		}
 
 	}
@@ -158,41 +159,40 @@ public class Reactor {
 				return;
 			}
 		}
-		
-		if ( target instanceof ITestCase ){
-			if ( !((ITestCase)target).isToExecute(method.getMethod().getName())){
+
+		if (target instanceof ITestCase) {
+			if (!((ITestCase) target).isToExecute(method.getMethod().getName())) {
 				return;
 			}
 		}
-		
+
 		getInstance().getResult().startTestCase(method.getMethod().getName(), getTestName(method.getMethod()));
 		try {
 			method.setExecuted(true);
 			try {
 				if (this.loginController != null) {
-				    loginController.loginIfNeed(target, method.getMethod());
+					loginController.loginIfNeed(target, method.getMethod());
 				}
 				this.setVerifyAjax(target, method.getMethod());
 				method.getMethod().invoke(target);
-			}
-			catch (Throwable e) {
-				if(method.getMethod().getAnnotation(Test.class)==null || !(e instanceof ArangiTesterException)){
-					
-					if (e.getCause() != null && !(e.getCause() instanceof ArangiTesterException)){
-						
-						if ( e instanceof InvocationTargetException && e.getCause() != null ){
+			} catch (Throwable e) {
+				if (method.getMethod().getAnnotation(Test.class) == null || !(e instanceof ArangiTesterException)) {
+
+					if (e.getCause() != null && !(e.getCause() instanceof ArangiTesterException)) {
+
+						if (e instanceof InvocationTargetException && e.getCause() != null) {
 							e = e.getCause();
 						}
-						
+
 						if (e instanceof SeleniumException && e.getMessage() != null) {
-							//if(e.getMessage().matches(".*Element.*not.*found.*")) LOG.info("Erro de elemento não encontrado, danado!");
+							// if(e.getMessage().matches(".*Element.*not.*found.*")) LOG.info("Erro de elemento não encontrado, danado!");
 						}
-						
+
 						String stacktrace = StackTraceUtil.getStackTrace(e);
 						getInstance().getResult().addError("erro nao identificado: " + stacktrace);
 					}
 				}
-				
+
 				method.setError(true);
 			}
 		} finally {
@@ -246,11 +246,11 @@ public class Reactor {
 }
 
 class ArangiTesterMethod {
-	private boolean executed = false;
-	private Method method = null;
-	private ArangiTesterMethod dependency = null;
-	private boolean error = false;
-	private boolean skip = false;
+	private boolean				executed	= false;
+	private Method				method		= null;
+	private ArangiTesterMethod	dependency	= null;
+	private boolean				error		= false;
+	private boolean				skip		= false;
 
 	public ArangiTesterMethod(Method method) {
 		this.method = method;

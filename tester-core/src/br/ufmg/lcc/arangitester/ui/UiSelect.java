@@ -36,94 +36,95 @@ import com.thoughtworks.selenium.Wait.WaitTimedOutException;
  * 
  * @see RequestConfig
  * @author Lucas Gonçalves
- *
+ * 
  */
-public class UiSelect extends UiComponent implements ICreate{
-	private Request requestDelegate;
+public class UiSelect extends UiComponent implements ICreate {
+	private Request	requestDelegate;
 
-	
 	@Override
 	public void create() {
 		requestDelegate = new Request(super.getConfig(RequestConfig.class));
 		requestDelegate.getRequestConfig().setSubmit(false);
 	}
-	
+
 	/**
 	 * Select a option in select tag.
-	 * @param label caption of option
+	 * 
+	 * @param label
+	 *            caption of option
 	 */
 	@Logger("Selecionando opção em #{componentDesc}: '#0'")
-	public void select(final String label){
+	public void select(final String label) {
 		waitElement(getComponentLocator());
 		waitOption(getComponentLocator(), label);
-		
-		if ( !getSel().isSomethingSelected(getComponentLocator()) || !(label.equals(getSel().getSelectedLabel(getComponentLocator()))) ){
 
-			IRequestCommand action = new IRequestCommand(){
+		if (!getSel().isSomethingSelected(getComponentLocator()) || !(label.equals(getSel().getSelectedLabel(getComponentLocator())))) {
+
+			IRequestCommand action = new IRequestCommand() {
 
 				@Override
 				public void execute() {
-					getSel().select(getComponentLocator(), "label=" + label + "");	
+					getSel().select(getComponentLocator(), "label=" + label + "");
 				}
 
 			};
-		
+
 			requestDelegate.execute(action, getSel());
-			
+
 			setPreviewslyActionValue(label);
-		}	
+		}
 
 	}
 
 	@Logger("Verificando '#{componentDesc}': '#0'")
-	public void verifySelect(String label){
+	public void verifySelect(String label) {
 		waitElement(getComponentLocator());
-		try{
+		try {
 			waitOption(getComponentLocator(), label);
-		}catch (ElementNotExistException e) {
-			throw new WrongValueException("A opção "+ label + "não existe no select.");
+		} catch (ElementNotExistException e) {
+			throw new WrongValueException("A opção " + label + "não existe no select.");
 		}
 		String selectedLabel = getSel().getSelectedLabel(getComponentLocator());
-		if (!selectedLabel.equals(label)){
-			throw new WrongValueException("Expected option: " + label +  
+		if (!selectedLabel.equals(label)) {
+			throw new WrongValueException("Expected option: " + label +
 					" but actually is: '" + selectedLabel + "'");
 		}
 	}
-	
-	public String getSelectedLabel(){
+
+	public String getSelectedLabel() {
 		waitElement(getComponentLocator());
-		
-		try{
-			new Wait(){
+
+		try {
+			new Wait() {
 				@Override
 				public boolean until() {
 					return getSel().getSelectedLabel(getComponentLocator()) != null;
 				}
 			}.wait(getComponentLocator(), DEFAULT_ELEMENT_WAIT_TIME);
-		}catch(WaitTimedOutException e){
+		} catch (WaitTimedOutException e) {
 			return null;
 		}
 		return getSel().getSelectedLabel(getComponentLocator());
 	}
-	
-	private void waitOption(final String locator, final String label){
-		try{
-			new Wait(){
+
+	private void waitOption(final String locator, final String label) {
+		try {
+			new Wait() {
 				@Override
 				public boolean until() {
 					return ArrayUtils.contains(getSel().getSelectOptions(locator), label);
 				}
 			}.wait(locator, DEFAULT_ELEMENT_WAIT_TIME);
-		}catch(WaitTimedOutException e){
-			throw new ElementNotExistException("Opção '"+ label +"' não encontrada.\n" +
-					"Opções existentes: "+ Arrays.toString(getSel().getSelectOptions(locator)));
+		} catch (WaitTimedOutException e) {
+			throw new ElementNotExistException("Opção '" + label + "' não encontrada.\n" +
+					"Opções existentes: " + Arrays.toString(getSel().getSelectOptions(locator)));
 		}
 	}
-	
+
 	@Override
 	public void verifyPreviewslyAction() {
-		String expectedText = (String)getPreviewslyActionValue();
-		if ( expectedText != null)
+		String expectedText = (String) getPreviewslyActionValue();
+		if (expectedText != null)
 			verifySelect(expectedText);
 	}
 

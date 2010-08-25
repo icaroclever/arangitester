@@ -31,25 +31,25 @@ public class Config {
 
 	@XStreamAlias("default")
 	@XStreamAsAttribute
-	private String defaultEnv;
+	private String			defaultEnv;
 
 	@XStreamAlias("login-controller")
-	private String loginController;
+	private String			loginController;
 
 	@XStreamAlias("locator-class")
-	private String locatorClass;
+	private String			locatorClass;
 
 	@XStreamAlias("default-login-username")
-	private String defaultLoginUsername;
+	private String			defaultLoginUsername;
 
 	@XStreamAlias("default-login-password")
-	private String defaultLoginPassword;
+	private String			defaultLoginPassword;
 
 	@XStreamImplicit
-	private List<ConfigEnv> environments;
+	private List<ConfigEnv>	environments;
 
 	@XStreamAlias("tomcat-users")
-	private String tomcatUsers;
+	private String			tomcatUsers;
 
 	public List<ConfigEnv> getEnvironments() {
 		return environments;

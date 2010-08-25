@@ -22,11 +22,12 @@ import java.lang.annotation.Target;
 
 /**
  * Control how database tasks work.
+ * 
  * @author Lucas Gonçalves
- *
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target( { ElementType.METHOD, ElementType.TYPE })
 public @interface Db {
 	String[] value() default {};
 }

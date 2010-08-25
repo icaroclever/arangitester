@@ -24,7 +24,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 public class ConfigEnvConverter implements Converter {
 
 	@Override
-	public void marshal(Object arg0, HierarchicalStreamWriter arg1,	MarshallingContext arg2) {
+	public void marshal(Object arg0, HierarchicalStreamWriter arg1, MarshallingContext arg2) {
 		System.out.println("entrou");
 	}
 

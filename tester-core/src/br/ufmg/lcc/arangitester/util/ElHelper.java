@@ -32,8 +32,8 @@ import de.odysseus.el.util.SimpleContext;
  * 
  */
 public class ElHelper {
-	private ExpressionFactory factory = new ExpressionFactoryImpl();
-	private SimpleContext context = new SimpleContext(new CompositeResolver());
+	private ExpressionFactory	factory	= new ExpressionFactoryImpl();
+	private SimpleContext		context	= new SimpleContext(new CompositeResolver());
 
 	public void addVariable(String name, Object value) {
 		context.setVariable(name, factory.createValueExpression(value,

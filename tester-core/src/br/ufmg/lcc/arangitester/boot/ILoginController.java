@@ -23,14 +23,17 @@ public interface ILoginController {
 
 	/**
 	 * Do login if it wasn't logged and the class has annotation for loggin
-	 * @param method being executed.
-	 * @throws FatalException 
+	 * 
+	 * @param method
+	 *            being executed.
+	 * @throws FatalException
 	 */
 	public abstract void loginIfNeed(Object target, Method method) throws FatalException;
 
 	/**
 	 * Try clearing all cookies. If there are any error clearing cookies, close browser.
-	 * @throws FatalException 
+	 * 
+	 * @throws FatalException
 	 */
 	public abstract void forceLogOff() throws FatalException;
 

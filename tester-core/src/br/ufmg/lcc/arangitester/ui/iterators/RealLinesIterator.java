@@ -23,10 +23,10 @@ import br.ufmg.lcc.arangitester.ui.IUiTable;
  * Iterate only over a table. Open all existent line and iterate over then.
  * 
  * @author Lucas Gonçalves
- *
+ * 
  */
 public class RealLinesIterator extends ComponentsIteratorBase {
-	private IUiTable<? extends IUiLine> root;
+	private IUiTable<? extends IUiLine>	root;
 
 	public RealLinesIterator(IUiTable<? extends IUiLine> root) {
 		this.root = root;
@@ -34,20 +34,20 @@ public class RealLinesIterator extends ComponentsIteratorBase {
 
 	private void createList(IUiTable<? extends IUiLine> table) {
 		boolean existAtLeastOne = false;
-		int i=0;
-		do{
+		int i = 0;
+		do {
 			existAtLeastOne = false;
 			IUiLine line = table.getLine(i++);
-			for ( IUiComponent compOfLine: line ){
-				if ( compOfLine.exist() ){
+			for (IUiComponent compOfLine : line) {
+				if (compOfLine.exist()) {
 					existAtLeastOne = true;
 					break;
 				}
 			}
-			if ( existAtLeastOne ){
+			if (existAtLeastOne) {
 				getComponentsList().add(line);
 			}
-		}while(existAtLeastOne);
+		} while (existAtLeastOne);
 	}
 
 	@Override

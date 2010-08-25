@@ -28,23 +28,23 @@ import br.ufmg.lcc.arangitester.exceptions.EnvException;
  * 
  */
 public class LoginControllerFactory {
-	private static Logger LOG = Logger.getLogger(LoginControllerFactory.class);
+	private static Logger	LOG	= Logger.getLogger(LoginControllerFactory.class);
 
 	public static ILoginController getLoginController() {
-        String loginController = ConfigFactory.getConfig().getLoginController();
-        if (StringUtils.isBlank(loginController)){
-            return null;
-        }
-        try {
-            Class< ? > clazz = Class.forName(loginController);
-            LOG.debug("Carregando Login Controller: " + clazz.getName());
-            return (ILoginController) clazz.newInstance();
-        } catch (ClassNotFoundException e) {
-            throw new EnvException("Classe de controle de login não existe: " + loginController);
-        } catch (InstantiationException e) {
-            throw new EnvException("Error ao carregar a classe de controle de login: " + loginController);
-        } catch (IllegalAccessException e) {
-            throw new EnvException("Error ao carregar a classe de controle de login: " + loginController);
-        }
-    }
+		String loginController = ConfigFactory.getConfig().getLoginController();
+		if (StringUtils.isBlank(loginController)) {
+			return null;
+		}
+		try {
+			Class<?> clazz = Class.forName(loginController);
+			LOG.debug("Carregando Login Controller: " + clazz.getName());
+			return (ILoginController) clazz.newInstance();
+		} catch (ClassNotFoundException e) {
+			throw new EnvException("Classe de controle de login não existe: " + loginController);
+		} catch (InstantiationException e) {
+			throw new EnvException("Error ao carregar a classe de controle de login: " + loginController);
+		} catch (IllegalAccessException e) {
+			throw new EnvException("Error ao carregar a classe de controle de login: " + loginController);
+		}
+	}
 }

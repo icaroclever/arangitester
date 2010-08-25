@@ -22,10 +22,11 @@ public class FunctionalSuite {
 	/*
 	 * This list will contain all informations about all of use cases
 	 */
-	private List<UseCase> cases = new ArrayList<UseCase>();
+	private List<UseCase>	cases	= new ArrayList<UseCase>();
 
 	/**
 	 * Get informations about a specific use case
+	 * 
 	 * @return cases
 	 */
 	public List<UseCase> getCases() {
@@ -34,6 +35,7 @@ public class FunctionalSuite {
 
 	/**
 	 * Modify a specific use case
+	 * 
 	 * @param cases
 	 */
 	public void setCases(List<UseCase> cases) {

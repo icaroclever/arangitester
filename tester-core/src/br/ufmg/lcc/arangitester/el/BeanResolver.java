@@ -20,7 +20,7 @@ import javax.el.ELContext;
 
 import br.ufmg.lcc.arangitester.util.Refletions;
 
-public class BeanResolver extends BeanELResolver{
+public class BeanResolver extends BeanELResolver {
 	public Object getValue(ELContext context, Object base, Object property) {
 
 		if (context == null) {
@@ -32,14 +32,14 @@ public class BeanResolver extends BeanELResolver{
 		}
 
 		Object value = null;
-		try{
-			value = Refletions.getFieldValue((String)property, base);
-		}catch(Throwable e){
+		try {
+			value = Refletions.getFieldValue((String) property, base);
+		} catch (Throwable e) {
 			return null;
 		}
-		
-		context.setPropertyResolved(true);			
-		
+
+		context.setPropertyResolved(true);
+
 		return value;
 	}
 }

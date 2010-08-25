@@ -26,49 +26,50 @@ import br.ufmg.lcc.arangitester.exceptions.EnvException;
 /**
  * Decide witch file is to read the configurations. This decision is based on variable Environment named CI.
  * It cache the configurations.
+ * 
  * @author Lucas Gonçalves
  */
 public class ConfigFactory {
-    private static Logger LOG = Logger.getLogger(ConfigFactory.class);
-    private static Config config;
-    private static ConfigEnv configenv;
+	private static Logger		LOG	= Logger.getLogger(ConfigFactory.class);
+	private static Config		config;
+	private static ConfigEnv	configenv;
 
-    public static Config getConfig() {
-        if (config == null) {
-            File configFile = new File("tester-config.xml");
-            LOG.debug("Carregando arquivo de configuração: " + configFile.getAbsolutePath());
-            try {
-                config = TesterConfigReader.read(configFile);
-            } catch (FileNotFoundException e1) {
-                LOG.error("Diretório do arquivo de configuração: " + configFile.getAbsolutePath());
-                throw new EnvException("O arquivo de configuração não existe", e1);
-            }
-        }
-        return config;
-    }
+	public static Config getConfig() {
+		if (config == null) {
+			File configFile = new File("tester-config.xml");
+			LOG.debug("Carregando arquivo de configuração: " + configFile.getAbsolutePath());
+			try {
+				config = TesterConfigReader.read(configFile);
+			} catch (FileNotFoundException e1) {
+				LOG.error("Diretório do arquivo de configuração: " + configFile.getAbsolutePath());
+				throw new EnvException("O arquivo de configuração não existe", e1);
+			}
+		}
+		return config;
+	}
 
-    public static ConfigEnv getEnvSpecificConfig() {
-        if (configenv == null) {
-            String env = System.getProperty("user.name");
-            env = StringUtils.replace(env, "‡", "ç");
-            configenv = ConfigFactory.getEnv(env);
+	public static ConfigEnv getEnvSpecificConfig() {
+		if (configenv == null) {
+			String env = System.getProperty("user.name");
+			env = StringUtils.replace(env, "‡", "ç");
+			configenv = ConfigFactory.getEnv(env);
 
-            if (configenv == null && StringUtils.isNotBlank(getConfig().getDefaultEnv())) {
-                configenv = ConfigFactory.getEnv(getConfig().getDefaultEnv());
-            }
+			if (configenv == null && StringUtils.isNotBlank(getConfig().getDefaultEnv())) {
+				configenv = ConfigFactory.getEnv(getConfig().getDefaultEnv());
+			}
 
-            LOG.info("Usando configurações para ambiente: " + env);
+			LOG.info("Usando configurações para ambiente: " + env);
 
-        }
-        return configenv;
-    }
+		}
+		return configenv;
+	}
 
-    private static ConfigEnv getEnv(String env) {
-        for (ConfigEnv e : getConfig().getEnvironments()) {
-            if (e.getName().equals(env)) {
-                return e;
-            }
-        }
-        return null;
-    }
+	private static ConfigEnv getEnv(String env) {
+		for (ConfigEnv e : getConfig().getEnvironments()) {
+			if (e.getName().equals(env)) {
+				return e;
+			}
+		}
+		return null;
+	}
 }

@@ -25,8 +25,8 @@ import org.apache.commons.lang.StringUtils;
 import br.ufmg.lcc.arangitester.annotations.Logger;
 import br.ufmg.lcc.arangitester.annotations.Ui;
 import br.ufmg.lcc.arangitester.annotations.VerifyAjax;
-import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
+import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ui.actions.IUiClickable;
@@ -42,62 +42,63 @@ import com.thoughtworks.selenium.SeleniumException;
 import com.thoughtworks.selenium.Wait;
 
 /**
- * It is base for all Ui Component. 
- * Use Composite pattern. 
+ * It is base for all Ui Component.
+ * Use Composite pattern.
+ * 
  * @author Lucas Gonçalves
  * 
  */
-public abstract class UiComponent implements IUiComponent{
-	
-	public static Long DEFAULT_ELEMENT_WAIT_TIME = 10000L;// Number in mileseconds: 10000L = 10 seconds
-	
-	private IUiComponent parent;
-	protected IComponentLocator locator = LocatorFactory.getLocator();
-	
-	private Annotation[] configs;
-	
-	private String componentLocator;
-	private String componentDesc;
-	private String componentId;
-	private String componentName;
-	private String componentIndex;
+public abstract class UiComponent implements IUiComponent {
 
-	private Object previewslyActionValue;
-	
+	public static Long			DEFAULT_ELEMENT_WAIT_TIME	= 10000L;						// Number in mileseconds: 10000L = 10 seconds
+
+	private IUiComponent		parent;
+	protected IComponentLocator	locator						= LocatorFactory.getLocator();
+
+	private Annotation[]		configs;
+
+	private String				componentLocator;
+	private String				componentDesc;
+	private String				componentId;
+	private String				componentName;
+	private String				componentIndex;
+
+	private Object				previewslyActionValue;
+
 	@SuppressWarnings("unchecked")
-	public <T extends Annotation> T getConfig(Class<T> annotation){
-		for ( Annotation config: configs ){
-			if ( annotation.isAssignableFrom(config.getClass()) ){
+	public <T extends Annotation> T getConfig(Class<T> annotation) {
+		for (Annotation config : configs) {
+			if (annotation.isAssignableFrom(config.getClass())) {
 				return (T) config;
 			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	@Logger("Clicking at:  #{componentDesc}")
 	public void click() {
-        String xpath = this.getComponentLocator();
-        this.waitElement(xpath);
-        getSel().click(xpath);
+		String xpath = this.getComponentLocator();
+		this.waitElement(xpath);
+		getSel().click(xpath);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	@Logger("Double Clicking at:  #{componentDesc}")
 	public void doubleClick() {
-        String xpath = this.getComponentLocator();
-        this.waitElement(xpath);
-        getSel().click(xpath);
-        getSel().doubleClick(xpath);
+		String xpath = this.getComponentLocator();
+		this.waitElement(xpath);
+		getSel().click(xpath);
+		getSel().doubleClick(xpath);
 	}
-	
-	public void setConfigs(Annotation[] configs){
+
+	public void setConfigs(Annotation[] configs) {
 		this.configs = configs;
 		Ui basicConfig = getConfig(Ui.class);
 		setComponentLocator(basicConfig.locator());
@@ -112,194 +113,194 @@ public abstract class UiComponent implements IUiComponent{
 	 */
 	@Logger("Mouser Over:  #{componentDesc}")
 	public void mouseOver() {
-	    waitElement(getComponentLocator());
-	    getSel().mouseOver(getComponentLocator());
+		waitElement(getComponentLocator());
+		getSel().mouseOver(getComponentLocator());
 	}
-	
+
 	/**
 	 * Verify if element exist, if expectation is true. Or element not exist, if expectation is false.
-	 * @param expected Their expectation on the existence of element
+	 * 
+	 * @param expected
+	 *            Their expectation on the existence of element
 	 * @throws ElementNotExistException
 	 */
 	@Logger("Verifyng if element exists(#0):  #{componentDesc}")
-	public void verifyExist(boolean expected){
-		try{
+	public void verifyExist(boolean expected) {
+		try {
 			waitElement(getComponentLocator());
 		} catch (ElementNotExistException e) {
-			if(expected) throw new ElementNotExistException("Elemento "+ getComponentDesc() + " não presente, quando deveria estar.");
+			if (expected) throw new ElementNotExistException("Elemento " + getComponentDesc() + " não presente, quando deveria estar.");
 			return;
 		}
-		if(!expected)
-			throw new ArangiTesterException("Elemento "+ getComponentDesc() + " presente, quando NÃO deveria estar.");
+		if (!expected)
+			throw new ArangiTesterException("Elemento " + getComponentDesc() + " presente, quando NÃO deveria estar.");
 	}
-	
+
 	@Logger("Verifyng Text on #{componentDesc}: \"#0\"")
-	public void verifyTextInside(final String expectedText){
+	public void verifyTextInside(final String expectedText) {
 		verifyTextInsideWithoutLog(expectedText);
 	}
-	
-	public void verifyTextInsideWithoutLog(final String expectedText){
+
+	public void verifyTextInsideWithoutLog(final String expectedText) {
 		waitElement(getComponentLocator());
 		final String texto = getSel().getText(getComponentLocator());
-		if(!ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText)){
+		if (!ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText)) {
 			throw new WrongValueException("\nTexto esperado mas não presente: '" +
 					expectedText +
 					"'\nTexto presente: '" +
 					getText() + "'", expectedText, texto);
 		}
 	}
-	
+
 	@Logger("Verifyng text not present on #{componentDesc}: \"#0\"")
-	public void verifyTextNotPresent(final String expectedText){
+	public void verifyTextNotPresent(final String expectedText) {
 		waitElement(getComponentLocator());
 		final String texto = getSel().getText(getComponentLocator());
-		if(ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText)){
+		if (ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText)) {
 			throw new ArangiTesterException("Texto não deveria estar presente, mas está: " + expectedText);
 		}
 	}
-	
-	public boolean isTextInside(final String expectedText){
+
+	public boolean isTextInside(final String expectedText) {
 		if (this instanceof UiPage) {
 			throw new TesterException("Este método não deve ser chamado em uma página. Utilize verifyTextPresent(txt)");
 		}
 		final String locator = getComponentLocator();
 		final String texto = getSel().getText(locator);
-		return new ArangiTesterWait(DEFAULT_ELEMENT_WAIT_TIME){
+		return new ArangiTesterWait(DEFAULT_ELEMENT_WAIT_TIME) {
 			@Override
 			public boolean until() {
 				return ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText);
 			}
 		}.getCondition();
 	}
-	
-	public boolean isTextInsideWithoutWait(final String expectedText){
+
+	public boolean isTextInsideWithoutWait(final String expectedText) {
 		final String locator = getComponentLocator();
 		final String texto = getSel().getText(locator);
-		
+
 		return ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText);
 	}
 
-	
-	
 	@Override
 	public Iterator<IUiComponent> iterator() {
 		return new ComponentsIterator(this);
 	}
-	
-	public Iterator<IUiComponent> fullIterator(){
+
+	public Iterator<IUiComponent> fullIterator() {
 		return new FullComponentsIterator(this);
 	}
-	
-	public Iterator<IUiComponent> fullWithClosedTableItesIterator(){
+
+	public Iterator<IUiComponent> fullWithClosedTableItesIterator() {
 		return new FullComponentsIteratorWithRealLinesOfTable(this);
 	}
-	
-	public Iterator<IUiComponent> singleWithClosedTableItemsIterator(){
+
+	public Iterator<IUiComponent> singleWithClosedTableItemsIterator() {
 		return new FullComponentsIteratorWithFirstRealLineOfTables(this);
 	}
-	
-	public void verifyPreviewslyAction(){
-		
+
+	public void verifyPreviewslyAction() {
+
 	}
-	
-	public void validate(IUiClickable saveButton, IUiComponent divMessage){
-		
+
+	public void validate(IUiClickable saveButton, IUiComponent divMessage) {
+
 	}
-	
-	public void clearPreviewslyAction(){
+
+	public void clearPreviewslyAction() {
 		previewslyActionValue = null;
 	}
-	
+
 	@VerifyAjax
-	protected void waitElement(final String loc){
-		try{
-			new Wait(){
+	protected void waitElement(final String loc) {
+		try {
+			new Wait() {
 				@Override
 				public boolean until() {
 					return getSel().isElementPresent(loc);
 				}
 			}.wait(loc, DEFAULT_ELEMENT_WAIT_TIME);
-		}catch (Throwable e){
-			throw new ElementNotExistException("Elemento "+ loc + " não presente.", e);
+		} catch (Throwable e) {
+			throw new ElementNotExistException("Elemento " + loc + " não presente.", e);
 		}
 	}
-	
+
 	@Logger("Verify if #{componentDesc} is enable(#0)")
 	@VerifyAjax
-	public void verifyIsEnable(final boolean enable){
-		try{
-			new Wait(){
+	public void verifyIsEnable(final boolean enable) {
+		try {
+			new Wait() {
 				@Override
 				public boolean until() {
 					if (enable) {
-						return getSel().isEditable(getComponentLocator()) && !isReadOnly();	
+						return getSel().isEditable(getComponentLocator()) && !isReadOnly();
 					} else {
 						return !getSel().isEditable(getComponentLocator()) || !isReadOnly();
 					}
 				}
 			}.wait("", DEFAULT_ELEMENT_WAIT_TIME);
-		}catch (Throwable e){
-			if (enable){
-				throw new WrongValueException ("Element is NOT editable but should be.");
+		} catch (Throwable e) {
+			if (enable) {
+				throw new WrongValueException("Element is NOT editable but should be.");
 			} else {
-				throw new WrongValueException ("Element is Editable but shouldn´t be.");
-			}		
+				throw new WrongValueException("Element is Editable but shouldn´t be.");
+			}
 		}
 	}
-	
+
 	@Logger("Verify if #{componentDesc} is visible(#0)")
-	public void verifyIsVisible(boolean expected){
+	public void verifyIsVisible(boolean expected) {
 		waitElement(getComponentLocator());
 		boolean visible = getSel().isVisible(getComponentLocator());
-		
-		if ( visible && !expected ){
-			throw new WrongValueException ("Element is visible, but it shouldn't be.");
-		}else if ( !visible && expected){
-			throw new WrongValueException ("Element isn't visible, but it should be.");
+
+		if (visible && !expected) {
+			throw new WrongValueException("Element is visible, but it shouldn't be.");
+		} else if (!visible && expected) {
+			throw new WrongValueException("Element isn't visible, but it should be.");
 		}
 	}
-	
-	public boolean isEnable(){
+
+	public boolean isEnable() {
 		waitElement(getComponentLocator());
-		return ( getSel().isEditable(getComponentLocator()) && !isReadOnly() );
+		return (getSel().isEditable(getComponentLocator()) && !isReadOnly());
 	}
-	
+
 	@Logger("Verify if #{componentDesc} is visible")
-	public boolean isVisible(){
+	public boolean isVisible() {
 		waitElement(getComponentLocator());
-		return ( getSel().isVisible(getComponentLocator()) );
+		return (getSel().isVisible(getComponentLocator()));
 	}
-	
-	private boolean isReadOnly(){
-		try{
-			return getSel().getAttribute(getComponentLocator()+"@readonly").equals("readonly");
-		}catch(SeleniumException e){
-			
+
+	private boolean isReadOnly() {
+		try {
+			return getSel().getAttribute(getComponentLocator() + "@readonly").equals("readonly");
+		} catch (SeleniumException e) {
+
 		}
-		
+
 		return false;
 	}
-	
-	public boolean exist(){
+
+	public boolean exist() {
 		return getSel().isElementPresent(getComponentLocator());
 	}
-	
-	public String getText(){
+
+	public String getText() {
 		return getSel().getText(this.getComponentLocator());
 	}
-	
+
 	protected static Selenium getSel() {
 		return getInstance().getSeleniumController().getSeleniumClient();
 	}
 
-	public void setParent(IUiComponent parent){
+	public void setParent(IUiComponent parent) {
 		this.parent = parent;
 	}
-	
-	public IUiComponent getParent(){
+
+	public IUiComponent getParent() {
 		return parent;
 	}
-	
+
 	public String getComponentDesc() {
 		return componentDesc;
 	}
@@ -339,7 +340,7 @@ public abstract class UiComponent implements IUiComponent{
 	public void setComponentName(String componentName) {
 		this.componentName = componentName;
 	}
-	
+
 	public String getComponentIndex() {
 		return componentIndex;
 	}
@@ -350,7 +351,8 @@ public abstract class UiComponent implements IUiComponent{
 
 	/**
 	 * Component HTML tag representation
-	 * @return HTML tag representation 
+	 * 
+	 * @return HTML tag representation
 	 */
 	public abstract String getComponentTag();
 
@@ -361,25 +363,25 @@ public abstract class UiComponent implements IUiComponent{
 	public static void setDEFAULT_ELEMENT_WAIT_TIME(Long default_element_wait_time) {
 		DEFAULT_ELEMENT_WAIT_TIME = default_element_wait_time;
 	}
-	
+
 	/**
 	 * Gets a xPath locator using the component's id, name or index .
+	 * 
 	 * @return Xpath Locator.
 	 */
 	public String getXPathLocator() {
-		
-		if(!StringUtils.isNotBlank(this.getComponentTag()))
+
+		if (!StringUtils.isNotBlank(this.getComponentTag()))
 			throw new TesterException("Component tag has not found.");
-		
-        if (StringUtils.isNotBlank(this.getComponentId()))
-            return String.format("/%s%s[@id='%s']", this.locator.getHtmlNameSpace(),this.getComponentTag(),this.getComponentId());
-        else if (StringUtils.isNotBlank(this.getComponentName())) 
-            return String.format("/%s%s[@name='%s']", this.locator.getHtmlNameSpace(),this.getComponentTag(),this.getComponentName());
-        else if (StringUtils.isNotBlank(this.getComponentIndex()))
-        	return String.format("/%s%s[%s]", this.locator.getHtmlNameSpace(),this.getComponentTag(),this.getComponentIndex());
-        else 
-        {
-            return String.format("/%s%s", this.locator.getHtmlNameSpace(),this.getComponentTag());
-        }
-    }
+
+		if (StringUtils.isNotBlank(this.getComponentId()))
+			return String.format("/%s%s[@id='%s']", this.locator.getHtmlNameSpace(), this.getComponentTag(), this.getComponentId());
+		else if (StringUtils.isNotBlank(this.getComponentName()))
+			return String.format("/%s%s[@name='%s']", this.locator.getHtmlNameSpace(), this.getComponentTag(), this.getComponentName());
+		else if (StringUtils.isNotBlank(this.getComponentIndex()))
+			return String.format("/%s%s[%s]", this.locator.getHtmlNameSpace(), this.getComponentTag(), this.getComponentIndex());
+		else {
+			return String.format("/%s%s", this.locator.getHtmlNameSpace(), this.getComponentTag());
+		}
+	}
 }

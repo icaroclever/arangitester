@@ -21,70 +21,71 @@ import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.ICreate;
 import br.ufmg.lcc.arangitester.ui.actions.UiClickable;
 
-public class UiCheckBox extends UiClickable implements ICreate{
-	
+public class UiCheckBox extends UiClickable implements ICreate {
+
 	public String getStatus() {
 		return getSel().getValue(getComponentLocator());
 	}
-	
+
 	@Logger("Preenchendo #{componentDesc}: check")
-	public void check(){
+	public void check() {
 		setPreviewslyActionValue(true);
-		if(!getSel().getValue(getComponentLocator()).equals("on")) {
+		if (!getSel().getValue(getComponentLocator()).equals("on")) {
 			getSel().click(getComponentLocator());
 		}
-		
-		if(!isChecked()) throw new ArangiTesterException("Erro em check. O checkbox não foi marcado com sucesso");
+
+		if (!isChecked()) throw new ArangiTesterException("Erro em check. O checkbox não foi marcado com sucesso");
 	}
-	
+
 	@Logger("Preenchendo #{componentDesc}: uncheck")
-	public void uncheck(){
+	public void uncheck() {
 		setPreviewslyActionValue(false);
-		if(getSel().getValue(getComponentLocator()).equals("on")) {
+		if (getSel().getValue(getComponentLocator()).equals("on")) {
 			getSel().click(getComponentLocator());
 		}
-		
-		if(isChecked()) throw new ArangiTesterException("Erro em check. O checkbox não foi desmarcado com sucesso");
+
+		if (isChecked()) throw new ArangiTesterException("Erro em check. O checkbox não foi desmarcado com sucesso");
 	}
-	
-	public boolean isChecked(){
+
+	public boolean isChecked() {
 		return getSel().getValue(getComponentLocator()).equals("on");
 	}
-	
+
 	@Logger("Verificando #{componentDesc}: #0")
-	public void verifyValue(Boolean state){
-		if ( state != null ){
-			boolean actual = getSel().getValue(getComponentLocator()).equals("on"); 
-			if ( state != actual ){
-				throw new WrongValueException("O valor esperado é: " + state + 
+	public void verifyValue(Boolean state) {
+		if (state != null) {
+			boolean actual = getSel().getValue(getComponentLocator()).equals("on");
+			if (state != actual) {
+				throw new WrongValueException("O valor esperado é: " + state +
 						" mas o presente é: '" + actual + "'");
 			}
 		}
 	}
-	
+
 	@Logger("Verificando #{componentDesc}: $0")
 	public void verifyCheckBox(String expectedStatus) {
 		waitElement(getComponentLocator());
 		String realValue = getSel().getValue(getComponentLocator());
-		if ( !realValue.equals(expectedStatus.trim())) {
+		if (!realValue.equals(expectedStatus.trim())) {
 			throw new WrongValueException("Valor esperado: " + expectedStatus + ". Valor atual: '" + realValue + "'");
 		}
 	}
-	
+
 	@Override
 	public void verifyPreviewslyAction() {
-		Boolean expectedValue = (Boolean)getPreviewslyActionValue();
+		Boolean expectedValue = (Boolean) getPreviewslyActionValue();
 		if (expectedValue != null)
 			verifyValue(expectedValue);
 	}
-	
+
 	/**
-	 * Metodo create. 
+	 * Metodo create.
+	 * 
 	 * @see ICreate
-	 * Neste caso, seta o submit padrao para false
+	 *      Neste caso, seta o submit padrao para false
 	 */
 	@Override
-	public void create(){
+	public void create() {
 		super.create();
 		getRequestConfig().setSubmit(false);
 	}

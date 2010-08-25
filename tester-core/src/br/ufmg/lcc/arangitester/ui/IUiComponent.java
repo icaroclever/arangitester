@@ -25,52 +25,64 @@ import br.ufmg.lcc.arangitester.ui.actions.IUiClickable;
  * and a whole page.
  * 
  * Composites must implements {@link IUiComposite}
+ * 
  * @author Lucas Gonçalves
- *
+ * 
  */
-public interface IUiComponent extends Iterable<IUiComponent>{
+public interface IUiComponent extends Iterable<IUiComponent> {
 	void setConfigs(Annotation[] configs);
+
 	<T extends Annotation> T getConfig(Class<T> annotation);
-	
+
 	String getComponentDesc();
+
 	void setComponentDesc(String name);
-	
+
 	String getComponentLocator();
+
 	void setComponentLocator(String locator);
-	
+
 	String getComponentId();
+
 	void setComponentId(String id);
 
 	String getComponentName();
+
 	void setComponentName(String name);
-	
+
 	void setParent(IUiComponent parent);
+
 	IUiComponent getParent();
-	
+
 	String getComponentIndex();
+
 	void setComponentIndex(String id);
-	
+
 	/**
 	 * Verify value in the component based on preview action executed.
 	 * Components that implement this method must verify if previews action is not null
 	 */
 	void verifyPreviewslyAction();
+
 	Object getPreviewslyActionValue();
+
 	void clearPreviewslyAction();
-	
-	
+
 	/**
 	 * Element is enabled when it is ENABLED and NOT READ-ONLY.
 	 * and is not enable when it is DISABLED OR READ-ONLY.
 	 * 
 	 */
 	void verifyIsEnable(boolean enable);
+
 	boolean exist();
-	
+
 	void click();
+
 	void doubleClick();
-	
+
 	String getText();
+
 	/**
 	 * Force validation on field.
 	 */

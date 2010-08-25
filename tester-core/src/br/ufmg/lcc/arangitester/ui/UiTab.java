@@ -19,14 +19,14 @@ import br.ufmg.lcc.arangitester.ui.actions.IUiClickable;
 import br.ufmg.lcc.arangitester.ui.actions.UiClickable;
 
 /**
- * Implements a tab. 
+ * Implements a tab.
  */
 public class UiTab extends UiClickable {
 	@Override
 	public void verifyPreviewslyAction() {
-		this.click();		
+		this.click();
 	}
-	
+
 	@Override
 	public void validate(IUiClickable saveButton, IUiComponent divMessage) {
 		this.clickWithOutLogger();

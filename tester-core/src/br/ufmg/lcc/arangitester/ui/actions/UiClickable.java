@@ -21,18 +21,20 @@ import br.ufmg.lcc.arangitester.annotations.RequestConfigImp;
 import br.ufmg.lcc.arangitester.ioc.ICreate;
 import br.ufmg.lcc.arangitester.ui.UiComponent;
 import br.ufmg.lcc.arangitester.ui.actions.IRequest.IRequestCommand;
+
 /**
  * Permit a common action click().
+ * 
  * @author Lucas Gonçalves
- *
+ * 
  */
-public class UiClickable extends UiComponent implements ICreate, IUiClickable{
-	private Request requestDelegate;
-	
-	public void clickWithOutLogger(){
+public class UiClickable extends UiComponent implements ICreate, IUiClickable {
+	private Request	requestDelegate;
+
+	public void clickWithOutLogger() {
 		waitElement(getComponentLocator());
 		super.mouseOver();
-		IRequestCommand action = new IRequestCommand(){
+		IRequestCommand action = new IRequestCommand() {
 
 			@Override
 			public void execute() {
@@ -42,12 +44,12 @@ public class UiClickable extends UiComponent implements ICreate, IUiClickable{
 		};
 		requestDelegate.execute(action, getSel());
 	}
-	
+
 	/**
 	 * Click on button
 	 */
 	@Logger("Clicando: #{componentDesc}")
-	public void click(){
+	public void click() {
 		clickWithOutLogger();
 	}
 

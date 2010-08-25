@@ -28,20 +28,19 @@ import br.ufmg.lcc.arangitester.config.ConfigTable;
  * 
  */
 public class DbHelper {
-	
-	
+
 	public static void printStatistics(IDataSet filteredDs) {
 		Logger log = Logger.getLogger("DB_EXPORT");
 		try {
 			int total = 0;
-			for (String name: filteredDs.getTableNames()) {
+			for (String name : filteredDs.getTableNames()) {
 				ITable table = filteredDs.getTable(name);
 				int rowCount = table.getRowCount();
 				total += rowCount;
 				if (rowCount > 100) {
-					log.warn(String.format("%s: %s",name ,rowCount ));
+					log.warn(String.format("%s: %s", name, rowCount));
 				} else {
-					log.debug(String.format("%s: %s",name ,rowCount ));
+					log.debug(String.format("%s: %s", name, rowCount));
 				}
 			}
 			log.info("Total Lines: " + total);
@@ -49,19 +48,19 @@ public class DbHelper {
 			log.error("Printing statistics");
 		}
 	}
-	
+
 	public static DefaultTableFilter getIncludeExcludeFilter(ConfigDumpFile dumpFileConfig) {
 		DefaultTableFilter filter = new DefaultTableFilter();
-		if (dumpFileConfig.getTables()!= null) {
-			for(ConfigTable table: dumpFileConfig.getTables()) {
+		if (dumpFileConfig.getTables() != null) {
+			for (ConfigTable table : dumpFileConfig.getTables()) {
 				if (table.isNot()) {
 					filter.excludeTable(table.getName());
 				} else {
 					filter.includeTable(table.getName());
 				}
 			}
-		}		
+		}
 		return filter;
 	}
-	
+
 }

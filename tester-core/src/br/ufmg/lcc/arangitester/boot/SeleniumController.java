@@ -29,28 +29,29 @@ import com.thoughtworks.selenium.Selenium;
 
 /**
  * Control server and client components of Selenium
+ * 
  * @author Lucas Gonçalves
- *
+ * 
  */
 public class SeleniumController {
 
-	private SeleniumServer seleniumServer;
-	private Selenium seleniumClient;
-	private ConfigEnv config;
-	private static final Integer DEFAULT_SELENIUM_SERVER_PORT=6889;
-	
-	public SeleniumController(ConfigEnv config){
+	private SeleniumServer			seleniumServer;
+	private Selenium				seleniumClient;
+	private ConfigEnv				config;
+	private static final Integer	DEFAULT_SELENIUM_SERVER_PORT	= 6889;
+
+	public SeleniumController(ConfigEnv config) {
 		this.config = config;
 	}
-	
+
 	/**
 	 * Destroys client clicking in close button
 	 */
-	public void destroyClient(){
-		if ( seleniumClient != null ){
-			try{
+	public void destroyClient() {
+		if (seleniumClient != null) {
+			try {
 				seleniumClient.close();
-			}catch (Exception e) {
+			} catch (Exception e) {
 				Context.getInstance().getResult().addError("O browser não foi inicializado, portanto não " +
 						"há necessidade de clicar no botão fechar.");
 			}
@@ -58,50 +59,50 @@ public class SeleniumController {
 			seleniumClient = null;
 		}
 	}
-	
+
 	/**
 	 * Destroys client ending the test session, killing the browser
 	 */
-	public void killClient(){
-		if ( seleniumClient != null ){
+	public void killClient() {
+		if (seleniumClient != null) {
 			seleniumClient.stop();
 			seleniumClient = null;
 		}
 	}
 
 	public Selenium getSeleniumClient() {
-		if ( seleniumClient == null ){
-			
-			//log.debug("Starting selenium client");
-			//log.debug(" browser: " +config.getBrowser() + " url:" + getUrl());
+		if (seleniumClient == null) {
+
+			// log.debug("Starting selenium client");
+			// log.debug(" browser: " +config.getBrowser() + " url:" + getUrl());
 			seleniumClient = new DefaultSelenium("localhost", getServer().getPort(), config.getBrowser(), getUrl());
 			seleniumClient.start();
-		try{
-			seleniumClient.getBodyText();
-		} catch (Exception e) {
-				if(e.getMessage().contains("sessionId should not be null"))
+			try {
+				seleniumClient.getBodyText();
+			} catch (Exception e) {
+				if (e.getMessage().contains("sessionId should not be null"))
 					throw new EnvException("Não foi possível inicializar o selenium." +
-						" Verifique as configurações do mesmo. Browser, servidor, porta, etc.",e);
+							" Verifique as configurações do mesmo. Browser, servidor, porta, etc.", e);
 			}
 		}
 		return seleniumClient;
 	}
-	
-	private SeleniumServer getServer(){
-		
-		if ( seleniumServer == null ){
-			try{
-				int selServerPort = (config.getSeleniumServerPort()!=null && !config.getSeleniumServerPort().equals(""))?
-						new Integer(config.getSeleniumServerPort()).intValue():DEFAULT_SELENIUM_SERVER_PORT;
-				
-				//log.debug("Starting selenium server");
+
+	private SeleniumServer getServer() {
+
+		if (seleniumServer == null) {
+			try {
+				int selServerPort = (config.getSeleniumServerPort() != null && !config.getSeleniumServerPort().equals("")) ?
+						new Integer(config.getSeleniumServerPort()).intValue() : DEFAULT_SELENIUM_SERVER_PORT;
+
+				// log.debug("Starting selenium server");
 				RemoteControlConfiguration remoteControlConfiguration = new RemoteControlConfiguration();
 				remoteControlConfiguration.setSingleWindow(true);
 				remoteControlConfiguration.setDontTouchLogging(true);
 				remoteControlConfiguration.setBrowserSideLogEnabled(false);
 				remoteControlConfiguration.setReuseBrowserSessions(false);
 				remoteControlConfiguration.setPort(selServerPort);
-				if(config.getFirefoxProfile() != null && !config.getFirefoxProfile().equals(""))
+				if (config.getFirefoxProfile() != null && !config.getFirefoxProfile().equals(""))
 					remoteControlConfiguration.setFirefoxProfileTemplate(new File(config.getFirefoxProfile()));
 				seleniumServer = new SeleniumServer(remoteControlConfiguration);
 				seleniumServer.start();
@@ -111,18 +112,18 @@ public class SeleniumController {
 		}
 		return seleniumServer;
 	}
-	
-	private String getUrl(){
+
+	private String getUrl() {
 		return "http://" + config.getHost() + ":" + config.getPort();
 	}
 
 	/**
 	 * Stop Selenium Server end clients
 	 */
-	public void stop(){
-		if ( seleniumClient != null )
+	public void stop() {
+		if (seleniumClient != null)
 			destroyClient();
-		if ( seleniumServer != null)
+		if (seleniumServer != null)
 			seleniumServer.stop();
 	}
 }

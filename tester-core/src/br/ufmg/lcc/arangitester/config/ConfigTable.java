@@ -20,12 +20,12 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 @XStreamAlias("table")
 public class ConfigTable {
-	
+
 	@XStreamAsAttribute
-	private boolean not;
-	
+	private boolean	not;
+
 	@XStreamAsAttribute
-	private String name;
+	private String	name;
 
 	public boolean isNot() {
 		return not;
@@ -42,5 +42,5 @@ public class ConfigTable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }

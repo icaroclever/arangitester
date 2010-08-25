@@ -40,7 +40,7 @@ public class PostgresDb implements DriverDb {
 	@Override
 	public void export(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
-		
+
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection, schema.getSchema());
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, schema.getQualifiedTableName());
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, schema.getCaseSensetive());
@@ -50,7 +50,7 @@ public class PostgresDb implements DriverDb {
 		// ITableFilter filter = new DatabaseSequenceFilter(connection);
 		IDataSet fullDataSet = new FilteredDataSet(DbHelper.getIncludeExcludeFilter(schema), dataset);
 		DbHelper.printStatistics(fullDataSet);
-		
+
 		XmlDataSet.write(fullDataSet, new FileOutputStream(schema.getName() + ".xml"));
 
 		connection.close();
@@ -68,15 +68,15 @@ public class PostgresDb implements DriverDb {
 		jdbcConnection.createStatement().execute("update pg_constraint set condeferrable = 't' where contype = 'f';");
 		jdbcConnection.createStatement().execute("update pg_trigger set tgdeferrable=true where tgisconstraint = true;");
 		jdbcConnection.createStatement().execute("SET CONSTRAINTS ALL DEFERRED");
-		
+
 		IDataSet ds = new XmlDataSet(new FileInputStream(schema.getName() + ".xml"));
 
 		// ITableFilter filter = new DatabaseSequenceFilter(connection);
 		// IDataSet fullDataSet = new FilteredDataSet(filter, ds);
-		
+
 		DatabaseOperation.DELETE_ALL.execute(connection, ds);
 		jdbcConnection.commit();
-		
+
 		jdbcConnection.createStatement().execute("update pg_constraint set condeferrable = 't' where contype = 'f';");
 		jdbcConnection.createStatement().execute("update pg_trigger set tgdeferrable=true where tgisconstraint = true;");
 		jdbcConnection.createStatement().execute("SET CONSTRAINTS ALL DEFERRED");
