@@ -20,6 +20,7 @@ import static br.ufmg.lcc.arangitester.Context.getInstance;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.lang.StringUtils;
 
 import br.ufmg.lcc.arangitester.Context;
@@ -29,8 +30,8 @@ import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.InvokeException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
-import br.ufmg.lcc.arangitester.util.Refletions;
 import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
+import br.ufmg.lcc.arangitester.util.Refletions;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.Wait;
@@ -265,7 +266,12 @@ public class UiPage extends UiComponent implements IUiComposite {
 	 * @return null if not exist
 	 */
 	public Page getConfig() {
-		return super.getClass().getSuperclass().getAnnotation(Page.class);
+		for (Object clazz : ClassUtils.getAllSuperclasses(super.getClass())) {
+			Page page = ((Class<?>) clazz).getAnnotation(Page.class);
+			if (page != null) return page;
+		}
+
+		return null;
 	}
 
 	/**

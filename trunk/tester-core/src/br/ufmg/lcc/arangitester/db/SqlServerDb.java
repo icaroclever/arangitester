@@ -1,10 +1,13 @@
 package br.ufmg.lcc.arangitester.db;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.text.DecimalFormat;
 
+import org.apache.log4j.Logger;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
@@ -21,6 +24,7 @@ import br.ufmg.lcc.arangitester.config.ConfigDumpFile;
  * 
  */
 public class SqlServerDb implements DriverDb {
+	Logger	log	= Logger.getLogger("DB_EXPORT");
 
 	@Override
 	public void export(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
@@ -34,7 +38,9 @@ public class SqlServerDb implements DriverDb {
 		DbHelper.printStatistics(filteredDs);
 
 		XmlDataSet.write(filteredDs, new FileOutputStream(schema.getName() + ".xml"));
-
+		long length = new File(schema.getName() + ".xml").length();
+		double mb = (double) length / (double)1048576;
+		log.info("File Size: " + new DecimalFormat("0.0").format(mb) + "MB");
 		connection.close();
 	}
 
@@ -52,7 +58,7 @@ public class SqlServerDb implements DriverDb {
 		InsertIdentityOperation.CLEAN_INSERT.execute(connection, ds);
 
 		jdbcConnection.createStatement().execute("exec sp_MSforeachtable 'ALTER TABLE ? CHECK CONSTRAINT ALL'");
-		jdbcConnection.createStatement().execute("exec sp_MSforeachtable 'ALTER TABLE ? ENABLE TRIGGER ALL'");
+		//jdbcConnection.createStatement().execute("exec sp_MSforeachtable 'ALTER TABLE ? ENABLE TRIGGER ALL'");
 
 		jdbcConnection.commit();
 		connection.close();
