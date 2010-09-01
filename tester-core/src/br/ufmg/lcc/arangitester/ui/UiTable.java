@@ -24,6 +24,7 @@ import org.apache.commons.lang.StringUtils;
 import com.thoughtworks.selenium.Wait;
 import br.ufmg.lcc.arangitester.annotations.Line;
 import br.ufmg.lcc.arangitester.annotations.Logger;
+import br.ufmg.lcc.arangitester.annotations.VerifyAjax;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
@@ -119,6 +120,7 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	 */
 	@SuppressWarnings("unchecked")
 	// TODO Refazer essa função, não bem específicamente.
+	@VerifyAjax
 	public T getLineFromContent(String text) {
 		Iterator<IUiLine> iterator = createRealLinesIterator();
 		IUiLine line;
