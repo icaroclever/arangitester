@@ -21,15 +21,15 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.thoughtworks.selenium.Wait;
 import br.ufmg.lcc.arangitester.annotations.Line;
 import br.ufmg.lcc.arangitester.annotations.Logger;
-import br.ufmg.lcc.arangitester.annotations.VerifyAjax;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
 import br.ufmg.lcc.arangitester.exceptions.WrongValueException;
 import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.ui.iterators.RealLinesIterator;
+
+import com.thoughtworks.selenium.Wait;
 
 public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<T> {
 
@@ -120,20 +120,39 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	 */
 	@SuppressWarnings("unchecked")
 	// TODO Refazer essa função, não bem específicamente.
-	@VerifyAjax
-	public T getLineFromContent(String text) {
-		Iterator<IUiLine> iterator = createRealLinesIterator();
-		IUiLine line;
-		String xpath;
-		while (iterator.hasNext()) {
-			line = iterator.next();
-			xpath = "xpath=//" + super.locator.getHtmlNameSpace() + "table[@id='" + getComponentId() + "']/" + super.locator.getHtmlNameSpace() + "tbody/"
-					+ super.locator.getHtmlNameSpace() + "tr[" + (line.getIndex() + 1) + "]";
-
-			if (getSel().getText(xpath).contains(text))
-				return (T) line;
+	public T getLineFromContent(final String text) {
+		try {
+			WaitLine waitLine = new WaitLine(text);
+			waitLine.wait("msg", DEFAULT_ELEMENT_WAIT_TIME);
+			return (T) waitLine.line;
+		} catch (Throwable e) {
+			throw new ArangiTesterException("Nenhuma linha com o texto: " + text);
 		}
-		throw new ArangiTesterException("Nenhuma linha com o texto: " + text);
+	}
+
+	private class WaitLine extends Wait {
+		String	text;
+		IUiLine	line;
+
+		public WaitLine(String text) {
+			this.text = text;
+		}
+
+		@Override
+		public boolean until() {
+			waitElement(getComponentLocator());
+			Iterator<IUiLine> iterator = createRealLinesIterator();
+			String xpath;
+			while (iterator.hasNext()) {
+				line = iterator.next();
+				xpath = "xpath=//" + locator.getHtmlNameSpace() + "table[@id='" + getComponentId() + "']/" + locator.getHtmlNameSpace() + "tbody/"
+						+ locator.getHtmlNameSpace() + "tr[" + (line.getIndex() + 1) + "]";
+
+				if (getSel().getText(xpath).contains(text))
+					return true;
+			}
+			return false;
+		}
 	}
 
 	public boolean existLineFromContent(String text) {
