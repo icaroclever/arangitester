@@ -56,7 +56,8 @@ public abstract class BaseLoginController implements ILoginController {
 		Login login = target.getClass().getAnnotation(Login.class);
 
 		Login methodLogin = null;
-		Field[] extraFields = login.fields();
+		Field[] extraFields = null;
+		if (login != null) login.fields();
 
 		if (method != null) {
 			methodLogin = method.getAnnotation(Login.class);

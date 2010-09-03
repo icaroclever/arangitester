@@ -42,6 +42,18 @@ public class UiPage extends UiComponent implements IUiComposite {
 	public static String	DEFAULT_PAGE_WAIT_TIME	= "50000";	// In miliseconds: 50000 = 50 seconds
 
 	/**
+	 * Invoke a url. Partial path. Ex. To involke  http://localhost:8080/app/test.faces
+	 * pass only /test.faces. http://localhost:8080/app will be appended reading config.
+	 * 
+	 * @param url
+	 *            URL requested
+	 */
+	@Logger("Invoking Url: #0")
+	public void invokePath(String url) {
+		invoke(Context.getInstance().getConfig().getPath() + "/" + url, "");
+	}
+
+	/**
 	 * Invoke a url. Url must be Complete. Ex.: http://localhost:8080/app/test.faces
 	 * To get http://localhost:8080/app from server.properties use LccContext.getInstance().getConfig().getPath()
 	 * 
@@ -143,11 +155,11 @@ public class UiPage extends UiComponent implements IUiComposite {
 		final String locator = "xpath=/" + this.getXPathLocator();
 		final String expectedTextWithoutSpaces = StringUtils.deleteWhitespace(expectedText);
 		try {
-			waitElement(locator);
+			//waitElement(locator);
 			new Wait() {
 				@Override
 				public boolean until() {
-					String html = getSel().getText(locator);
+					String html = getSel().getBodyText();
 					html = StringUtils.deleteWhitespace(html);
 					if (!html.contains(expectedTextWithoutSpaces)) {
 						return false;
