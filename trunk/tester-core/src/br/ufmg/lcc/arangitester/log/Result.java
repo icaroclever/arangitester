@@ -63,6 +63,9 @@ public class Result implements IResult {
 	public void addInfo(String msg) {
 		if (currentTestCase == null) {
 			msg = "  boot: " + msg;
+			String status = msg.endsWith(LoggerImpl.STATUS_OK) ? LoggerImpl.STATUS_OK : LoggerImpl.STATUS_ERROR;
+			msg = msg.substring(0, msg.length() - status.length());
+			msg = LoggerImpl.getFormatedStatusMsg(msg.trim(), status);
 		}
 
 		LOG.info(MSG_PREFIX + msg);
