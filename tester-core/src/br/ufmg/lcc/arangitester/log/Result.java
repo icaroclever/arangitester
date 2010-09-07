@@ -37,14 +37,13 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.xml.transform.Transformer;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.Context;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.interceptors.LoggerImpl;
+import br.ufmg.lcc.arangitester.transformers.ResultTransformer;
 import br.ufmg.lcc.arangitester.util.StackTraceUtil;
 
 import com.thoughtworks.selenium.Selenium;
@@ -270,7 +269,7 @@ public class Result implements IResult {
 		File fileOut = new File(file.getParentFile(), StringUtils.substringBefore(file.getName(), ".") + ".html");
 		try {
 			InputStream xslIs = this.getClass().getClassLoader().getResourceAsStream("toHtml.xsl");
-			br.ufmg.lcc.arangitester.transformers.Transformer.tranform(file, fileOut, xslIs);
+			ResultTransformer.tranform(file, fileOut, xslIs);
 		} catch (Exception e) {
 			LOG.error("Fail create html result file", e);
 		}

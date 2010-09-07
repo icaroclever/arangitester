@@ -17,8 +17,6 @@ package br.ufmg.lcc.arangitester.boot;
 
 import java.lang.reflect.Method;
 
-import org.apache.commons.lang.StringUtils;
-
 import br.ufmg.lcc.arangitester.Context;
 import br.ufmg.lcc.arangitester.annotations.Field;
 import br.ufmg.lcc.arangitester.annotations.Login;
@@ -54,51 +52,16 @@ public abstract class BaseLoginController implements ILoginController {
 	@Override
 	public void loginIfNeed(Object target, Method method) throws FatalException {
 		Login login = target.getClass().getAnnotation(Login.class);
+		if (method != null) login = method.getAnnotation(Login.class);
 
-		Login methodLogin = null;
-		Field[] extraFields = null;
-		if (login != null) login.fields();
-
-		if (method != null) {
-			methodLogin = method.getAnnotation(Login.class);
-		}
-
-		String username = null;
-		String password = null;
-
-		if ((methodLogin != null && !user.equals(methodLogin.user()))) {
+		if (needChangeUser(login) || needLogOff(login)) {
 			forceLogOff();
-			username = methodLogin.user();
-			password = methodLogin.password();
-			extraFields = methodLogin.fields();
-		} else if (login != null) {
-			if (login.user().equals("NULL")) {
-				if (StringUtils.isNotBlank(ConfigFactory.getConfig().getDefaultLoginUsername())) {
-					username = ConfigFactory.getConfig().getDefaultLoginUsername();
-				} else {
-					username = "admin";
-				}
-			} else {
-				username = login.user();
-			}
-			if (login.password().equals("NULL")) {
-				if (StringUtils.isNotBlank(ConfigFactory.getConfig().getDefaultLoginPassword())) {
-					password = ConfigFactory.getConfig().getDefaultLoginPassword();
-				} else {
-					password = "senha";
-				}
-			} else {
-				password = login.password();
-			}
 		}
 
-		if (login != null && alreadyLogged == false) {
-			login(username, password, extraFields);
-			if (methodLogin != null)
-				user = methodLogin.user();
-			else
-				user = login.user();
-			alreadyLogged = true;
+		if (login != null && isAlreadyLogged() == false) {
+			login(getUserName(login), getPassword(login), login.fields());
+			user = getUserName(login);
+			setAlreadyLogged(true);
 		}
 	}
 
@@ -111,6 +74,7 @@ public abstract class BaseLoginController implements ILoginController {
 			Context.getInstance().getSeleniumController().killClient();
 		} finally {
 			setAlreadyLogged(false);
+			user = null;
 		}
 	}
 
@@ -122,5 +86,35 @@ public abstract class BaseLoginController implements ILoginController {
 	@Override
 	public void setAlreadyLogged(boolean alreadyLogged) {
 		this.alreadyLogged = alreadyLogged;
+	}
+
+	private boolean needLogOff(Login login) {
+		return alreadyLogged && login == null;
+	}
+
+	private boolean needChangeUser(Login login) {
+		return login != null && alreadyLogged && !user.equals(login.user());
+	}
+
+	private String getUserName(Login login) {
+		if (login.user().equals("NULL")) {
+			if (ConfigFactory.getConfig().getDefaultLoginUsername() != null) {
+				return ConfigFactory.getConfig().getDefaultLoginUsername();
+			} else {
+				return "admin";
+			}
+		}
+		return login.user();
+	}
+
+	private String getPassword(Login login) {
+		if (login.password().equals("NULL")) {
+			if (ConfigFactory.getConfig().getDefaultLoginPassword() != null) {
+				return ConfigFactory.getConfig().getDefaultLoginPassword();
+			} else {
+				return "senha";
+			}
+		}
+		return login.password();
 	}
 }
