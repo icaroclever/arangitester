@@ -52,7 +52,7 @@ public abstract class BaseLoginController implements ILoginController {
 	@Override
 	public void loginIfNeed(Object target, Method method) throws FatalException {
 		Login login = target.getClass().getAnnotation(Login.class);
-		if (method != null) login = method.getAnnotation(Login.class);
+		if (method != null && method.getAnnotation(Login.class) != null) login = method.getAnnotation(Login.class);
 
 		if (needChangeUser(login) || needLogOff(login)) {
 			forceLogOff();

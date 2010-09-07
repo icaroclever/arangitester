@@ -74,7 +74,7 @@ public class UiPage extends UiComponent implements IUiComposite {
 	 * @param title
 	 *            Expected page title
 	 */
-	@Logger("Invoking Url: #0 \tTitle: #1")
+	@Logger("Invoking Url: #0 Title: #1")
 	public void invoke(String url, String title) {
 
 		if (title == null)
