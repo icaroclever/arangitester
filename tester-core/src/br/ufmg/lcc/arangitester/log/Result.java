@@ -269,13 +269,13 @@ public class Result implements IResult {
 	public void save(File file) {
 		XmlResult xml = new XmlResult();
 		xml.save(file, getTest());
-		File fileOut = new File(file.getParentFile(), StringUtils.substringBefore(file.getName(), ".") + ".html");
-		try {
-			InputStream xslIs = this.getClass().getClassLoader().getResourceAsStream("toHtml.xsl");
-			ResultTransformer.tranform(file, fileOut, xslIs);
-		} catch (Exception e) {
-			LOG.error("Fail create html result file", e);
-		}
+//		File fileOut = new File(file.getParentFile(), StringUtils.substringBefore(file.getName(), ".") + ".html");
+//		try {
+//			InputStream xslIs = this.getClass().getClassLoader().getResourceAsStream("toHtml.xsl");
+//			ResultTransformer.tranform(file, fileOut, xslIs);
+//		} catch (Exception e) {
+//			LOG.error("Fail create html result file", e);
+//		}
 	}
 
 	public void addObs(String annotation) {
