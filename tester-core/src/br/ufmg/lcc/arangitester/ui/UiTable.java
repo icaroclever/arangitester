@@ -143,12 +143,16 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 			waitElement(getComponentLocator());
 			Iterator<IUiLine> iterator = createRealLinesIterator();
 			String xpath;
+			String xpathWithOutLocator;
 			while (iterator.hasNext()) {
 				line = iterator.next();
-				xpath = "xpath=//" + locator.getHtmlNameSpace() + "table[@id='" + getComponentId() + "']/" + locator.getHtmlNameSpace() + "tbody/"
-						+ locator.getHtmlNameSpace() + "tr[" + (line.getIndex() + 1) + "]";
+				xpath = String.format("xpath=//%stable[@id='%s']/%stbody/%str[%s]", locator.getHtmlNameSpace(), getComponentId(), locator.getHtmlNameSpace(), locator
+						.getHtmlNameSpace(), line.getIndex() + 1);
 
-				if (getSel().getText(xpath).contains(text))
+				xpathWithOutLocator = String.format("xpath=//table[@id='%s']/tbody/tr[%s]", getComponentId(), line.getIndex() + 1);
+				// With richfaces using xhtml, one table has strange behavior, same time need namespace some time not.
+				if ((getSel().isElementPresent(xpath) && getSel().getText(xpath).contains(text))
+						|| (getSel().isElementPresent(xpathWithOutLocator) && getSel().getText(xpathWithOutLocator).contains(text)))
 					return true;
 			}
 			return false;
