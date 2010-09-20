@@ -67,12 +67,11 @@ public abstract class UiComponent implements IUiComponent {
 
 	@SuppressWarnings("unchecked")
 	public <T extends Annotation> T getConfig(Class<T> annotation) {
-		if (configs != null)
-			for (Annotation config : configs) {
-				if (annotation.isAssignableFrom(config.getClass())) {
-					return (T) config;
-				}
+		if (configs != null) for (Annotation config : configs) {
+			if (annotation.isAssignableFrom(config.getClass())) {
+				return (T) config;
 			}
+		}
 		return null;
 	}
 
@@ -133,8 +132,7 @@ public abstract class UiComponent implements IUiComponent {
 			if (expected) throw new ElementNotExistException("Elemento " + getComponentDesc() + " não presente, quando deveria estar.");
 			return;
 		}
-		if (!expected)
-			throw new ArangiTesterException("Elemento " + getComponentDesc() + " presente, quando NÃO deveria estar.");
+		if (!expected) throw new ArangiTesterException("Elemento " + getComponentDesc() + " presente, quando NÃO deveria estar.");
 	}
 
 	@Logger("Verifyng Text on #{componentDesc}: \"#0\"")
@@ -151,8 +149,7 @@ public abstract class UiComponent implements IUiComponent {
 
 	@Logger("Verifyng text not present on #{componentDesc}: \"#0\"")
 	public void verifyTextNotPresent(final String expectedText) {
-		if (isTextInside(expectedText))
-			throw new ArangiTesterException("Texto não deveria estar presente, mas está: " + expectedText);
+		if (isTextInside(expectedText)) throw new ArangiTesterException("Texto não deveria estar presente, mas está: " + expectedText);
 	}
 
 	public boolean isTextInside(final String expectedText) {
@@ -348,7 +345,9 @@ public abstract class UiComponent implements IUiComponent {
 	 * 
 	 * @return HTML tag representation
 	 */
-	public abstract String getComponentTag();
+	public String getComponentTag() {
+		return null;
+	}
 
 	public static Long getDEFAULT_ELEMENT_WAIT_TIME() {
 		return DEFAULT_ELEMENT_WAIT_TIME;
@@ -365,8 +364,7 @@ public abstract class UiComponent implements IUiComponent {
 	 */
 	public String getXPathLocator() {
 
-		if (!StringUtils.isNotBlank(this.getComponentTag()))
-			throw new TesterException("Component tag has not found.");
+		if (!StringUtils.isNotBlank(this.getComponentTag())) throw new TesterException("Component tag has not found.");
 
 		if (StringUtils.isNotBlank(this.getComponentId()))
 			return String.format("/%s%s[@id='%s']", this.locator.getHtmlNameSpace(), this.getComponentTag(), this.getComponentId());
