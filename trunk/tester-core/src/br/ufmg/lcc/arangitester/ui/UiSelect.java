@@ -137,7 +137,6 @@ public class UiSelect extends UiComponent implements ICreate {
 
 	@Override
 	public String getComponentTag() {
-		// TODO Auto-generated method stub
 		return "select";
 	}
 }

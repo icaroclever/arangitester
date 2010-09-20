@@ -119,7 +119,6 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	// TODO Refazer essa função, não bem específicamente.
 	public T getLineFromContent(final String text) {
 		try {
 			WaitLine waitLine = new WaitLine(text);

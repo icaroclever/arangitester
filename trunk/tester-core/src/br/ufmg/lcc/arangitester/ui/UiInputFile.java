@@ -53,7 +53,6 @@ public class UiInputFile extends UiComponent {
 
 	@Override
 	public String getComponentTag() {
-		// TODO Auto-generated method stub
 		return "input";
 	}
 }

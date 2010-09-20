@@ -64,7 +64,6 @@ public class UiClickable extends UiComponent implements ICreate, IUiClickable {
 
 	@Override
 	public String getComponentTag() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
