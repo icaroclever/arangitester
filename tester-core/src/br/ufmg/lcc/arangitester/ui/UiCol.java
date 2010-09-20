@@ -26,7 +26,6 @@ public class UiCol extends UiComponent {
 
 	@Override
 	public String getComponentTag() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

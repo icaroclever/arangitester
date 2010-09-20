@@ -325,7 +325,6 @@ public class UiInputText extends UiComponent {
 
 	@Override
 	public String getComponentTag() {
-		// TODO Auto-generated method stub
 		return "input";
 	}
 }
