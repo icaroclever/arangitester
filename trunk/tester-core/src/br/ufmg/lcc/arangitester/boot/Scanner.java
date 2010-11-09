@@ -87,7 +87,7 @@ public class Scanner {
 			handleItem(name);
 		}
 	}
-
+	
 	private void handleDirectory(File file, String path) {
 		for (File child : file.listFiles()) {
 			String newPath = path == null ? child.getName() : path + '/' + child.getName();
@@ -99,8 +99,12 @@ public class Scanner {
 		}
 	}
 
+	/** Recover the paths of class items which their names end with "FunctionalTest", "TestCase" or "TestSuite".
+	 *  @param name		absolute item path
+	 */
 	public void handleItem(String name) {
-		if ((name.endsWith("FunctionalTest.class") || name.endsWith("TestCase.class")) && !name.equals("LccTestCase.class") && !name.endsWith("ITestCase.class")) {
+
+		if (name.endsWith("FunctionalTest.class") || name.endsWith("TestCase.class") || name.endsWith("TestSuite.class")) {
 			try {
 				name = StringUtils.substringBeforeLast(StringUtils.replace(name, "/", "."), ".");
 				tests.add(getClass().getClassLoader().loadClass(name));
@@ -117,5 +121,4 @@ public class Scanner {
 	public void setTests(List<Class<?>> tests) {
 		this.tests = tests;
 	}
-
 }
