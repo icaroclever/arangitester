@@ -31,7 +31,6 @@ package br.ufmg.lcc.arangitester.log;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
@@ -43,7 +42,6 @@ import org.apache.log4j.Logger;
 import br.ufmg.lcc.arangitester.Context;
 import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.interceptors.LoggerImpl;
-import br.ufmg.lcc.arangitester.transformers.ResultTransformer;
 import br.ufmg.lcc.arangitester.util.StackTraceUtil;
 
 import com.thoughtworks.selenium.Selenium;
@@ -269,13 +267,6 @@ public class Result implements IResult {
 	public void save(File file) {
 		XmlResult xml = new XmlResult();
 		xml.save(file, getTest());
-//		File fileOut = new File(file.getParentFile(), StringUtils.substringBefore(file.getName(), ".") + ".html");
-//		try {
-//			InputStream xslIs = this.getClass().getClassLoader().getResourceAsStream("toHtml.xsl");
-//			ResultTransformer.tranform(file, fileOut, xslIs);
-//		} catch (Exception e) {
-//			LOG.error("Fail create html result file", e);
-//		}
 	}
 
 	public void addObs(String annotation) {
