@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import br.ufmg.lcc.arangitester.Context;
 import br.ufmg.lcc.arangitester.annotations.Test;
@@ -30,6 +31,7 @@ import br.ufmg.lcc.arangitester.arangi.pages.NullSearchPage;
 import br.ufmg.lcc.arangitester.arangi.pages.ArangiPage;
 import br.ufmg.lcc.arangitester.arangi.ui.Button;
 import br.ufmg.lcc.arangitester.arangi.ui.GenericLine;
+import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
@@ -46,9 +48,9 @@ import br.ufmg.lcc.arangitester.ui.actions.IRequest;
  */
 public class CrudPattern extends BasePatterns{
 	
-	private Crud config = getLccCrudNotation();
+	private Crud config = getCrudNotation();
 	
-	protected Crud getLccCrudNotation(){
+	protected Crud getCrudNotation(){
 		
 		if(config == null)
 		{
@@ -122,8 +124,8 @@ public class CrudPattern extends BasePatterns{
 					"\nConfira as classes de mapeamento - *page e *SearchPage, e verifique as anotações LccCrud.");
 		}
 		
-		
-		String title;	// The arangi title of current page
+		// TODO Organizar a verificação de título
+		//String title;	// The arrange title of current page
 		ArangiPage editPage = createPage(config.page(), "page"); //edit page
 		ArangiPage controller; //controller page of this test. Can be search or edit page.
 		
@@ -143,7 +145,7 @@ public class CrudPattern extends BasePatterns{
 				controller = editPage; // Change of page
 				afterCallEditPage(controller);
 				controller.verifyUrl();
-				title = controller.getArangiConfig().includeTitle();
+			//	title = controller.getArangiConfig().includeTitle();
 				//if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
 				
 				if(controller.existSearchButton(Button.CANCEL))
@@ -152,7 +154,7 @@ public class CrudPattern extends BasePatterns{
 				
 					controller = searchPage; // Change of page
 					controller.verifyUrl();
-					title = controller.getArangiConfig().searchTitle();
+				//	title = controller.getArangiConfig().searchTitle();
 					//if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
 				}
 			}
@@ -163,7 +165,7 @@ public class CrudPattern extends BasePatterns{
 			controller = editPage; // Change of page
 			afterCallEditPage(controller);
 			controller.verifyUrl();
-			title = controller.getArangiConfig().includeTitle();
+			//title = controller.getArangiConfig().includeTitle();
 			//if(!StringUtils.isBlank(title)) controller.verifyPageTitle(title);
 		}
 	}
@@ -302,6 +304,11 @@ public class CrudPattern extends BasePatterns{
 	@Test(value="Verificar Dependência entre entidades", order=6)
 	public void verifyDependencyBetweenEntities(){
 		int linePosition;
+		
+		if(config.searchPage()==NullSearchPage.class){
+			Logger.getLogger(CrudPattern.class).info("Dependências de Entidades não verificadas por não haver tela de Pesquisa.");
+			return;
+		}
 		ArangiSearchPage searchPage = createPage(config.searchPage(), "search");
 		searchPage.invoke();
 		searchPage.getBtnSearch().click();
@@ -339,54 +346,6 @@ public class CrudPattern extends BasePatterns{
 		
 		page.getBtnSave().click();
 		page.verifyMessagePresent(config.saveMessage());
-		
-		if(config.searchPage() == NullSearchPage.class)
-		{
-			page.invoke();
-			for (Field field: config.fields()){
-				IUiComponent target = resolveElExpression(field.name(), "search");
-				if (target != null){
-					compare(target, field, ACTION.ADD);
-				}
-			}	
-			return;
-		}
-		
-		ArangiSearchPage searchPage = createPage(config.searchPage(), "search");
-		searchPage.invoke();
-		
-		for (Field field: config.fields()){
-			IUiComponent target = resolveElExpression(field.name(), "search");
-			if (target != null){
-				fill(target, field, ACTION.ADD);
-			}
-		}
-		
-		searchPage.getBtnSearch().click();
-		GenericLine lineToVerify = null;
-		if(!config.searchLineValue().equals(""))
-		{
-			lineToVerify = searchPage.getResult().getLineFromContent(config.searchLineValue());
-		}
-		if(lineToVerify ==null)
-			lineToVerify = searchPage.getResult().getLine(config.searchLine());
-		
-		if ( config.useViewToVerifyAddedRegistry() ){
-			lineToVerify.getView().click();
-		}else{
-			lineToVerify.getModify().click();
-		}
-		
-		for (Field field: config.fields()){
-			IUiComponent fieldOnPage = resolveElExpression(field.name(), "page");
-			if(field.noVerify()){
-				return;
-			}
-			if ( fieldOnPage == null ){
-				throw new TesterException("O componente " + field.name() + " não existe na página " + config.page().getSimpleName());
-			}
-			fieldOnPage.verifyPreviewslyAction();
-		}
 	}
 	
 	public void beforeAddRegistry(ArangiPage page)
