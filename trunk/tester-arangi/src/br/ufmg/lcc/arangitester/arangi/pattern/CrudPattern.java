@@ -55,7 +55,7 @@ public class CrudPattern extends BasePatterns{
 			config = this.getClass().getAnnotation(Crud.class);
 			if(config==null){
 				throw new EnvException("\nEsta classe - "+ this.getClass().getName() +" - não " +
-						"possui a notação LccCrud, necessária para correta execução do CrudPattern.\n" +
+						"possui a notação Crud, necessária para correta execução do CrudPattern.\n" +
 						"Crie a anotação ou então não herde a classe LccCrudPattern. ");
 			}
 		}

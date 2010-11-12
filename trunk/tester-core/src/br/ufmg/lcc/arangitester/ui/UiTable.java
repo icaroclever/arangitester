@@ -159,7 +159,7 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 	}
 
 	public boolean existLineFromContent(String text) {
-		String line = getSel().getText("xpath=//" + super.locator.getHtmlNameSpace() + "/tr" + super.locator.getHtmlNameSpace() + "/td");
+		String line = getSel().getText("xpath=/"+super.locator.getHtmlNameSpace()+"/table[@id='"+ super.getComponentId()+"']/tbody" + super.locator.getHtmlNameSpace() + "/tr");
 		return line.contains(text);
 	}
 
