@@ -24,15 +24,24 @@ import br.ufmg.lcc.arangitester.ioc.UiComponentFactory;
 import br.ufmg.lcc.arangitester.ui.UiTable;
 
 public class ArangiSearchPage extends ArangiPage{
-
-	private String tableName = null;
 	
 	@SuppressWarnings("unchecked")
 	private UiTable result;
+	private Class<? extends GenericLine> line = GenericLine.class;
 	
-	public ArangiSearchPage(String tableName) {
+	@SuppressWarnings("unchecked")
+	public ArangiSearchPage(String tableName, Class<? extends GenericLine> line) {
 		super();
-		this.tableName = tableName;
+		result = (UiTable<? extends GenericLine>)UiComponentFactory.getInstance(UiTable.class);
+		result.setComponentId(tableName);
+		result.setComponentDesc("Result");
+		if(line != null)
+			this.line = line;
+	}
+	
+	public ArangiSearchPage(String tableName)
+	{
+		this(tableName,null);
 	}
 
 	public void verifyResult(int number){
@@ -46,13 +55,11 @@ public class ArangiSearchPage extends ArangiPage{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public UiTable<? extends GenericLine> getResult(){
-		if ( result == null ){
-			result = (UiTable<? extends GenericLine>)UiComponentFactory.getInstance(UiTable.class);
-			result.setType(GenericLine.class);
-			result.setComponentId(tableName);
-			result.setComponentDesc("Result");
-		}
+	public UiTable<? extends GenericLine> getResult()
+	{
+		if ( result != null ) 
+			result.setType(line);
+			
 		return (UiTable<? extends GenericLine>) result;
 	}
 	

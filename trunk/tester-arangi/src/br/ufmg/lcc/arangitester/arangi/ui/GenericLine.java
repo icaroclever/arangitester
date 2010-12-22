@@ -23,9 +23,9 @@ import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.Ui;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
 import br.ufmg.lcc.arangitester.ui.UiCheckBox;
-import br.ufmg.lcc.arangitester.ui.UiImage;
 import br.ufmg.lcc.arangitester.ui.UiSimpleLine;
 import br.ufmg.lcc.arangitester.ui.actions.IRequest;
+import br.ufmg.lcc.arangitester.ui.actions.UiClickable;
 import br.ufmg.lcc.arangitester.util.ArangiTesterStringUtils;
 import br.ufmg.lcc.arangitester.util.Refletions;
 
@@ -34,22 +34,19 @@ public class GenericLine extends UiSimpleLine{
 	@Ui(desc = "Delete #{index}", id = "checkDelete")
 	private UiCheckBox checkDelete;
 
-	@Ui(desc = "View #{index}", id = "viewImg")
-	private UiImage view;
-
 	@Ui(desc = "Modify #{index}", id = "modifyImg")
-	private UiImage modify;
+	private UiClickable modify;
 
 	@Ui(desc = "Save #{index}", id = "saveImg")
-	private UiImage save;
+	private UiClickable save;
 
 	@RequestConfig(window=IRequest.Window.CLOSE)
 	@Ui(desc = "Select #{index}", id = "selectImg")
-	private UiImage select;
+	private UiClickable select;
 	
 	@RequestConfig(confirmation=IRequest.Confirmation.OK)
 	@Ui(desc = "Cancelar  #{index}", id = "cancelImg")
-	public UiImage cancel;
+	private UiClickable cancel;
 	
 	/**
      * Change all ids, locators and desc of this line children.
@@ -60,6 +57,8 @@ public class GenericLine extends UiSimpleLine{
             Ui uiConfig = field.getAnnotation(Ui.class);
             try {
                 IUiComponent ui = (IUiComponent)Refletions.getFieldValue(field, this);
+                
+                if(ui == null) continue;
                 String locator = uiConfig.locator();
                 String id = uiConfig.id();
                 String name = uiConfig.name();
@@ -94,43 +93,35 @@ public class GenericLine extends UiSimpleLine{
 		this.checkDelete = checkDelete;
 	}
 
-	public UiImage getView() {
-		return view;
-	}
-
-	public void setView(UiImage view) {
-		this.view = view;
-	}
-
-	public UiImage getModify() {
+	public UiClickable getModify() {
 		return modify;
 	}
 
-	public void setModify(UiImage modify) {
+	public void setModify(UiClickable modify) {
 		this.modify = modify;
 	}
 
-	public UiImage getSave() {
+	public UiClickable getSave() {
 		return save;
 	}
 
-	public void setSave(UiImage save) {
+	public void setSave(UiClickable save) {
 		this.save = save;
 	}
 
-	public UiImage getSelect() {
+	public UiClickable getSelect() {
 		return select;
 	}
 
-	public void setSelect(UiImage select) {
+	public void setSelect(UiClickable select) {
 		this.select = select;
 	}
 
-	public UiImage getCancel() {
+	public UiClickable getCancel() {
 		return cancel;
 	}
 
-	public void setCancel(UiImage cancel) {
+	public void setCancel(UiClickable cancel) {
 		this.cancel = cancel;
 	}
 }
