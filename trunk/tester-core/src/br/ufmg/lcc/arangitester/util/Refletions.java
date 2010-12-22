@@ -51,9 +51,11 @@ public class Refletions {
 	 */
 	public static List<Field> getFields(Class<?> clazz, Class<? extends Annotation> annotation) {
 		List<Field> fields = new ArrayList<Field>();
+		List<String> fieldsName = new ArrayList<String>();
 		for (Class<?> superClass = clazz; superClass != Object.class; superClass = superClass.getSuperclass()) {
 			for (Field field : superClass.getDeclaredFields()) {
-				if (field.isAnnotationPresent(annotation)) {
+				if (field.isAnnotationPresent(annotation) && !fieldsName.contains(field.getName())) {
+					fieldsName.add(field.getName());
 					fields.add(field);
 				}
 			}
