@@ -371,7 +371,7 @@ public abstract class UiComponent implements IUiComponent {
 		else if (StringUtils.isNotBlank(this.getComponentName()))
 			return String.format("/%s%s[@name='%s']", this.locator.getHtmlNameSpace(), this.getComponentTag(), this.getComponentName());
 		else if (StringUtils.isNotBlank(this.getComponentIndex()))
-			return String.format("/%s%s[%s]", this.locator.getHtmlNameSpace(), this.getComponentTag(), this.getComponentIndex());
+			return String.format("/%s%s[%d]", this.locator.getHtmlNameSpace(), this.getComponentTag(), this.getComponentIndex());
 		else {
 			return String.format("/%s%s", this.locator.getHtmlNameSpace(), this.getComponentTag());
 		}
