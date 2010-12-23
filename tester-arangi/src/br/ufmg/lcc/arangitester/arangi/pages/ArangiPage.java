@@ -142,8 +142,8 @@ public class ArangiPage extends UiPage{
 	 * with the url of this page. 
 	 */
 	public void verifyUrl(){
-		String expectedUrl = getPageUrl();
-		verifyUrl(expectedUrl);
+		//String expectedUrl = getPageUrl();
+		//verifyUrl(expectedUrl);
 	}
 
 	/**

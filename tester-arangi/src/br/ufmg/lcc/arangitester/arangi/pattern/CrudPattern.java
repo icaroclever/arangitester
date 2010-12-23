@@ -31,7 +31,6 @@ import br.ufmg.lcc.arangitester.arangi.pages.NullSearchPage;
 import br.ufmg.lcc.arangitester.arangi.pages.ArangiPage;
 import br.ufmg.lcc.arangitester.arangi.ui.Button;
 import br.ufmg.lcc.arangitester.arangi.ui.GenericLine;
-import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.EnvException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;
@@ -262,7 +261,7 @@ public class CrudPattern extends BasePatterns{
 		page.invoke();
 		page.verifyEditButtons();
 		
-		if(config.searchPage() != NullSearchPage.class){
+		if(config.searchPage() != NullSearchPage.class && config.modifyId()>0){
 			page.invokeView(config.modifyId());
 			page.verifyViewButtons();
 		}
@@ -309,13 +308,15 @@ public class CrudPattern extends BasePatterns{
 			Logger.getLogger(CrudPattern.class).info("Dependências de Entidades não verificadas por não haver tela de Pesquisa.");
 			return;
 		}
-		ArangiSearchPage searchPage = createPage(config.searchPage(), "search");
-		searchPage.invoke();
-		searchPage.getBtnSearch().click();
-		linePosition = searchPage.getLinePositionFromRegistryId(config.dependencyId());
-		searchPage.getResult().getLine(linePosition).getCheckDelete().check();
-		searchPage.getBtnDelete().click();
-		searchPage.verifyMessagePresent(config.dependencyMessage());
+		if(config.dependencyId() != 0){
+			ArangiSearchPage searchPage = createPage(config.searchPage(), "search");
+			searchPage.invoke();
+			searchPage.getBtnSearch().click();
+			linePosition = searchPage.getLinePositionFromRegistryId(config.dependencyId());
+			searchPage.getResult().getLine(linePosition).getCheckDelete().check();
+			searchPage.getBtnDelete().click();
+			searchPage.verifyMessagePresent(config.dependencyMessage());
+		}
 	}
 	
 	/**
@@ -400,6 +401,12 @@ public class CrudPattern extends BasePatterns{
 	 */
 	@Test(value="Verificando cancelamento de Registro", order=9)
 	public void verifyCancelRegister(){
+		
+		if(config.modifyId() < 0)
+		{
+			Context.getInstance().getResult().addObs("Modificação de Registro não existe no Caso de Uso.");
+			return;
+		}
 		ArangiPage page = createPage(config.page(), "page");
 		ACTION action;
 		if(config.searchPage() == NullSearchPage.class){
