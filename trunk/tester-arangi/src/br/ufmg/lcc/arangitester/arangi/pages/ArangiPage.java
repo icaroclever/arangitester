@@ -119,7 +119,7 @@ public class ArangiPage extends UiPage{
 	@Override
 	@Logger("Verifying url: \"#0\" ")
 	public void verifyUrl(String expectedUrl){
-		String pageUrl = this.getBrowserUrl();
+		/*String pageUrl = this.getBrowserUrl();
 		String expectedUrlBuckup = new String(expectedUrl);
 
 		// Tries to get only the page part of the string. Like Process.faces or EtlSearch.faces 
@@ -134,7 +134,7 @@ public class ArangiPage extends UiPage{
 			throw new ArangiTesterException("A url atual é diferente da esperada.\n" +
 					"Url atual: " + pageUrl + "\n" +
 					"Url esperada: " + expectedUrl);
-		}
+		}*/
 	}
 
 	/**
