@@ -220,7 +220,12 @@ public abstract class BasePatterns implements ITestCase{
 				fill(targetField, new FieldImpl(field), action);
 			}
 		}
-		searchPage.getBtnSearch().click();
+		
+		if(searchPage.getBtnSearch().exist()){
+			
+			searchPage.getBtnSearch().click();
+		}
+		
 		searchPage.getResult().getLine(0).getSelect().click();
 	}
 	
