@@ -199,8 +199,7 @@ public class UiPage extends UiComponent implements IUiComposite {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public void verifyAllEnabled(boolean enabled, Class... components) {
+	public void verifyAllEnabled(boolean enabled, @SuppressWarnings("rawtypes") Class... components) {
 		for (IUiComponent component : this) {
 			if (IUiComposite.class.isAssignableFrom(component.getClass())) {
 				((IUiComposite) component).verifyAllEnabled(enabled, components);
@@ -210,9 +209,9 @@ public class UiPage extends UiComponent implements IUiComposite {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void verifyAllEnable(boolean enable) {
+		@SuppressWarnings("rawtypes")
 		Class[] components = new Class[] { UiInputText.class, UiCheckBox.class, UiTable.class, UiSelect.class };
 		List<? extends IUiComponent> allUiComponents = Refletions.getAllUiComponents(this, components);
 		for (IUiComponent component : allUiComponents) {

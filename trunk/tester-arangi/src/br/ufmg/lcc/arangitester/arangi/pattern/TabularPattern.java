@@ -50,7 +50,7 @@ public class TabularPattern extends BasePatterns{
 			for (Field field: config.fields()){
 				IUiComponent fieldOnPage = resolveElExpression("table[0]." +field.name(), "page");
 				backupOriginalValues[i++] = getValue(fieldOnPage);
-				fill(fieldOnPage, field, ACTION.CANCEL);
+				fill(fieldOnPage, new FieldImpl(field), ACTION.CANCEL);
 			}
 			page.getLine(0).getCancel().click();
 
@@ -104,7 +104,7 @@ public class TabularPattern extends BasePatterns{
 
 		for (Field field: config.fields()){
 			IUiComponent fieldOnPage = resolveElExpression("table[" + lineToAdd + "]." +field.name(), "page");
-			fill(fieldOnPage, field, ACTION.ADD);
+			fill(fieldOnPage, new FieldImpl(field), ACTION.ADD);
 		}
 
 		if ( config.editAll() ) {
@@ -154,7 +154,7 @@ public class TabularPattern extends BasePatterns{
 		for (Field field: config.fields()){
 			IUiComponent fieldOnPage = resolveElExpression("table[" + config.modifyRegisterNumber() + "]." +field.name(), "page");
 			backupOriginalValues[i++] = getValue(fieldOnPage);
-			fill(fieldOnPage, field, ACTION.MODIFY);
+			fill(fieldOnPage, new FieldImpl(field), ACTION.MODIFY);
 		}
 
 		if (config.editAll()){
@@ -187,7 +187,7 @@ public class TabularPattern extends BasePatterns{
 
 			for (Field field: config.fields()){
 				IUiComponent fieldOnPage = resolveElExpression("table[" + lineToAdd + "]." +field.name(), "page");
-				fill(fieldOnPage, field, ACTION.ADD);
+				fill(fieldOnPage, new FieldImpl(field), ACTION.ADD);
 			}
 
 			if ( config.editAll() ) {

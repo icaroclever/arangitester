@@ -62,6 +62,7 @@ public class UiComponentFactory {
 				if (field.getType().isAssignableFrom(UiTable.class)) {
 					IUiTable<?> table = (IUiTable<?>) newInstanceDep;
 					ParameterizedType pType = (ParameterizedType) field.getGenericType();
+					@SuppressWarnings("rawtypes")
 					Class t = (Class<?>) pType.getActualTypeArguments()[0];
 					table.setType(t);
 				}

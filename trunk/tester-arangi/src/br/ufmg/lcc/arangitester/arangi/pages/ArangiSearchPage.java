@@ -25,14 +25,13 @@ import br.ufmg.lcc.arangitester.ui.UiTable;
 
 public class ArangiSearchPage extends ArangiPage{
 	
-	@SuppressWarnings("unchecked")
-	private UiTable result;
+	private UiTable<GenericLine> result;
 	private Class<? extends GenericLine> line = GenericLine.class;
 	
 	@SuppressWarnings("unchecked")
 	public ArangiSearchPage(String tableName, Class<? extends GenericLine> line) {
 		super();
-		result = (UiTable<? extends GenericLine>)UiComponentFactory.getInstance(UiTable.class);
+		result = (UiTable<GenericLine>)UiComponentFactory.getInstance(UiTable.class);
 		result.setComponentId(tableName);
 		result.setComponentDesc("Result");
 		if(line != null)
@@ -54,10 +53,14 @@ public class ArangiSearchPage extends ArangiPage{
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
+	class Teste extends GenericLine
+	{
+		
+	}
+	
 	public UiTable<? extends GenericLine> getResult()
 	{
-		if ( result != null ) 
+		if ( result != null )
 			result.setType(line);
 			
 		return (UiTable<? extends GenericLine>) result;

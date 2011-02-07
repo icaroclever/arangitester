@@ -31,9 +31,9 @@ public interface IUiTable<T extends IUiLine> extends IUiComposite {
 	 */
 	void removeLine(int number);
 
-	Class<T> getType();
+	Class<? extends T> getType();
 
-	void setType(Class<T> type);
+	void setType(Class<? extends T> type);
 
 	void verifyAllPreviewslyActions();
 
@@ -63,7 +63,7 @@ public interface IUiTable<T extends IUiLine> extends IUiComposite {
 	 */
 	T getLine(int i);
 
-	List<T> getLines();
+	List<? extends T> getLines();
 
 	/**
 	 * Verify text in a cell. Spaces between words will be discarted.

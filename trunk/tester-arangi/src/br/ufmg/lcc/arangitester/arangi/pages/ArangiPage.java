@@ -27,7 +27,6 @@ import br.ufmg.lcc.arangitester.arangi.ui.Button;
 import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.Ui;
 import br.ufmg.lcc.arangitester.exceptions.ElementNotExistException;
-import br.ufmg.lcc.arangitester.exceptions.ArangiTesterException;
 import br.ufmg.lcc.arangitester.exceptions.TesterException;
 import br.ufmg.lcc.arangitester.log.IResult;
 import br.ufmg.lcc.arangitester.ui.IUiComponent;

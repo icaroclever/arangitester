@@ -16,6 +16,7 @@
 package br.ufmg.lcc.arangitester.db;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -103,11 +104,14 @@ public class OracleDb implements DriverDb {
 		connection.getConfig().setFeature(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, fileConfig.getCaseSensetive());
 
 		Properties prop = new Properties();
-		FileReader file = new FileReader(fileConfig.getName() + "_sequences.txt");
-		if (file == null)
-			throw new Exception("File sequences.txt not found.");
-
-		prop.load(file);
+		try{
+			FileReader file = new FileReader(fileConfig.getName() + "_sequences.txt");
+			prop.load(file);
+		}catch(FileNotFoundException fnfe)
+		{
+			throw new Exception("File sequences.txt not found.\n"+fnfe.getMessage());
+		}
+		
 
 		HashMap<String, Long> sequences = getSequences(database, connection, fileConfig);
 		Enumeration<Object> keys = prop.keys();

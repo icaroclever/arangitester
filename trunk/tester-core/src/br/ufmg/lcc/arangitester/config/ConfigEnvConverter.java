@@ -36,9 +36,8 @@ public class ConfigEnvConverter implements Converter {
 		return env;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public boolean canConvert(Class clazz) {
+	public boolean canConvert(@SuppressWarnings("rawtypes") Class clazz) {
 		return clazz.equals(ConfigEnv.class);
 	}
 

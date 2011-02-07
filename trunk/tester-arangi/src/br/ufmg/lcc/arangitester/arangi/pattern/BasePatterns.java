@@ -93,7 +93,7 @@ public abstract class BasePatterns implements ITestCase{
 		return value;
 	}
 	
-	protected boolean isPopup(Field fieldConfig){
+	protected boolean isPopup(FieldImpl fieldConfig){
 		if ( fieldConfig.popup()!= null && fieldConfig.popup().searchPage() != NullSearchPage.class){
 			return true;
 		}
@@ -110,7 +110,7 @@ public abstract class BasePatterns implements ITestCase{
 	 * @param action If it is an action of add a registry in the system, cancel 
 	 * 			an addition or modify a registry
 	 */
-	protected void fill(Object target, Field fieldConfig, ACTION action){
+	protected void fill(Object target, FieldImpl fieldConfig, ACTION action){
 		LOG.debug("Preenchendo valor do campo: " + fieldConfig.name());
 		boolean closed = false;
 		
@@ -181,7 +181,7 @@ public abstract class BasePatterns implements ITestCase{
 	 * @param action If it is an action of add a registry in the system, cancel 
 	 * 			an addition or modify a registry
 	 */
-	protected void compare(Object target, Field fieldConfig, ACTION action){
+	protected void compare(Object target, FieldImpl fieldConfig, ACTION action){
 		LOG.debug("Preenchendo valor do campo: " + fieldConfig.name());
 		if ( isPopup(fieldConfig) ){
 			fillPopup(target, fieldConfig, action);
@@ -209,7 +209,7 @@ public abstract class BasePatterns implements ITestCase{
 		}
 	}
 
-	protected void fillPopup(Object target, Field fieldConfig, ACTION action){
+	protected void fillPopup(Object target, FieldImpl fieldConfig, ACTION action){
 		UiClickable clicableComponent = (UiClickable)target;
 		clicableComponent.getRequestConfig().setWindow(IRequest.Window.OPEN);
 		clicableComponent.click();
@@ -263,13 +263,19 @@ public abstract class BasePatterns implements ITestCase{
 	
 }
 
-
-class FieldImpl implements Field {
+class FieldImpl{
 	private String name;
 	private String addValue;
 	private String cancelValue;
 	private String modifyValue;
 
+	public FieldImpl(Field field){
+		this.name = field.name();
+		this.addValue = field.addValue();
+		this.cancelValue = field.cancelValue();
+		this.modifyValue = field.modifyValue();
+	}
+	
 	public FieldImpl(PopField popField){
 		this.name = popField.name();
 		this.addValue = popField.addValue();
@@ -277,37 +283,32 @@ class FieldImpl implements Field {
 		this.modifyValue = popField.modifyValue();
 	}
 	
-	@Override
+	
 	public String addValue() {
 		return addValue;
 	}
 
-	@Override
 	public String cancelValue() {
 		return cancelValue;
 	}
 
-	@Override
 	public String modifyValue() {
 		return modifyValue;
 	}
 
-	@Override
+	
 	public String name() {
 		return name;
 	}
 
-	@Override
 	public PopUp popup() {
 		return null;
 	}
 
-	@Override
 	public Class<? extends Annotation> annotationType() {
 		return null;
 	}
 
-	@Override
 	public boolean noVerify() {
 		return false;
 	}
