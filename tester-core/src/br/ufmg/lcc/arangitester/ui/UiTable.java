@@ -33,7 +33,7 @@ import com.thoughtworks.selenium.Wait;
 
 public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<T> {
 
-	private Class<T>	type;
+	private Class<? extends T>	type;
 
 	private List<T>		lines	= new ArrayList<T>();
 
@@ -231,9 +231,8 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 		}
 		return eval.intValue();
 	}
-
-	@SuppressWarnings("unchecked")
-	public void verifyAllEnabled(boolean enable, Class... components) {
+	
+	public void verifyAllEnabled(boolean enable,  @SuppressWarnings("rawtypes") Class... components) {
 		for (T line : getLines()) {
 			line.verifyAllEnabled(enable, components);
 		}
@@ -247,11 +246,11 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 		}
 	}
 
-	public Class<T> getType() {
+	public Class<? extends T> getType() {
 		return type;
 	}
 
-	public void setType(Class<T> type) {
+	public void setType(Class<? extends T> type) {
 		this.type = type;
 	}
 
@@ -262,7 +261,7 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 		return lines.get(i);
 	}
 
-	public List<T> getLines() {
+	public List<? extends T> getLines() {
 		return lines;
 	}
 

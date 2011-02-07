@@ -151,8 +151,9 @@ public class Refletions {
 	 *            SuperTypes of components that will be returned.
 	 * @return all components that is subclass of any component.
 	 */
+	
 	@SuppressWarnings("unchecked")
-	public static List<? extends IUiComponent> getAllUiComponents(IUiComponent container, Class... components) {
+	public static List<? extends IUiComponent> getAllUiComponents(IUiComponent container, @SuppressWarnings("rawtypes") Class... components) {
 		List<IUiComponent> result = new ArrayList<IUiComponent>();
 
 		for (IUiComponent component : Refletions.getAllUiComponents((Class<? extends UiComponent>) container.getClass(), (Object) container)) {

@@ -34,9 +34,8 @@ public interface IUiComposite extends IUiComponent {
 	 * @param enable
 	 *            true enable, false disable
 	 */
-	@SuppressWarnings("unchecked")
 	@VerifyAjax
-	void verifyAllEnabled(boolean enable, Class... components);
+	void verifyAllEnabled(boolean enable, @SuppressWarnings("rawtypes") Class... components);
 
 	/**
 	 * This is a helper method. It recursive verify if components exist and verify if its enable.

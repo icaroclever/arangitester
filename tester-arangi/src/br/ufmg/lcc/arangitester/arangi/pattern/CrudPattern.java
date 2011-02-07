@@ -341,7 +341,7 @@ public class CrudPattern extends BasePatterns{
 				throw new TesterException("O componente " + field.name() + " não existe na página " + config.page().getSimpleName());
 			}
 			beforeFillFieldAddRegistry(page, field);
-			fill(fieldOnPage, field, ACTION.ADD);
+			fill(fieldOnPage, new FieldImpl(field), ACTION.ADD);
 			afterFillFieldAddRegistry(page, field);
 		}
 		
@@ -363,7 +363,7 @@ public class CrudPattern extends BasePatterns{
 		page.invoke();
 
 		for (Field field: config.fields()){
-			fill(resolveElExpression(field.name(), "page"), field, ACTION.ADD);
+			fill(resolveElExpression(field.name(), "page"), new FieldImpl(field), ACTION.ADD);
 		}
 
 		page.getBtnSave().click();
@@ -429,7 +429,7 @@ public class CrudPattern extends BasePatterns{
 		for (Field field: config.fields()){
 			IUiComponent target = resolveElExpression(field.name(), "page");
 			if ( beforeFillFieldCancelRegistry(page, field)){
-				fill(target, field, action);
+				fill(target, new FieldImpl(field), action);
 				afterFillFieldCancelRegistry(page, field);
 			}
 		}
@@ -491,7 +491,7 @@ public class CrudPattern extends BasePatterns{
 			IUiComponent target = resolveElExpression(field.name(), "page");
 			
 			if ( beforeFillFieldModifyRegistry(page, field) ){
-				fill(target, field, ACTION.MODIFY);
+				fill(target, new FieldImpl(field), ACTION.MODIFY);
 				afterFillFieldModifyRegistry(page, field);
 			}
 		}
@@ -548,7 +548,7 @@ public class CrudPattern extends BasePatterns{
 		for (Field field: config.fields()){
 			IUiComponent target = resolveElExpression(field.name(), "search");
 			if (target != null){
-				fill(target, field, ACTION.ADD);
+				fill(target, new FieldImpl(field), ACTION.ADD);
 			}
 		}
 		
@@ -572,7 +572,7 @@ public class CrudPattern extends BasePatterns{
 		for (Field field: config.fields()){
 			IUiComponent target = resolveElExpression(field.name(), "search");
 			if (target != null){
-				fill(target, field, ACTION.ADD);
+				fill(target, new FieldImpl(field), ACTION.ADD);
 			}
 		}
 		searchPage.verifyResult( bodyLines - 1 );
@@ -586,7 +586,7 @@ public class CrudPattern extends BasePatterns{
 		for (Field field: config.fields()){
 			IUiComponent target = resolveElExpression(field.name(), "search");
 			if (target != null){
-				fill(target, field, action);
+				fill(target, new FieldImpl(field), action);
 			}
 		}
 		

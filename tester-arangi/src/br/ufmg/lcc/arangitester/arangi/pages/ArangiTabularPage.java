@@ -27,6 +27,7 @@ import br.ufmg.lcc.arangitester.ui.UiTable;
 /**
  * Generic Tabular Page. It wraps a LccUiTable.
  * @author Lucas Gonçalves
+ * @author Ícaro Clever Braga
  *
  * @param <T> Type of line.
  */
@@ -60,8 +61,7 @@ public class ArangiTabularPage<T extends GenericLine> extends ArangiPage impleme
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public void verifyAllEnabled(boolean enabled,  Class... components) {
+	public void verifyAllEnabled(boolean enabled,  @SuppressWarnings("rawtypes") Class... components) {
 		getTable().verifyAllEnabled(enabled, components);
 	}
 	
@@ -80,7 +80,7 @@ public class ArangiTabularPage<T extends GenericLine> extends ArangiPage impleme
 	}
 
 	@Override
-	public List<T> getLines() {
+	public List<? extends T> getLines() {
 		return getTable().getLines();
 	}
 
@@ -95,12 +95,12 @@ public class ArangiTabularPage<T extends GenericLine> extends ArangiPage impleme
 	}
 
 	@Override
-	public Class<T> getType() {
+	public Class<? extends T> getType() {
 		return getTable().getType();
 	}
 
 	@Override
-	public void setType(Class<T> type) {
+	public void setType(Class<? extends T> type) {
 		getTable().setType(type);
 	}
 

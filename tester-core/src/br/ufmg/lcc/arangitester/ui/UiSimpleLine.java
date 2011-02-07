@@ -93,8 +93,7 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public void verifyAllEnabled(boolean enable, Class... components) {
+	public void verifyAllEnabled(boolean enable, @SuppressWarnings("rawtypes") Class... components) {
 		for (IUiComponent component : Refletions.getAllUiComponents(this, components)) {
 			component.verifyIsEnable(enable);
 		}
@@ -117,9 +116,9 @@ public class UiSimpleLine extends UiComponent implements IUiLine {
 		throw new TesterException("@Line must be defined.");
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void verifyAllEnable(boolean enable) {
+		@SuppressWarnings("rawtypes")
 		Class[] components = new Class[] { UiInputText.class, UiCheckBox.class, UiSelect.class };
 		for (IUiComponent component : Refletions.getAllUiComponents(this, components)) {
 			if (component.exist())
