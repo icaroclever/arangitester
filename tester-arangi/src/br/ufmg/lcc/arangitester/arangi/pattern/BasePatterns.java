@@ -268,12 +268,14 @@ class FieldImpl{
 	private String addValue;
 	private String cancelValue;
 	private String modifyValue;
+	private PopUp popup;
 
 	public FieldImpl(Field field){
 		this.name = field.name();
 		this.addValue = field.addValue();
 		this.cancelValue = field.cancelValue();
 		this.modifyValue = field.modifyValue();
+		this.popup = field.popup();
 	}
 	
 	public FieldImpl(PopField popField){
@@ -302,7 +304,7 @@ class FieldImpl{
 	}
 
 	public PopUp popup() {
-		return null;
+		return popup;
 	}
 
 	public Class<? extends Annotation> annotationType() {
