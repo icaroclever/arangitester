@@ -157,7 +157,7 @@ public abstract class BasePatterns implements ITestCase{
 		}else if ( target instanceof UiSelect){
 			((UiSelect)target).select(actionValue);
 		}else if (target instanceof UiCheckBox) {
-			if (actionValue.toLowerCase().equals("sim"))
+			if (actionValue.toLowerCase().equals("checked"))
 				((UiCheckBox)target).check();
 			else
 				((UiCheckBox)target).uncheck();
