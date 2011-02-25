@@ -467,8 +467,8 @@ public class CrudPattern extends BasePatterns{
 				afterFillFieldCancelRegistry(page, field);
 			}
 		}
-		page.getBtnCancel().getRequestConfig().setConfirmation(IRequest.Confirmation.OK);
 		page.getBtnCancel().click();
+		page.getBtnCancel().getRequestConfig().setConfirmation(IRequest.Confirmation.OK);
 		
 		if(config.searchPage() == NullSearchPage.class){
 			page.invoke();

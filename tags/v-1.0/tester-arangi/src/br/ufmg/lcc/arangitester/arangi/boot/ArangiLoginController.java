@@ -35,11 +35,13 @@ import com.thoughtworks.selenium.SeleniumException;
  * 
  */
 public class ArangiLoginController extends BaseLoginController {
+	
+	private Class<? extends ArangiLoginPage> baseLoginPageMapClass = ArangiLoginPage.class;
 
 	protected void login(String user, String password, Field[] fields) throws FatalException {
 		Selenium sel = Context.getInstance().getSeleniumController().getSeleniumClient();
 		try{
-			ArangiLoginPage login = UiComponentFactory.getInstance(ArangiLoginPage.class);
+			ArangiLoginPage login = UiComponentFactory.getInstance(baseLoginPageMapClass);
 			login.invoke();
 			login.getUsername().type(user);
 			login.getPassword().type(password);
@@ -56,8 +58,18 @@ public class ArangiLoginController extends BaseLoginController {
 		}catch (SeleniumException e) {
 			throw new FatalException("Falha no login: " + e.getMessage());
 		}
-		if(!sel.getLocation().contains("Home.faces")) throw new FatalException("Falha no login.");
+		if(!sel.getLocation().contains("Home.")) throw new FatalException("Falha no login.");
 		
 		
 	}
+
+	public Class<? extends ArangiLoginPage> getBaseLoginPageMapClass() {
+		return baseLoginPageMapClass;
+	}
+
+	public void setBaseLoginPageMapClass(
+			Class<? extends ArangiLoginPage> baseLoginPageMapClass) {
+		this.baseLoginPageMapClass = baseLoginPageMapClass;
+	}
+	
 }
