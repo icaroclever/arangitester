@@ -338,7 +338,8 @@ public class CrudPattern extends BasePatterns{
 		for (Field field: config.fields()){
 			IUiComponent fieldOnPage = resolveElExpression(field.name(), "page");
 			if ( fieldOnPage == null ){
-				throw new TesterException("O componente " + field.name() + " não existe na página " + config.page().getSimpleName());
+				String message = "O componente " + field.name() + " não existe na página " + config.page().getSimpleName();
+				throw new TesterException(message);
 			}
 			beforeFillFieldAddRegistry(page, field);
 			fill(fieldOnPage, new FieldImpl(field), ACTION.ADD);
