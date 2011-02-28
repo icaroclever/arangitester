@@ -188,11 +188,11 @@ public class Reactor {
 							// if(e.getMessage().matches(".*Element.*not.*found.*")) LOG.info("Erro de elemento não encontrado, danado!");
 						}
 
-						String stacktrace = StackTraceUtil.getStackTrace(e);
-						getInstance().getResult().addError("erro nao identificado: " + stacktrace);
 					}
+					String stacktrace = StackTraceUtil.getStackTrace(e);
+					getInstance().getResult().addError("erro nao identificado: " + stacktrace);
 				}
-
+				
 				method.setError(true);
 			}
 		} finally {
