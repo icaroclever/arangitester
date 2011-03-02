@@ -104,12 +104,12 @@ public abstract class BasePatterns implements ITestCase{
 	private Stack<String> windowNameList()
 	{
 		Stack<String> windowNames = new Stack<String>();
+		String[] allWindowNames = getSel().getAllWindowNames();
 		
-		for(int i=1; i < getSel().getAllWindowIds().length;i++)
+		for(int i=0; i < allWindowNames.length;i++)
 		{
-			if(getSel().getAllWindowNames()[i].equals("null"))
-				continue;
-			windowNames.add(getSel().getAllWindowNames()[i]);
+			if(!allWindowNames[i].equals("null"))
+				windowNames.push((allWindowNames[i].startsWith("selenium"))?"null":allWindowNames[i]);
 		}
 		
 		return windowNames;
@@ -125,63 +125,41 @@ public abstract class BasePatterns implements ITestCase{
 	 * @param action If it is an action of add a registry in the system, cancel 
 	 * 			an addition or modify a registry
 	 */
-	protected void fill(Object target, FieldImpl fieldConfig, ACTION action){
+	protected void fill(IUiComponent target, FieldImpl fieldConfig, ACTION action){
 		LOG.debug("Preenchendo valor do campo: " + fieldConfig.name());
-		boolean closed = false;
 		
-		if ( isPopup(fieldConfig) ){
-			int tryCount = 0;
-			for(tryCount=0; tryCount < 2 && !closed; tryCount++){
-				closed = true;
-				fillPopup(target, fieldConfig, action);
-				int allOpenedWindowsNumber = getSel().getAllWindowIds().length;
-				
-				for(int i=1; i < allOpenedWindowsNumber;i++)
-				{
-					if(getSel().getAllWindowNames()[i].equals("null"))
-						continue;
-					getSel().selectWindow(getSel().getAllWindowNames()[i]);
-					getSel().windowFocus();
-					getSel().close();
-					closed = false;
-					LOG.warn("Selenium had a problem with the javascript page.");
-				}
-				getSel().selectWindow("null");
-				getSel().windowFocus();
-			}
-			
-			if(tryCount == 2 && closed == false)
+		if (!isPopup(fieldConfig))
+		{	
+			String actionValue = null;
+			switch(action)
 			{
-				throw new ArangiTesterException("The page cannot be closed");
+				case ADD: 	 actionValue = fieldConfig.addValue();
+					break;
+				case CANCEL: actionValue = fieldConfig.cancelValue();
+					break;
+				case MODIFY: actionValue = fieldConfig.modifyValue();
+					break;
 			}
-			return;
-		}
-		
-		String actionValue = null;
-		if ( action == ACTION.ADD){
-			actionValue = fieldConfig.addValue();
-		}else if ( action == ACTION.CANCEL){
-			actionValue = fieldConfig.cancelValue();
-		}else if ( action == ACTION.MODIFY){
-			actionValue = fieldConfig.modifyValue();
-		}
-
-		if ( target instanceof UiInputText){
-			((UiInputText)target).type(actionValue);
-		}else if ( target instanceof UiSelect){
-			((UiSelect)target).select(actionValue);
-		}else if (target instanceof UiCheckBox) {
-			if (actionValue.toLowerCase().equals("checked"))
-				((UiCheckBox)target).check();
-			else
-				((UiCheckBox)target).uncheck();
-		}else if (target instanceof UiRadio){
-			((UiRadio)target).select(actionValue);
-		}else if (target instanceof UiButton ){
-			((UiButton)target).click();
-		}else if (target instanceof UiTab ){
-			if( actionValue.toLowerCase().equals("click"))
-				((UiTab)target).click();
+	
+			if ( target instanceof UiInputText){
+				((UiInputText)target).type(actionValue);
+			}else if ( target instanceof UiSelect){
+				((UiSelect)target).select(actionValue);
+			}else if (target instanceof UiCheckBox) {
+				if (actionValue.toLowerCase().equals("checked"))
+					((UiCheckBox)target).check();
+				else
+					((UiCheckBox)target).uncheck();
+			}else if (target instanceof UiRadio){
+				((UiRadio)target).select(actionValue);
+			}else if (target instanceof UiButton ){
+				((UiButton)target).click();
+			}else if (target instanceof UiTab ){
+				if( actionValue.toLowerCase().equals("click"))
+					((UiTab)target).click();
+			}
+		}else{
+			fillPopup(target, fieldConfig, action);
 		}
 	}
 	
@@ -199,42 +177,36 @@ public abstract class BasePatterns implements ITestCase{
 		LOG.debug("Preenchendo valor do campo: " + fieldConfig.name());
 		if ( isPopup(fieldConfig) ){
 			fillPopup(target, fieldConfig, action);
-			return;
-		}
-		
-		
-		String actionValue = null;
-		if ( action == ACTION.ADD){
-			actionValue = fieldConfig.addValue();
-		}else if ( action == ACTION.CANCEL){
-			actionValue = fieldConfig.cancelValue();
-		}else if ( action == ACTION.MODIFY){
-			actionValue = fieldConfig.modifyValue();
-		}
-
-		if ( target instanceof UiInputText){
-			((UiInputText)target).verifyTextInside(actionValue);
-		}else if ( target instanceof UiSelect){
-			((UiSelect)target).verifySelect(actionValue);
-		}else if (target instanceof UiCheckBox) {
-			((UiCheckBox)target).verifyCheckBox(actionValue);
-		}else if (target instanceof UiRadio){
-			((UiRadio)target).verifySelect(actionValue);
+		} else{
+			String actionValue = null;
+			if ( action == ACTION.ADD){
+				actionValue = fieldConfig.addValue();
+			}else if ( action == ACTION.CANCEL){
+				actionValue = fieldConfig.cancelValue();
+			}else if ( action == ACTION.MODIFY){
+				actionValue = fieldConfig.modifyValue();
+			}
+	
+			if ( target instanceof UiInputText){
+				((UiInputText)target).verifyTextInside(actionValue);
+			}else if ( target instanceof UiSelect){
+				((UiSelect)target).verifySelect(actionValue);
+			}else if (target instanceof UiCheckBox) {
+				((UiCheckBox)target).verifyCheckBox(actionValue);
+			}else if (target instanceof UiRadio){
+				((UiRadio)target).verifySelect(actionValue);
+			}
 		}
 	}
 
 	protected void fillPopup(Object target, FieldImpl fieldConfig, ACTION action){
+		Stack<String> oldWNList = windowNameList();
 		UiClickable clicableComponent = (UiClickable)target;
 		clicableComponent.getRequestConfig().setWindow(IRequest.Window.OPEN);
 		clicableComponent.click();
 		
-		for(int i=1; i < getSel().getAllWindowNames().length;i++)
-		{
-			if(getSel().getAllWindowNames()[i].equals("null"))
-				continue;
-			getSel().selectWindow(getSel().getAllWindowNames()[i]);
-			getSel().windowFocus();
-		}
+		getSel().selectWindow(windowNameList().peek());
+		getSel().windowFocus();
 		
 		ArangiSearchPage searchPage = createPage(fieldConfig.popup().searchPage(), "PopSearch");
 		for (PopField field: fieldConfig.popup().popFields()){
@@ -245,12 +217,20 @@ public abstract class BasePatterns implements ITestCase{
 			}
 		}
 		
-		if(searchPage.getBtnSearch().exist()){
-			
+		if(searchPage.getBtnSearch().exist())
+		{
 			searchPage.getBtnSearch().click();
 		}
 		
 		searchPage.getResult().getLine(0).getSelect().click();
+		
+		Stack<String> currentWNList = windowNameList();
+		if(!oldWNList.containsAll(currentWNList))
+		{
+			throw new ArangiTesterException("The page cannot be closed");
+		}
+		getSel().selectWindow(currentWNList.pop());
+		getSel().windowFocus();
 	}
 	
 	protected void verify(Object target, String value){
