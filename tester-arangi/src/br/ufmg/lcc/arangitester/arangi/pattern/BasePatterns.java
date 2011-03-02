@@ -16,6 +16,7 @@
 package br.ufmg.lcc.arangitester.arangi.pattern;
 
 import java.lang.annotation.Annotation;
+import java.util.Stack;
 
 import javax.el.ExpressionFactory;
 import javax.el.PropertyNotFoundException;
@@ -100,6 +101,20 @@ public abstract class BasePatterns implements ITestCase{
 		return false;
 	}
 	
+	private Stack<String> windowNameList()
+	{
+		Stack<String> windowNames = new Stack<String>();
+		
+		for(int i=1; i < getSel().getAllWindowIds().length;i++)
+		{
+			if(getSel().getAllWindowNames()[i].equals("null"))
+				continue;
+			windowNames.add(getSel().getAllWindowNames()[i]);
+		}
+		
+		return windowNames;
+	}
+	
 	/**
 	 * Fills some field, considering the action happening(inserting a registry,
 	 * modifying a registry, etc <br/>
@@ -139,7 +154,6 @@ public abstract class BasePatterns implements ITestCase{
 			{
 				throw new ArangiTesterException("The page cannot be closed");
 			}
-			
 			return;
 		}
 		
@@ -213,10 +227,20 @@ public abstract class BasePatterns implements ITestCase{
 		UiClickable clicableComponent = (UiClickable)target;
 		clicableComponent.getRequestConfig().setWindow(IRequest.Window.OPEN);
 		clicableComponent.click();
+		
+		for(int i=1; i < getSel().getAllWindowNames().length;i++)
+		{
+			if(getSel().getAllWindowNames()[i].equals("null"))
+				continue;
+			getSel().selectWindow(getSel().getAllWindowNames()[i]);
+			getSel().windowFocus();
+		}
+		
 		ArangiSearchPage searchPage = createPage(fieldConfig.popup().searchPage(), "PopSearch");
 		for (PopField field: fieldConfig.popup().popFields()){
 			IUiComponent targetField = resolveElExpression(field.name(), "PopSearch");
 			if (target != null){
+				getSel().windowFocus();
 				fill(targetField, new FieldImpl(field), action);
 			}
 		}

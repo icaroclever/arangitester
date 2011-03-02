@@ -364,7 +364,10 @@ public class CrudPattern extends BasePatterns{
 		page.invoke();
 
 		for (Field field: config.fields()){
-			fill(resolveElExpression(field.name(), "page"), new FieldImpl(field), ACTION.ADD);
+			IUiComponent fieldOnPage = resolveElExpression(field.name(), "page");
+			beforeAddRegistry(page);
+			fill(fieldOnPage, new FieldImpl(field), ACTION.ADD);
+			afterFillFieldAddRegistry(page, field);
 		}
 
 		page.getBtnSave().click();
