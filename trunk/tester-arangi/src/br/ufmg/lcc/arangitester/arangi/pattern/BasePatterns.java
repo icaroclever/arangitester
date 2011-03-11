@@ -222,7 +222,7 @@ public abstract class BasePatterns implements ITestCase{
 			searchPage.getBtnSearch().click();
 		}
 		
-		searchPage.getResult().getLine(0).getSelect().click();
+		selectResult(searchPage);
 		
 		Stack<String> currentWNList = windowNameList();
 		if(!oldWNList.containsAll(currentWNList))
@@ -231,6 +231,19 @@ public abstract class BasePatterns implements ITestCase{
 		}
 		getSel().selectWindow(currentWNList.pop());
 		getSel().windowFocus();
+	}
+	
+	
+	/**
+	 * This method execute before the items search. It select the first item occurrence in the result. 
+	 * @param searchPage
+	 */
+	protected void selectResult(ArangiSearchPage searchPage)
+	{
+		if(searchPage.getResult().getRealLinesNumber() != 0)
+			searchPage.getResult().getLine(0).getSelect().click();
+		else
+			throw new ArangiTesterException("The result is empty.");
 	}
 	
 	protected void verify(Object target, String value){
