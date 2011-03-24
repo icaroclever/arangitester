@@ -38,7 +38,7 @@ public @interface Line {
 	/**
 	 * @return Define de beginIndex on default xpath of line "${tableXpath}/tbody/tr[${beginIndex}]". 1 Based index.
 	 */
-	int beginIndex() default 2;
+	int beginIndex() default 1;
 
 	/**
 	 * @return Define de beginIndex on default xpath of line "${tableXpath}/tbody/tr[${beginIndex}]". 1 Based index.
