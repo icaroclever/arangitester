@@ -1,0 +1,159 @@
+<project default="execute">
+	<xmlproperty file="${basedir}/tester-config.xml" />
+	<property name="jvm.args" value="" />
+	<property name="extension" value="${tester-config(extension)}" />
+
+	<dirname property="at.dir" file="${ant.file}" />
+	<basename property="project.name" file="${basedir}" />
+	
+	<property name="at.bin.dir" value="${basedir}/../temp/tester-core" />
+	<property name="at.bin.dir" value="${basedir}/../temp/tester-core" />
+	<property name="tomcat.ajp.port" value="18009" />
+
+	<property name="extension.dir" value="${at.dir}/../${extension}" />
+	<property name="project.bin.dir" value="${basedir}/../temp/${project.name}" />
+
+	<path id="arangi-tester-classpath" description="Classpath of tester-core-classes + tester-core-libs">
+		<pathelement path="${basedir}/src" />
+		<fileset dir="${at.dir}/lib" includes="**/*.jar" />
+		<pathelement location="${at.bin.dir}/tester-core.jar" />
+		<pathelement location="${extension.bin.dir}/${extension}.jar" />
+	</path>
+
+	<path id="app-full-classpath" description="Classpath of app-classes + arangi-tester-classes + arangi-tester-libs">
+		<fileset dir="${at.dir}/lib" includes="**/*.jar" />
+		<pathelement location="${at.bin.dir}/tester-core.jar" />
+		<pathelement location="${extension.bin.dir}/${extension}.jar" />
+		<pathelement location="${project.bin.dir}/bin" />
+	</path>
+
+	<taskdef resource="cargo.tasks" classpathref="arangi-tester-classpath" />
+
+	<target name="compile-tester-core">
+		<delete dir="${at.bin.dir}" />
+		<mkdir dir="${at.bin.dir}/bin" />
+		<javac srcdir="${at.dir}/src" destdir="${at.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="arangi-tester-classpath" debug="true" />
+		<jar destfile="${at.bin.dir}/tester-core.jar" basedir="${at.bin.dir}/bin" />
+	</target>
+
+	<target name="compile-tester-extension" depends="compile-tester-core">
+		<delete dir="${extension.bin.dir}" />
+		<mkdir dir="${extension.bin.dir}/bin" />
+		<javac srcdir="${extension.dir}/src" destdir="${extension.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="arangi-tester-classpath" debug="true" />
+		<jar destfile="${extension.bin.dir}/${extension}.jar" basedir="${extension.bin.dir}/bin" />
+	</target>
+
+	<target name="compile-tests" depends="compile-tester-core, compile-tester-extension">
+		<delete dir="${project.bin.dir}" />
+		<mkdir dir="${project.bin.dir}/bin" />
+		<javac srcdir="${basedir}/src" destdir="${project.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="arangi-tester-classpath" debug="true" />
+		<copy file="${basedir}/src/log4j.xml" todir="${project.bin.dir}/bin" />
+		<copy file="${basedir}/src/lcc.properties" todir="${project.bin.dir}/bin" />
+	</target>
+
+	<target name="execute" depends="compile-tester-core, compile-tester-extension, compile-tests, start-tomcat">
+		<java dir="${basedir}" classname="br.ufmg.lcc.arangitester.boot.Reactor" fork="true" classpathref="app-full-classpath">
+			<!--jvmarg value="-Xdebug" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9009" /-->
+		</java>
+	</target>
+
+	<target name="reload-db" depends="compile-tester-core">
+		<java classname="br.ufmg.lcc.arangitester.db.DbUnitController" fork="true" dir="${basedir}" classpathref="arangi-tester-classpath">
+			<arg value="reload" />
+		</java>
+	</target>
+
+	<target name="start-tomcat" if="start-tomcat">
+		<xmlproperty file="${basedir}/tester-config.xml" />
+		<property name="tester-config.tomcat-users" value="admin:senha:manager" />
+		<property name="tomcat.wait" value="false" />
+		<echo level="info" message="Tomcat Users: ${tester-config.tomcat-users}" />
+		<echo level="info" message="Catalina Home: ${catalina.home}" />
+		<echo level="info" message="JVM ARGS: ${jvm.args}" />
+		<echo level="info" message="Workspace: ${workspace}" />
+		<echo level="info" message="Tomcat Port: ${tomcat.port}" />
+		<echo level="info" message="War File: ${war.file}" />
+		<echo level="info" message="Tomcat Wait: ${tomcat.wait}" />
+		<cargo containerId="tomcat6x" home="${catalina.home}" output="${workspace}/tomcat/output.log" log="${workspace}/cargo.log" action="start" wait="${tomcat.wait}">
+			<sysproperty key="LccTestEnv" value="true" />
+			<configuration home="${workspace}/tomcat">
+				<property name="cargo.servlet.users" value="${tester-config.tomcat-users}" />
+				<property name="cargo.jvmargs" value="${jvm.args}" />
+				<property name="cargo.servlet.port" value="${tomcat.port}" />
+				<property name="cargo.servlet.ajp.port" value="${tomcat.ajp.port}" />
+				<property name="cargo.logging" value="high" />
+				<deployable type="war" file="${war.file}" />
+			</configuration>
+		</cargo>
+	</target>
+
+	<target name="create-project">
+		<input message="Project name" addproperty="project" />
+		<input message="Package name" addproperty="package" defaultvalue="com.company.projectname" />
+		<input message="Output Dir" addproperty="output" defaultvalue="../" />
+		<mkdir dir="${output}/${project}" />
+		<copy todir="${output}/${project}" filtering="true">
+			<filterset>
+				<filter token="project" value="${project}" />
+				<filter token="package" value="${package}" />
+				<filter token="user.name" value="${user.name}" />
+			</filterset>
+			<fileset dir="templates/eclipse" includes="**/*" />
+		</copy>
+
+		<mkdir dir="${output}/${project}/build" />
+		<javac srcdir="src" destdir="${output}/${project}/build" encoding="UTF-8">
+			<classpath>
+				<fileset dir="lib" includes="**/*.jar" />
+			</classpath>
+		</javac>
+		<mkdir dir="${output}/${project}/lib/src/" />
+		<jar destfile="${output}/${project}/lib/tester-core.jar">
+			<fileset dir="${output}/${project}/build" includes="**/*" />
+			<fileset dir="../tester-core/src" includes="**/*" />
+		</jar>
+		<delete dir="${output}/${project}/build" />
+
+		<copy todir="${output}/${project}/lib">
+			<fileset dir="lib" includes="**/*.jar" />
+		</copy>
+	</target>
+
+	<target name="Update Project Lib">
+		<mkdir dir="build" />
+		<javac srcdir="../tester-core/src" destdir="build" encoding="UTF-8">
+			<classpath>
+				<fileset dir="lib" includes="**/*.jar" />
+			</classpath>
+		</javac>
+		<jar destfile="lib/tester-core.jar" compress="true">
+			<fileset dir="build" includes="**/*" />
+			<fileset dir="../tester-core/src" includes="**/*" />
+		</jar>
+		<delete dir="build" />
+	</target>
+
+	<target name="javadocsUml">
+		<mkdir dir="javadoc"/>
+		<javadoc sourcepath="src" packagenames="br.*" destdir="javadoc" 
+			private="true" encoding="UTF-8">
+			<classpath>
+				<fileset dir="lib" includes="**/*.jar"/>
+			</classpath>
+			<doclet name="org.umlgraph.doclet.UmlGraphDoc" path="lib/UmlGraph-5.2.jar">
+				<param name="-inferrel" />
+				<param name="-inferdep" />
+				<param name="-hide" value="java.*" />
+				<param name="-collpackages" value="java.util.*" />
+				<param name="-qualify" />
+				<param name="-postfixpackage" />
+				<param name="-nodefontsize" value="9" />
+				<param name="-nodefontpackagesize" value="7" />
+				<param name="-link" value="http://java.sun.com/j2se/1.5.0/docs/guide/javadoc/doclet/spec" />
+				<param name="-link" value="http://java.sun.com/j2se/1.5/docs/api" />
+			</doclet>
+		</javadoc>
+	</target>
+
+</project>
