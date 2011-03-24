@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tester-config xmlns="http://www.example.org/config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/config ../tester-core/config.xsd">
+	
+	<locator-class>$ICOMPONETLOCATOR_CHILD</locator-class>
+	<login-controller>$ILOGINCONTROLLER_CHILD</login-controller>
+
+<!-- Configuração de ambiente para Heber -->		
+	<environment name="$USER">
+		<!-- Selenium attribute configuration -->	
+		<browser>*firefox | *iexplore | *chrome</browser>
+		<port>$PORT</port>
+		<host>$HOST</host>
+		<path>$PATH</path>
+		
+		<!-- Database configuration -->
+		<database>
+			<url>$JDBC_URL</url>
+			<user>$DB_USER</user>
+			<password>$DB_USER_PASS</password>
+			<driver>$JDBC_DRIVER</driver>
+			<file name="cnpsarouca"/>
+		</database>
+		<database>
+			...
+		</database>
+	</environment>	
+</tester-config>
