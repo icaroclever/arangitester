@@ -220,16 +220,9 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 
 		String xpath = String.format("/%1$s/%2$stbody/%2$str", this.getXPathLocator(), super.locator.getHtmlNameSpace()); // Eg.: xpath = "//table[@id='ID'/tbody/tr]";
 
-		Number eval = getSel().getXpathCount(xpath);
+		Number linesSize = getSel().getXpathCount(xpath);
 
-		Line lineAnnotation = getType().getAnnotation(Line.class);
-		if (lineAnnotation != null) {
-			eval = Math.max(eval.intValue() - lineAnnotation.beginIndex(), 0);
-			if (lineAnnotation.footer()) {
-				eval = Math.max(eval.intValue() - 1, 0);
-			}
-		}
-		return eval.intValue();
+		return linesSize.intValue();
 	}
 	
 	public void verifyAllEnabled(boolean enable,  @SuppressWarnings("rawtypes") Class... components) {
