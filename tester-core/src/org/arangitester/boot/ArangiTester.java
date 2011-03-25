@@ -41,42 +41,39 @@ import org.arangitester.util.StackTraceUtil;
 import com.thoughtworks.selenium.SeleniumException;
 
 /**
- * Entry point for tests. This class must control witch classes and
- * methods execute. It control the lifecycle of method execution
+ * This class is the entry point for tests. It must control which classes and
+ * methods are going to be executed. It controls the life cycle of method executions,
  * including login and database tasks.
  * 
  * @author Lucas Gonçalves
- * 
+ * @author Ícaro C. F. Braga
+ * @since 1.5
  */
-public class Reactor {
-	private Logger				LOG				= Logger.getLogger(Reactor.class);
+public class ArangiTester {
+	private Logger				LOG				= Logger.getLogger(ArangiTester.class);
 	private ILoginController	loginController	= LoginControllerFactory.getLoginController();
 	private DbUnitController	dbController	= new DbUnitController();
 
 	/**
-	 * Start execution of Tests.
-	 * <p>
-	 * Tree ways to execute:
+	 * Starts the tests execution.
+	 * @param 
+	 * There are three ways to execute:
 	 * <ol>
-	 * <li>Without parameters: Execute all classes that name end with FunctionalTest</li>
-	 * <li>With class name: Execute the class</li>
-	 * <li>With class + method name. ex:. com.test.UserFunctionalTest.emptyName: Execute only the method in the class</li>
+	 * <li><b>Without parameters:</b> Executes all classes which the class name suffix is TestSuite, TestScenario or TestCase</li>
+	 * <li><b>With absolute class name:</b> Only executes a specific class</li>
+	 * <li><b>With absolute class name + method name</b>: Only executes a specific method in the class. Eg.: com.test.UserTestSuite emptyName</li>
 	 * </ol>
 	 */
-	public static void main(String[] args) throws Exception {
-		Reactor lccReactor = new Reactor();
-		ExecutionOptions executionOptions = new ExecutionOptions(args);
+	public static void main(String[] parameters) throws Exception {
+		ArangiTester reactor = new ArangiTester();
+		ExecutionOptions executionOptions = new ExecutionOptions(parameters);
 		if (ConfigFactory.getEnvSpecificConfig() == null) {
 			throw new Exception(String.format("Environment to user %s don´t exist", System.getProperty("user.name")));
 		}
-		lccReactor.startExecution(executionOptions);
+		reactor.startExecution(executionOptions);
 	}
-
-	/**
-	 * Stops selenium only when all test cases are finished.
-	 * Note that test case is related to test class, not with a test method.
-	 * Test class contains one or many test method.
-	 */
+	
+	
 	public void startExecution(ExecutionOptions executionOptions) throws Exception {
 		try {
 			// Logger.getLogger("br.ufmg.lcc").setLevel((Level) Level.DEBUG);

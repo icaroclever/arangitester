@@ -30,14 +30,7 @@ import com.thoughtworks.xstream.XStream;
  */
 public class TesterConfigReader {
 
-	public static void main(String[] args) throws FileNotFoundException {
-	// LccTesterConfigReader reader = new LccTesterConfigReader();
-// reader.write();
-	// reader.read(new File("teste.xml"));
-
-	}
-
-	public void write() throws FileNotFoundException {
+	public void write(File file) throws FileNotFoundException {
 		Config config = new Config();
 		ArrayList<ConfigEnv> envs = new ArrayList<ConfigEnv>();
 		ConfigEnv evn = new ConfigEnv();
@@ -45,7 +38,7 @@ public class TesterConfigReader {
 		envs.add(evn);
 		config.setEnvironments(envs);
 		XStream xtream = getXstream();
-		xtream.toXML(config, new FileOutputStream("teste.xml"));
+		xtream.toXML(config, new FileOutputStream("tester-config.xml"));
 	}
 
 	private static XStream getXstream() {
