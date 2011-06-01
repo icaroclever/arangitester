@@ -16,14 +16,20 @@
 	<property name="tomcat.ajp.port" value="9009" />
 	
 	<path id="arangi-tester-classpath" description="Classpath of ${tester-core.name}-classes + ${tester-core.name}-libs">
-		<pathelement path="${tester-core.dir}/src" />
 		<fileset dir="${tester-core.dir}/lib" includes="**/*.jar" />
+		<pathelement path="${tester-core.dir}/src" />
+		<pathelement path="${extension.dir}/src" />
 		<pathelement location="${tester-core.bin.dir}/${tester-core.name}.jar" />
 		<pathelement location="${extension.bin.dir}/${extension}.jar" />
 	</path>
 
 	<path id="app-full-classpath" description="Classpath of app-classes + arangi-tester-classes + arangi-tester-libs">
 		<fileset dir="${tester-core.dir}/lib" includes="**/*.jar" />
+		<fileset dir="${extension.dir}/lib" includes="**/*.jar" erroronmissingdir="false"/>
+		<fileset dir="${test.project.dir}/lib" includes="**/*.jar" erroronmissingdir="false"/>
+		<pathelement path="${tester-core.dir}/src" />
+		<pathelement path="${extension.dir}/src" />
+		<pathelement path="${test.project.dir}/src" />
 		<pathelement location="${tester-core.bin.dir}/${tester-core.name}.jar" />
 		<pathelement location="${extension.bin.dir}/${extension}.jar" />
 		<pathelement location="${test.project.bin.dir}/bin" />
@@ -48,13 +54,13 @@
 	<target name="compile-tests" depends="compile-tester-core, compile-tester-extension">
 		<delete dir="${test.project.bin.dir}" />
 		<mkdir dir="${test.project.bin.dir}/bin" />
-		<javac srcdir="${test.project.dir}/src" destdir="${test.project.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="app-full-classpath" debug="true" />
+		<javac srcdir="${test.project.dir}/src" destdir="${test.project.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6"  classpathref="app-full-classpath" debug="true" />
 		<copy file="${test.project.dir}/src/log4j.xml" todir="${test.project.bin.dir}/bin" />
 		<copy file="${test.project.dir}/src/lcc.properties" todir="${test.project.bin.dir}/bin" />
 	</target>
 
 	<target name="execute" depends="compile-tester-core, compile-tester-extension, compile-tests, start-tomcat">
-		<java dir="${basedir}" classname="br.ufmg.lcc.arangitester.boot.Reactor" fork="true" classpathref="app-full-classpath">
+		<java dir="${test.project.dir}" classname="br.ufmg.lcc.arangitester.boot.Reactor" fork="true" classpathref="app-full-classpath">
 			<!--jvmarg value="-Xdebug" />
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9009" /-->
 		</java>
@@ -67,10 +73,8 @@
 	</target>
 
 	<target name="start-tomcat" if="start-tomcat">
-		<xmlproperty file="${basedir}/tester-config.xml" />
-		<property name="tester-config.tomcat-users" value="admin:senha:manager" />
+		<xmlproperty file="${test.project.dir}/tester-config.xml" />
 		<property name="tomcat.wait" value="false" />
-		<echo level="info" message="Tomcat Users: ${tester-config.tomcat-users}" />
 		<echo level="info" message="Catalina Home: ${catalina.home}" />
 		<echo level="info" message="JVM ARGS: ${jvm.args}" />
 		<echo level="info" message="Workspace: ${workspace}" />
@@ -80,7 +84,6 @@
 		<cargo containerId="tomcat6x" home="${catalina.home}" output="${workspace}/tomcat/output.log" log="${workspace}/cargo.log" action="start" wait="${tomcat.wait}">
 			<sysproperty key="LccTestEnv" value="true" />
 			<configuration home="${workspace}/tomcat">
-				<property name="cargo.servlet.users" value="${tester-config.tomcat-users}" />
 				<property name="cargo.jvmargs" value="${jvm.args}" />
 				<property name="cargo.servlet.port" value="${tomcat.port}" />
 				<property name="cargo.servlet.ajp.port" value="${tomcat.ajp.port}" />
