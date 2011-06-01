@@ -15,6 +15,7 @@
 	<property name="tomcat.ajp.port" value="9009" />
 
 	<property name="extension.dir" value="${at.dir}/../${extension}" />
+	<property name="extension.bin.dir" value="${at.dir}/../temp/${extension}" />
 	<property name="project.bin.dir" value="${basedir}/../temp/${test.project.name}" />
 
 	<path id="arangi-tester-classpath" description="Classpath of ${at.name}-classes + ${at.name}-libs">
