@@ -26,7 +26,7 @@
 		<fileset dir="${tester-core.dir}/lib" includes="**/*.jar" />
 		<pathelement location="${tester-core.bin.dir}/${tester-core.name}.jar" />
 		<pathelement location="${extension.bin.dir}/${extension}.jar" />
-		<pathelement location="${test.test.project.bin.dir}/bin" />
+		<pathelement location="${test.project.bin.dir}/bin" />
 	</path>
 
 	<taskdef resource="cargo.tasks" classpathref="arangi-tester-classpath" />
@@ -48,7 +48,7 @@
 	<target name="compile-tests" depends="compile-tester-core, compile-tester-extension">
 		<delete dir="${test.project.bin.dir}" />
 		<mkdir dir="${test.project.bin.dir}/bin" />
-		<javac srcdir="${test.project.dir}/src" destdir="${test.project.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="arangi-tester-classpath" debug="true" />
+		<javac srcdir="${test.project.dir}/src" destdir="${test.project.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="app-full-classpath" debug="true" />
 		<copy file="${test.project.dir}/src/log4j.xml" todir="${test.project.bin.dir}/bin" />
 		<copy file="${test.project.dir}/src/lcc.properties" todir="${test.project.bin.dir}/bin" />
 	</target>
