@@ -6,7 +6,7 @@
 	<property name="tester-core.dir"		value="${workspace}/${tester-core.name}"/>
 	<property name="tester-core.bin.dir"	value="${workspace}/temp/${tester-core.name}"/>
 	<property name="test.project.dir"		value="${workspace}/${test.project.name}" />
-	<property name="test.test.project.bin.dir"	value="${workspace}/temp/${test.project.name}" />
+	<property name="test.project.bin.dir"	value="${workspace}/temp/${test.project.name}" />
 	<xmlproperty file="${test.project.dir}/tester-config.xml" collapseAttributes="true"/>
 	<property name="extension"				value="${tester-config.extension}" />
 	<property name="extension.dir"			value="${workspace}/${extension}" />
