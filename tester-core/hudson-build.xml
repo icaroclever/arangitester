@@ -1,70 +1,67 @@
 <project default="execute">
 	
 	<property environment="env"/>
-	<property name="workspace" value="${env.WORKSPACE}"/>
-	<property name="basedir" value="${workspace}/${test.project.name}"/>
-	<xmlproperty file="${basedir}/tester-config.xml" />
+	<property name="workspace"				value="${env.WORKSPACE}"/>
+	<property name="tester-core.name"		value="tester-core"/>
+	<property name="tester-core.dir"		value="${workspace}/${tester-core.name}"/>
+	<property name="tester-core.bin.dir"	value="${workspace}/temp/${tester-core.name}"/>
+	<property name="test.project.dir"		value="${workspace}/${test.project.name}" />
+	<property name="test.test.project.bin.dir"	value="${workspace}/temp/${test.project.name}" />
+	<xmlproperty file="${test.project.dir}/tester-config.xml" collapseAttributes="true"/>
+	<property name="extension"				value="${tester-config.extension}" />
+	<property name="extension.dir"			value="${workspace}/${extension}" />
+	<property name="extension.bin.dir"		value="${workspace}/temp/${extension}" />
 	
 	<property name="jvm.args" value="" />
-	<property name="extension" value="${tester-config(extension)}" />
-
-	<dirname property="at.dir" file="${ant.file}" />
-	<basename property="at.name" file="${basedir}" />
-	
-	<property name="at.bin.dir" value="${basedir}/../temp/${at.name}" />
 	<property name="tomcat.ajp.port" value="9009" />
-
-	<property name="extension.dir" value="${at.dir}/../${extension}" />
-	<property name="extension.bin.dir" value="${at.dir}/../temp/${extension}" />
-	<property name="project.bin.dir" value="${basedir}/../temp/${test.project.name}" />
-
+	
 	<path id="arangi-tester-classpath" description="Classpath of ${at.name}-classes + ${at.name}-libs">
-		<pathelement path="${basedir}/src" />
-		<fileset dir="${at.dir}/lib" includes="**/*.jar" />
-		<pathelement location="${at.bin.dir}/${at.name}.jar" />
+		<pathelement path="${tester-core.dir}/src" />
+		<fileset dir="${tester-core.dir}/lib" includes="**/*.jar" />
+		<pathelement location="${tester-core.bin.dir}/${tester-core.name}.jar" />
 		<pathelement location="${extension.bin.dir}/${extension}.jar" />
 	</path>
 
 	<path id="app-full-classpath" description="Classpath of app-classes + arangi-tester-classes + arangi-tester-libs">
-		<fileset dir="${at.dir}/lib" includes="**/*.jar" />
-		<pathelement location="${at.bin.dir}/${at.name}.jar" />
+		<fileset dir="${tester-core.dir}/lib" includes="**/*.jar" />
+		<pathelement location="${tester-core.bin.dir}/${tester-core.name}.jar" />
 		<pathelement location="${extension.bin.dir}/${extension}.jar" />
-		<pathelement location="${project.bin.dir}/bin" />
+		<pathelement location="${test.test.project.bin.dir}/bin" />
 	</path>
 
 	<taskdef resource="cargo.tasks" classpathref="arangi-tester-classpath" />
 
-	<target name="compile-${at.name}">
-		<delete dir="${at.bin.dir}" />
-		<mkdir dir="${at.bin.dir}/bin" />
-		<javac srcdir="${at.dir}/src" destdir="${at.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="arangi-tester-classpath" debug="true" />
-		<jar destfile="${at.bin.dir}/${at.name}.jar" basedir="${at.bin.dir}/bin" />
+	<target name="compile-tester-core">
+		<delete dir="${tester-core.bin.dir}" />
+		<mkdir dir="${tester-core.bin.dir}/bin" />
+		<javac srcdir="${tester-core.dir}/src" destdir="${at.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="arangi-tester-classpath" debug="true" />
+		<jar destfile="${tester-core.bin.dir}/${tester-core.name}.jar" basedir="${tester-core.bin.dir}/bin" />
 	</target>
 
-	<target name="compile-tester-extension" depends="compile-${at.name}">
+	<target name="compile-tester-extension" depends="compile-tester-core">
 		<delete dir="${extension.bin.dir}" />
 		<mkdir dir="${extension.bin.dir}/bin" />
 		<javac srcdir="${extension.dir}/src" destdir="${extension.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="arangi-tester-classpath" debug="true" />
 		<jar destfile="${extension.bin.dir}/${extension}.jar" basedir="${extension.bin.dir}/bin" />
 	</target>
 
-	<target name="compile-tests" depends="compile-${at.name}, compile-tester-extension">
-		<delete dir="${project.bin.dir}" />
-		<mkdir dir="${project.bin.dir}/bin" />
-		<javac srcdir="${basedir}/src" destdir="${project.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="arangi-tester-classpath" debug="true" />
-		<copy file="${basedir}/src/log4j.xml" todir="${project.bin.dir}/bin" />
-		<copy file="${basedir}/src/lcc.properties" todir="${project.bin.dir}/bin" />
+	<target name="compile-tests" depends="compile-tester-core, compile-tester-extension">
+		<delete dir="${test.project.bin.dir}" />
+		<mkdir dir="${test.project.bin.dir}/bin" />
+		<javac srcdir="${test.project.dir}/src" destdir="${test.project.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="arangi-tester-classpath" debug="true" />
+		<copy file="${test.project.dir}/src/log4j.xml" todir="${test.project.bin.dir}/bin" />
+		<copy file="${test.project.dir}/src/lcc.properties" todir="${test.project.bin.dir}/bin" />
 	</target>
 
-	<target name="execute" depends="compile-${at.name}, compile-tester-extension, compile-tests, start-tomcat">
+	<target name="execute" depends="compile-tester-core, compile-tester-extension, compile-tests, start-tomcat">
 		<java dir="${basedir}" classname="br.ufmg.lcc.arangitester.boot.Reactor" fork="true" classpathref="app-full-classpath">
 			<!--jvmarg value="-Xdebug" />
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9009" /-->
 		</java>
 	</target>
 
-	<target name="reload-db" depends="compile-${at.name}">
-		<java classname="br.ufmg.lcc.arangitester.db.DbUnitController" fork="true" dir="${basedir}" classpathref="arangi-tester-classpath">
+	<target name="reload-db" depends="compile-tester-core">
+		<java classname="br.ufmg.lcc.arangitester.db.DbUnitController" fork="true" dir="${test.project.dir}" classpathref="arangi-tester-classpath">
 			<arg value="reload" />
 		</java>
 	</target>
