@@ -15,7 +15,7 @@
 	<property name="jvm.args" value="" />
 	<property name="tomcat.ajp.port" value="9009" />
 	
-	<path id="arangi-tester-classpath" description="Classpath of ${at.name}-classes + ${at.name}-libs">
+	<path id="arangi-tester-classpath" description="Classpath of ${tester-core.name}-classes + ${tester-core.name}-libs">
 		<pathelement path="${tester-core.dir}/src" />
 		<fileset dir="${tester-core.dir}/lib" includes="**/*.jar" />
 		<pathelement location="${tester-core.bin.dir}/${tester-core.name}.jar" />
@@ -34,7 +34,7 @@
 	<target name="compile-tester-core">
 		<delete dir="${tester-core.bin.dir}" />
 		<mkdir dir="${tester-core.bin.dir}/bin" />
-		<javac srcdir="${tester-core.dir}/src" destdir="${at.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="arangi-tester-classpath" debug="true" />
+		<javac srcdir="${tester-core.dir}/src" destdir="${tester-core.bin.dir}/bin" encoding="UTF-8" source="1.6" target="1.6" classpathref="arangi-tester-classpath" debug="true" />
 		<jar destfile="${tester-core.bin.dir}/${tester-core.name}.jar" basedir="${tester-core.bin.dir}/bin" />
 	</target>
 
