@@ -85,80 +85,10 @@
 			<sysproperty key="LccTestEnv" value="true" />
 			<configuration home="${workspace}/tomcat">
 				<property name="cargo.jvmargs" value="${jvm.args}" />
-				<property name="cargo.servlet.port" value="${tomcat.port}" />
 				<property name="cargo.servlet.ajp.port" value="${tomcat.ajp.port}" />
 				<property name="cargo.logging" value="high" />
 				<deployable type="war" file="${war.file}" />
 			</configuration>
 		</cargo>
 	</target>
-
-	<target name="create-project">
-		<input message="Project name" addproperty="project" />
-		<input message="Package name" addproperty="package" defaultvalue="com.company.projectname" />
-		<input message="Output Dir" addproperty="output" defaultvalue="../" />
-		<mkdir dir="${output}/${project}" />
-		<copy todir="${output}/${project}" filtering="true">
-			<filterset>
-				<filter token="project" value="${project}" />
-				<filter token="package" value="${package}" />
-				<filter token="user.name" value="${user.name}" />
-			</filterset>
-			<fileset dir="templates/eclipse" includes="**/*" />
-		</copy>
-
-		<mkdir dir="${output}/${project}/build" />
-		<javac srcdir="src" destdir="${output}/${project}/build" encoding="UTF-8">
-			<classpath>
-				<fileset dir="lib" includes="**/*.jar" />
-			</classpath>
-		</javac>
-		<mkdir dir="${output}/${project}/lib/src/" />
-		<jar destfile="${output}/${project}/lib/${at.name}.jar">
-			<fileset dir="${output}/${project}/build" includes="**/*" />
-			<fileset dir="../${at.name}/src" includes="**/*" />
-		</jar>
-		<delete dir="${output}/${project}/build" />
-
-		<copy todir="${output}/${project}/lib">
-			<fileset dir="lib" includes="**/*.jar" />
-		</copy>
-	</target>
-
-	<target name="Update Project Lib">
-		<mkdir dir="build" />
-		<javac srcdir="../${at.name}/src" destdir="build" encoding="UTF-8">
-			<classpath>
-				<fileset dir="lib" includes="**/*.jar" />
-			</classpath>
-		</javac>
-		<jar destfile="lib/${at.name}.jar" compress="true">
-			<fileset dir="build" includes="**/*" />
-			<fileset dir="../${at.name}/src" includes="**/*" />
-		</jar>
-		<delete dir="build" />
-	</target>
-
-	<target name="javadocsUml">
-		<mkdir dir="javadoc"/>
-		<javadoc sourcepath="src" packagenames="br.*" destdir="javadoc" 
-			private="true" encoding="UTF-8">
-			<classpath>
-				<fileset dir="lib" includes="**/*.jar"/>
-			</classpath>
-			<doclet name="org.umlgraph.doclet.UmlGraphDoc" path="lib/UmlGraph-5.2.jar">
-				<param name="-inferrel" />
-				<param name="-inferdep" />
-				<param name="-hide" value="java.*" />
-				<param name="-collpackages" value="java.util.*" />
-				<param name="-qualify" />
-				<param name="-postfixpackage" />
-				<param name="-nodefontsize" value="9" />
-				<param name="-nodefontpackagesize" value="7" />
-				<param name="-link" value="http://java.sun.com/j2se/1.5.0/docs/guide/javadoc/doclet/spec" />
-				<param name="-link" value="http://java.sun.com/j2se/1.5/docs/api" />
-			</doclet>
-		</javadoc>
-	</target>
-
 </project>
