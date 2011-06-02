@@ -61,43 +61,13 @@
 		<copy file="${test.project.dir}/src/lcc.properties" todir="${test.project.bin.dir}/bin" />
 	</target>
 
-	<target name="execute" depends="compile-tester-core, compile-tester-extension, compile-tests, start-tomcat">
-		<java dir="${test.project.dir}" classname="br.ufmg.lcc.arangitester.boot.Reactor" fork="true" classpathref="app-full-classpath">
-			<!--jvmarg value="-Xdebug" />
-			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9009" /-->
-		</java>
+	<target name="execute" depends="compile-tester-core, compile-tester-extension, compile-tests">
+		<java dir="${test.project.dir}" classname="br.ufmg.lcc.arangitester.boot.Reactor" fork="true" classpathref="app-full-classpath"/>
 	</target>
 
 	<target name="reload-db" depends="compile-tester-core">
 		<java classname="br.ufmg.lcc.arangitester.db.DbUnitController" fork="true" dir="${test.project.dir}" classpathref="arangi-tester-classpath">
 			<arg value="reload" />
 		</java>
-	</target>
-	
-	<taskdef resource="cargo.tasks">
-	  <classpath>
-	    <pathelement location="${tester-core.dir}/lib/cargo-uberjar.jar"/>
-	    <pathelement location="${tester-core.dir}/lib/cargo-ant-tasks.jar"/>
-	  </classpath>
-	</taskdef>
-
-	<target name="start-tomcat" if="start-tomcat">
-		<xmlproperty file="${test.project.dir}/tester-config.xml" />
-		<property name="tomcat.wait" value="false" />
-		<echo level="info" message="Catalina Home: ${catalina.home}" />
-		<echo level="info" message="JVM ARGS: ${jvm.args}" />
-		<echo level="info" message="Workspace: ${workspace}" />
-		<echo level="info" message="Tomcat AJP Port: ${tomcat.ajp.port}" />
-		<echo level="info" message="War File: ${war.file}" />
-		<echo level="info" message="Tomcat Wait: ${tomcat.wait}" />
-		<cargo containerId="tomcat6x" home="${catalina.home}" output="${workspace}/tomcat/output.log" log="${workspace}/cargo.log" action="start" wait="${tomcat.wait}">
-			<sysproperty key="LccTestEnv" value="true" />
-			<configuration home="${workspace}/tomcat">
-				<property name="cargo.jvmargs" value="${jvm.args}" />
-				<property name="cargo.servlet.ajp.port" value="${tomcat.ajp.port}" />
-				<property name="cargo.logging" value="high" />
-				<deployable type="war" file="${war.file}" />
-			</configuration>
-		</cargo>
 	</target>
 </project>
