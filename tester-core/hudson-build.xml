@@ -34,8 +34,10 @@
 		<pathelement location="${extension.bin.dir}/${extension}.jar" />
 		<pathelement location="${test.project.bin.dir}/bin" />
 	</path>
-
-	<taskdef resource="cargo.tasks" classpathref="arangi-tester-classpath" />
+	
+	<path id="cargo-classpath">
+		<fileset dir="." includes="**/*.jar" />
+	</path>
 
 	<target name="compile-tester-core">
 		<delete dir="${tester-core.bin.dir}" />
@@ -71,6 +73,13 @@
 			<arg value="reload" />
 		</java>
 	</target>
+	
+	<taskdef resource="cargo.tasks">
+	  <classpath>
+	    <pathelement location="${tester-core.dir}/lib/cargo-uberjar.jar"/>
+	    <pathelement location="${tester-core.dir}/lib/cargo-ant-tasks.jar"/>
+	  </classpath>
+	</taskdef>
 
 	<target name="start-tomcat" if="start-tomcat">
 		<xmlproperty file="${test.project.dir}/tester-config.xml" />
@@ -78,7 +87,7 @@
 		<echo level="info" message="Catalina Home: ${catalina.home}" />
 		<echo level="info" message="JVM ARGS: ${jvm.args}" />
 		<echo level="info" message="Workspace: ${workspace}" />
-		<echo level="info" message="Tomcat Port: ${tomcat.port}" />
+		<echo level="info" message="Tomcat AJP Port: ${tomcat.ajp.port}" />
 		<echo level="info" message="War File: ${war.file}" />
 		<echo level="info" message="Tomcat Wait: ${tomcat.wait}" />
 		<cargo containerId="tomcat6x" home="${catalina.home}" output="${workspace}/tomcat/output.log" log="${workspace}/cargo.log" action="start" wait="${tomcat.wait}">
