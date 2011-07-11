@@ -59,9 +59,7 @@
 
 	<xsd:complexType name="database">
 		<xsd:sequence>
-			<xsd:element name="url" type="xsd:string" minOccurs="1"
-				maxOccurs="1">
-			</xsd:element>
+			<xsd:element name="url" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
 			<xsd:element name="user" type="xsd:string"></xsd:element>
 			<xsd:element name="password" type="xsd:string"></xsd:element>
 			<xsd:element name="driver" type="xsd:string"></xsd:element>
@@ -73,9 +71,7 @@
             			br.ufmg.lcc.arangitester.db.IReloadListener
             		</xsd:documentation>
             	</xsd:annotation></xsd:element>
-            <xsd:element name="file" type="file" maxOccurs="unbounded"
-				minOccurs="0">
-			</xsd:element>
+            <xsd:element name="file" type="file" maxOccurs="unbounded" minOccurs="0"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -100,10 +96,10 @@
 	<xsd:complexType name="environment">
     	<xsd:sequence>
     		<xsd:element name="browser" type="xsd:string"></xsd:element>
-    		<xsd:element name="firefox-profile-dir" type="xsd:string"></xsd:element>
     		<xsd:element name="port" type="xsd:int"></xsd:element>
     		<xsd:element name="host" type="xsd:string"></xsd:element>
     		<xsd:element name="path" type="xsd:string"></xsd:element>
+    		<xsd:element name="firefox-profile-dir" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
     		<xsd:element name="database" type="database" maxOccurs="unbounded" minOccurs="0">
     		</xsd:element>
     	</xsd:sequence>
