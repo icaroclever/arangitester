@@ -15,6 +15,7 @@
  */
 package br.ufmg.lcc.arangitester.arangi.pages;
 
+import br.ufmg.lcc.arangitester.annotations.RequestConfig;
 import br.ufmg.lcc.arangitester.annotations.Ui;
 import br.ufmg.lcc.arangitester.arangi.annotations.Page;
 import br.ufmg.lcc.arangitester.ui.UiButton;
@@ -29,6 +30,7 @@ import br.ufmg.lcc.arangitester.ui.UiInputText;
 @Page(url="/")
 public class ArangiLoginPage extends ArangiPage {
 
+	@RequestConfig(forceWait=30000)
 	@Ui(desc="Autenticar", locator="id=btnOk")
 	private UiButton btnOk;
 	
