@@ -97,7 +97,6 @@ public class Refletions {
 				}
 			}
 			Collections.sort(tempMethods, new Comparator<Method>() {
-				@Override
 				public int compare(Method m1, Method m2) {
 					return ((Integer) m1.getAnnotation(Test.class).order()).compareTo((Integer) m2.getAnnotation(Test.class).order());
 				}

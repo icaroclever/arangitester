@@ -55,4 +55,9 @@ public class UiInputFile extends UiComponent {
 	public String getComponentTag() {
 		return "input";
 	}
+
+	public void create() {
+		// TODO Auto-generated method stub
+		
+	}
 }

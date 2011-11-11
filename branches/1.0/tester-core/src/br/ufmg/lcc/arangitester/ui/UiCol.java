@@ -28,4 +28,9 @@ public class UiCol extends UiComponent {
 	public String getComponentTag() {
 		return null;
 	}
+
+	public void create() {
+		// TODO Auto-generated method stub
+		
+	}
 }

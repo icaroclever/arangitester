@@ -16,6 +16,7 @@
 package br.ufmg.lcc.arangitester.ui;
 
 import java.lang.annotation.Annotation;
+import java.util.Iterator;
 
 import br.ufmg.lcc.arangitester.ui.actions.IUiClickable;
 
@@ -87,4 +88,8 @@ public interface IUiComponent extends Iterable<IUiComponent> {
 	 * Force validation on field.
 	 */
 	void validate(IUiClickable clickableElement, IUiComponent component);
+
+	Iterator<IUiComponent> iterator();
+
+	void create();
 }

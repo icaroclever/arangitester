@@ -36,7 +36,6 @@ public class UiClickable extends UiComponent implements ICreate, IUiClickable {
 		super.mouseOver();
 		IRequestCommand action = new IRequestCommand() {
 
-			@Override
 			public void execute() {
 				getSel().click(getComponentLocator());
 			}
@@ -57,7 +56,6 @@ public class UiClickable extends UiComponent implements ICreate, IUiClickable {
 		return requestDelegate.getRequestConfig();
 	}
 
-	@Override
 	public void create() {
 		requestDelegate = new Request(getConfig(RequestConfig.class));
 	}

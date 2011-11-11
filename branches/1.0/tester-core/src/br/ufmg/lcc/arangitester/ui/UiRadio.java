@@ -73,4 +73,9 @@ public class UiRadio extends UiComponent {
 		return "input";
 	}
 
+	public void create() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
