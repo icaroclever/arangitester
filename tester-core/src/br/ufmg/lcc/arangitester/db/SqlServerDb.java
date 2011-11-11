@@ -26,7 +26,6 @@ import br.ufmg.lcc.arangitester.config.ConfigDumpFile;
 public class SqlServerDb implements DriverDb {
 	Logger	log	= Logger.getLogger("DB_EXPORT");
 
-	@Override
 	public void export(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
@@ -44,7 +43,6 @@ public class SqlServerDb implements DriverDb {
 		connection.close();
 	}
 
-	@Override
 	public void reload(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);

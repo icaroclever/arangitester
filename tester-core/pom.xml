@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>tester-core</groupId>
+  <artifactId>tester-core</artifactId>
+  <version>1.0</version>
+  <name>Arangi Tester Core</name>
+  <description>Make functional tests easy, integrating many open-source tools like Dbunit, Selenium, Eclipse. Turn tests development faster, easy and evolutional with a high api that hide many problems of Selenium and Dbunit.</description>
+  <url>http://code.google.com/p/arangitester/</url>
+  <scm>
+  	<developerConnection>Ícaro Clever</developerConnection>
+  	<url>http://arangitester.googlecode.com/svn/branches/1.0</url>
+  </scm>
+  <issueManagement>
+  	<url>http://code.google.com/p/arangitester/issues/list</url>
+  	<system>Google Code</system>
+  </issueManagement>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.thoughtworks.xstream</groupId>
+  		<artifactId>xstream</artifactId>
+  		<version>1.4.2</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-beanutils</groupId>
+  		<artifactId>commons-beanutils</artifactId>
+  		<version>20030211.134440</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.seleniumhq.selenium.client-drivers</groupId>
+  		<artifactId>selenium-java-client-driver</artifactId>
+  		<version>1.0.2</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.el</groupId>
+  		<artifactId>javax.el-api</artifactId>
+  		<version>2.2.3</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>de.odysseus.juel</groupId>
+  		<artifactId>juel-api</artifactId>
+  		<version>2.2.4</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>de.odysseus.juel</groupId>
+  		<artifactId>juel-impl</artifactId>
+  		<version>2.2.4</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>dom4j</groupId>
+  		<artifactId>dom4j</artifactId>
+  		<version>1.6.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.seleniumhq.selenium.server</groupId>
+  		<artifactId>selenium-server-coreless</artifactId>
+  		<version>1.0.3</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>cglib</groupId>
+  		<artifactId>cglib-nodep</artifactId>
+  		<version>2.2.2</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-lang</groupId>
+  		<artifactId>commons-lang</artifactId>
+  		<version>2.4</version>
+  	</dependency>
+  </dependencies>
+</project>

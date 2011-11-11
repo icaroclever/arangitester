@@ -36,7 +36,6 @@ public class InterceptorCallBack implements MethodInterceptor {
 	private static IInterceptor	loggerInterceptor	= new LoggerImpl();
 	private static IInterceptor	ajaxInterceptor		= new AjaxVerifcationImpl();
 
-	@Override
 	public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
 		Logger loggerConfig = method.getAnnotation(Logger.class);
 		VerifyAjax ajaxAnnotation = method.getAnnotation(VerifyAjax.class);

@@ -263,7 +263,6 @@ public class Result implements IResult {
 		currentUseCase.setEndTime(new Date());
 	}
 
-	@Override
 	public void save(File file) {
 		XmlResult xml = new XmlResult();
 		xml.save(file, getTest());

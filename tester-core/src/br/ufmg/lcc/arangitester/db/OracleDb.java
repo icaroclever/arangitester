@@ -48,7 +48,6 @@ public class OracleDb implements DriverDb {
 	/**
 	 * 
 	 */
-	@Override
 	public void export(ConfigDatabase database, ConfigDumpFile fileConfig) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		String schemaName = fileConfig.getSchema();
@@ -92,7 +91,6 @@ public class OracleDb implements DriverDb {
 	 * generico. O ideal eh q o
 	 * arquivo sequences.txt contivesse todos os atributos das sequencias, para que eles fossem recuperados a partir deste metodo.
 	 */
-	@Override
 	public void reload(ConfigDatabase database, ConfigDumpFile fileConfig) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		String schemaName = fileConfig.getSchema();

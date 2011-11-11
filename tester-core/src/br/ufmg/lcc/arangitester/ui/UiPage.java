@@ -209,7 +209,6 @@ public class UiPage extends UiComponent implements IUiComposite {
 		}
 	}
 
-	@Override
 	public void verifyAllEnable(boolean enable) {
 		@SuppressWarnings("rawtypes")
 		Class[] components = new Class[] { UiInputText.class, UiCheckBox.class, UiTable.class, UiSelect.class };
@@ -301,5 +300,10 @@ public class UiPage extends UiComponent implements IUiComposite {
 		if (!url.startsWith("/"))
 			url = "/" + url;
 		return Context.getInstance().getConfig().getPath() + url;
+	}
+
+	public void create() {
+		// TODO Auto-generated method stub
+		
 	}
 }

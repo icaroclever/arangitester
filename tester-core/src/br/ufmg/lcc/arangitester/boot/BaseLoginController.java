@@ -49,7 +49,6 @@ public abstract class BaseLoginController implements ILoginController {
 		}
 	}
 
-	@Override
 	public void loginIfNeed(Object target, Method method) throws FatalException {
 		Login login = target.getClass().getAnnotation(Login.class);
 		if (method != null && method.getAnnotation(Login.class) != null) login = method.getAnnotation(Login.class);
@@ -65,7 +64,6 @@ public abstract class BaseLoginController implements ILoginController {
 		}
 	}
 
-	@Override
 	public void forceLogOff() throws FatalException {
 		try {
 			Context.getInstance().getSeleniumController().getSeleniumClient().deleteAllVisibleCookies();
@@ -78,12 +76,10 @@ public abstract class BaseLoginController implements ILoginController {
 		}
 	}
 
-	@Override
 	public boolean isAlreadyLogged() {
 		return alreadyLogged;
 	}
 
-	@Override
 	public void setAlreadyLogged(boolean alreadyLogged) {
 		this.alreadyLogged = alreadyLogged;
 	}

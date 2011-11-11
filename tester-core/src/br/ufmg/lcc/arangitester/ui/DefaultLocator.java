@@ -27,7 +27,6 @@ public class DefaultLocator implements IComponentLocator {
 	 * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getComponentId(java.lang.String,
 	 * br.ufmg.lcc.arangitester.ui.LccIUiComponent)
 	 */
-	@Override
 	public String getComponentId(String id, IUiComponent component) {
 		if (id == null)
 			return id;
@@ -41,7 +40,6 @@ public class DefaultLocator implements IComponentLocator {
 	 * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getComponentLocator(java.lang.String,
 	 * br.ufmg.lcc.arangitester.ui.LccIUiComponent)
 	 */
-	@Override
 	public String getComponentLocator(String componentLocator, IUiComponent component) {
 		if (StringUtils.isNotBlank(componentLocator)) {
 			return ArangiTesterStringUtils.interpolate(componentLocator, component);
@@ -59,7 +57,6 @@ public class DefaultLocator implements IComponentLocator {
 	 * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getComponentName(java.lang.String,
 	 * br.ufmg.lcc.arangitester.ui.LccIUiComponent)
 	 */
-	@Override
 	public String getComponentName(String name, IUiComponent component) {
 		if (name == null)
 			return name;
@@ -72,7 +69,6 @@ public class DefaultLocator implements IComponentLocator {
 	 * 
 	 * @see br.ufmg.lcc.arangitester.ui.LccIComponentLocator#getHtmlNameSpace()
 	 */
-	@Override
 	public String getHtmlNameSpace() {
 		return "";
 	}

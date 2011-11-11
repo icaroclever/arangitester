@@ -18,4 +18,6 @@ package br.ufmg.lcc.arangitester.ui.actions;
 
 public interface IUiClickable {
 	public void click();
+
+	void create();
 }

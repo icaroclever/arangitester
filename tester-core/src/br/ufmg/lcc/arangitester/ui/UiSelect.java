@@ -41,7 +41,6 @@ import com.thoughtworks.selenium.Wait.WaitTimedOutException;
 public class UiSelect extends UiComponent implements ICreate {
 	private Request	requestDelegate;
 
-	@Override
 	public void create() {
 		requestDelegate = new Request(super.getConfig(RequestConfig.class));
 		requestDelegate.getRequestConfig().setSubmit(false);
@@ -66,7 +65,6 @@ public class UiSelect extends UiComponent implements ICreate {
 
 			IRequestCommand action = new IRequestCommand() {
 
-				@Override
 				public void execute() {
 					getSel().select(getComponentLocator(), "label=" + label + "");
 				}
