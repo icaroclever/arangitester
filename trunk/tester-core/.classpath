@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.15.jar" sourcepath="lib/src/log4j-1.2.15-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/selenium-java-client-driver.jar" sourcepath="lib/src/selenium-java-client-driver-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/selenium-server.jar" sourcepath="lib/src/selenium-server-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-lang-2.4.jar" sourcepath="lib/src/commons-lang-2.4-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/cglib-nodep-2.2.jar" sourcepath="lib/src/cglib-src-2.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-beanutils-1.7.0.jar" sourcepath="lib/src/commons-beanutils-1.7.0-sources.jar"/>
-	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar" sourcepath="lib/src/dom4j-1.6.1-sources.jar"/>
-	<classpathentry kind="lib" path="lib/dbunit/commons-collections-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/dbunit/junit-3.8.2.jar"/>
-	<classpathentry kind="lib" path="lib/dbunit/junit-addons-1.4.jar"/>
-	<classpathentry kind="lib" path="lib/dbunit/mysql-connector-java-5.1.6-bin.jar"/>
-	<classpathentry kind="lib" path="lib/dbunit/poi-2.5.1-final-20040804.jar"/>
-	<classpathentry kind="lib" path="lib/dbunit/postgresql-8.3-603.jdbc3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/dbunit/slf4j-api-1.4.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/dbunit/slf4j-nop-1.4.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/dbunit/xercesImpl-2.6.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/dbunit/xmlParserAPIs-2.6.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/juel-2.1.0.jar" sourcepath="/home/goncalvesl/temp/juel-2.1.0/src"/>
-	<classpathentry exported="true" kind="lib" path="lib/juel-2.1.0-impl.jar"/>
-	<classpathentry kind="lib" path="lib/dbunit/classes12.jar"/>
-	<classpathentry kind="lib" path="lib/xpp3_min-1.1.4c.jar"/>
-	<classpathentry kind="lib" path="lib/xstream-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/dbunit/dbunit-2.4.4-lcc.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

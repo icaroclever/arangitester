@@ -37,7 +37,6 @@ import org.dbunit.operation.DatabaseOperation;
  */
 public class PostgresDb implements DriverDb {
 
-	@Override
 	public void export(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 
@@ -56,7 +55,6 @@ public class PostgresDb implements DriverDb {
 		connection.close();
 	}
 
-	@Override
 	public void reload(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
 
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());

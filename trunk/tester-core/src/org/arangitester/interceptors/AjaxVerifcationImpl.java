@@ -30,18 +30,14 @@ import org.arangitester.annotations.VerifyAjax;
  */
 public class AjaxVerifcationImpl implements IInterceptor {
 
-	@Override
 	public void after(Method method, Object[] args, Annotation annotation, Object obj) {
 
 	}
 
-	@Override
 	public void afterFinally(Method method, Object[] args, Annotation annotation, Object obj) {}
 
-	@Override
 	public void afterThrowing(Method method, Object[] args, Throwable throwable, Annotation annotation, Object obj) {}
 
-	@Override
 	public void before(Method method, Object[] args, Annotation annotation, Object obj) {
 		if (Context.getInstance().isVerifyAjaxRequest()) {
 			Context.getInstance().getSeleniumController().getSeleniumClient().waitForCondition("Ajax.activeRequestCount == 0", "10000");

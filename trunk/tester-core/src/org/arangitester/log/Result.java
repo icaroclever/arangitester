@@ -174,9 +174,9 @@ public class Result implements IResult {
 		String screenshotFullPath = null;
 
 		// Verifica se o screenshot está em formato html ou png, e onde foi salvado
-		if (StringUtils.endsWithIgnoreCase(path, "png")) {
+		if (StringUtils.equalsIgnoreCase(path, "png")) {
 			screenshotFullPath = Context.getInstance().getScreenshotPngDir().getAbsolutePath() + System.getProperty("file.separator") + path;
-		} else if (StringUtils.endsWithIgnoreCase(path, "html")) {
+		} else if (StringUtils.equalsIgnoreCase(path, "html")) {
 			screenshotFullPath = Context.getInstance().getScreenshotHtmlDir().getAbsolutePath() + System.getProperty("file.separator") + path;
 		} else {
 			screenshotFullPath = Context.getInstance().getScreenshotDefaultDir().getAbsolutePath() + System.getProperty("file.separator") + path;
@@ -263,7 +263,6 @@ public class Result implements IResult {
 		currentUseCase.setEndTime(new Date());
 	}
 
-	@Override
 	public void save(File file) {
 		XmlResult xml = new XmlResult();
 		xml.save(file, getTest());

@@ -38,7 +38,6 @@ import org.dbunit.operation.DatabaseOperation;
  */
 public class MysqlDb implements DriverDb {
 
-	@Override
 	public void export(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
@@ -53,7 +52,6 @@ public class MysqlDb implements DriverDb {
 		connection.close();
 	}
 
-	@Override
 	public void reload(ConfigDatabase database, ConfigDumpFile schema) throws Exception {
 		Connection jdbcConnection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
