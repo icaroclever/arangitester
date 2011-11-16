@@ -44,7 +44,6 @@ public abstract class ComponentsIteratorBase implements Iterator<IUiComponent> {
 		return componentsList;
 	}
 
-	@Override
 	public boolean hasNext() {
 		if (getComponentsList().size() > position + 1) {
 			return true;
@@ -52,13 +51,11 @@ public abstract class ComponentsIteratorBase implements Iterator<IUiComponent> {
 		return false;
 	}
 
-	@Override
 	public IUiComponent next() {
 		position++;
 		return getComponentsList().get(position);
 	}
 
-	@Override
 	public void remove() {}
 
 }

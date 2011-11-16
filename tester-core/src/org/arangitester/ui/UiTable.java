@@ -66,7 +66,6 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 		return (T) newLine;
 	}
 
-	@Override
 	public void removeLine(int number) {
 		for (int i = number; i < lines.size(); i++) {
 			((T) getLines().get(number)).setIndex(i + 1);
@@ -181,7 +180,7 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 		getLine(lineNumber).click();
 	}
 
-	@Override
+	
 	@Logger("Verifying text on table[#0][#1] : #3")
 	public void verifyColumnText(int line, int col, Section section, String text) {
 		// default:table[@id='registerForm:globalParameterTable']/default:thead/default:tr[1]/default:th[3]
@@ -230,7 +229,6 @@ public class UiTable<T extends IUiLine> extends UiComponent implements IUiTable<
 		}
 	}
 
-	@Override
 	public void verifyAllEnable(boolean enable) {
 		getLine(2);
 		for (T line : getLines()) {

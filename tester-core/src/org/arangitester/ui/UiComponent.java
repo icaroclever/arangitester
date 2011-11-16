@@ -78,7 +78,6 @@ public abstract class UiComponent implements IUiComponent {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	@Logger("Clicking at:  #{componentDesc}")
 	public void click() {
 		String xpath = this.getComponentLocator();
@@ -89,7 +88,6 @@ public abstract class UiComponent implements IUiComponent {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	@Logger("Double Clicking at:  #{componentDesc}")
 	public void doubleClick() {
 		String xpath = this.getComponentLocator();
@@ -173,7 +171,6 @@ public abstract class UiComponent implements IUiComponent {
 		return ArangiTesterStringUtils.containsWithoutSpaces(texto, expectedText);
 	}
 
-	@Override
 	public Iterator<IUiComponent> iterator() {
 		return new ComponentsIterator(this);
 	}
